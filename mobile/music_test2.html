@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dream Ambient Sound Test</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.39/Tone.js"></script>
+<style>
+  body { background:#000; color:#fff; font-family:sans-serif; padding:20px; }
+  button, select, input { margin:6px; padding:6px 10px; }
+  .panel { background:#111; border:1px solid #333; border-radius:8px; padding:14px; margin-bottom:14px; }
+</style>
+</head>
+<body>
+
+<h2>Dream Ambient Sound Prototype — File Upload</h2>
+<p>Upload any Renaissance recording, apply ambient transformation, overlay procedural ambience.</p>
+
+<div class="panel">
+  <input id="fileInput" type="file" accept="audio/*" />
+  <br>
+  <label>Mood</label>
+  <select id="moodSelect">
+    <option value="peaceful">Peaceful</option>
+    <option value="mysterious">Mysterious</option>
+    <option value="luminous">Luminous</option>
+    <option value="somber">Somber</option>
+  </select>
+
+  <label>Environment</label>
+  <select id="envSelect">
+    <option value="none">None</option>
+    <option value="forest">Forest Night</option>
+    <option value="ocean">Ocean Waves</option>
+    <option value="train">Distant Train</option>
+    <option value="indoor">Indoor Room Tone</option>
+  </select>
+</div>
+
+<div class="panel">
+  <button id="startBtn">Start</button>
+  <button id="stopBtn">Stop</button>
+  <p id="status">Status: idle</p>
+</div>
+
+<script>
+let player = null;
+let envNoise = null;
+
+const master = new Tone.Volume(-6).toDestination();
+const reverb = new Tone.Reverb({ decay: 14, wet: 0.5 });
+const delay = new Tone.FeedbackDelay("8n", 0.25);
+const pitch = new Tone.PitchShift({ pitch: -2 });
+const lowpass = new Tone.Filter({ type:"lowpass", frequency: 2600 });
+
+function applyMood(type) {
+  const m = {
+    peaceful:  { p:-2, c:3000, r:0.5, d:0.25, rate:0.9 },
+    mysterious:{ p:-5, c:1500, r:0.7, d:0.45, rate:0.8 },
+    luminous:  { p:-1, c:5500, r:0.6, d:0.30, rate:0.95 },
+    somber:    { p:-3, c:2000, r:0.3, d:0.15, rate:0.75 }
+  }[type];
+
+  pitch.pitch = m.p;
+  lowpass.frequency.value = m.c;
+  reverb.wet.value = m.r;
+  delay.wet.value = m.d;
+  if (player) player.playbackRate = m.rate;
+}
+
+function createEnvironment(type) {
+  if (envNoise) envNoise.stop();
+  if (type === "none") return;
+
+  envNoise = new Tone.Noise("pink");
+  const filter = new Tone.Filter("bandpass", 400).connect(master);
+  envNoise.connect(filter);
+
+  if(type==="forest") filter.frequency.value = 1200;
+  if(type==="ocean")  filter.frequency.value = 300;
+  if(type==="train")  filter.frequency.value = 180;
+  if(type==="indoor") filter.frequency.value = 700;
+
+  envNoise.start();
+}
+
+document.getElementById("fileInput").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const url = URL.createObjectURL(file);
+
+  if (!player) {
+    player = new Tone.Player({ url, loop:true }).chain(pitch, lowpass, reverb, delay, master);
+  } else {
+    player.load(url);
+  }
+
+  document.getElementById("status").innerText = "Status: file loaded";
+});
+
+document.getElementById("startBtn").addEventListener("click", async () => {
+  await Tone.start();
+
+  if (!player) { alert("Upload a file first"); return; }
+
+  applyMood(document.getElementById("moodSelect").value);
+  createEnvironment(document.getElementById("envSelect").value);
+
+  player.start();
+  document.getElementById("status").innerText = "Status: playing";
+});
+
+document.getElementById("stopBtn").addEventListener("click", () => {
+  if (player) player.stop();
+  if (envNoise) envNoise.stop();
+  document.getElementById("status").innerText = "Status: stopped";
+});
+</script>
+
+</body>
+</html>

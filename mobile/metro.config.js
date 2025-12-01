@@ -1,17 +1,20 @@
-// mobile/metro.config.js
 const { getDefaultConfig } = require('expo/metro-config');
 const path = require('path');
 
 const config = getDefaultConfig(__dirname);
 
-// 1. Force the bundler to resolve 'three' to your project's root node_modules
-// This prevents libraries from using their own hidden copies.
+// 1. Force resolution to the root node_modules
 config.resolver.extraNodeModules = {
   'three': path.resolve(__dirname, 'node_modules/three'),
 };
 
-// 2. Ensure standard file extensions are handled
+// 2. Help Metro find the assets
 config.resolver.sourceExts = ['js', 'jsx', 'json', 'ts', 'tsx', 'cjs', 'mjs'];
 config.resolver.assetExts = ['glb', 'gltf', 'png', 'jpg', 'ttf', 'mp4'];
+
+// 3. Prevent Metro from seeing the duplicate 'three' inside other packages
+config.resolver.blockList = [
+  /node_modules\/.*\/node_modules\/three\/.*/,
+];
 
 module.exports = config;
