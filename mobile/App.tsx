@@ -1,7 +1,13 @@
-import { StyleSheet, View, StatusBar, Platform } from 'react-native';
+import { StyleSheet, View, StatusBar } from 'react-native';
 import { Asset } from 'expo-asset'; 
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'; // <--- NEW LIBRARY
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'; 
 import DreamScene, { DreamData } from './components/DreamScene';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs([
+  "EXGL: gl.pixelStorei() doesn't support this parameter yet!",
+  "THREE.WebGLRenderer: Context Lost."
+]);
 
 const getAssetUri = (requireSource: any): string => {
   const asset = Asset.fromModule(requireSource);
@@ -13,17 +19,14 @@ const BG_FRAMES = [
     getAssetUri(require('./assets/background_0.jpg')), 
     getAssetUri(require('./assets/background_1.jpg')), 
     getAssetUri(require('./assets/background_2.jpg')), 
-    getAssetUri(require('./assets/background_3.jpg')), 
-    getAssetUri(require('./assets/background_4.jpg')), 
-    getAssetUri(require('./assets/background_5.jpg')), 
 ];
 
 const SHEET_IMG = getAssetUri(require('./assets/station_0.png')); 
 
 const MOCK_DREAM_JSON: DreamData = {
   hex: {
-    title: "DreamHex Dual Mode 2",
-    description_360: "Testing Web/Gyro support.",
+    title: "DreamHex: Debug Mode 3",
+    description_360: "Visualizing Axes.",
     central_imagery: "Test",
     background_frames: BG_FRAMES,
     stations: [
@@ -44,10 +47,9 @@ const MOCK_DREAM_JSON: DreamData = {
 
 export default function App() {
   return (
-    // SafeAreaProvider is required at the root now
     <SafeAreaProvider>
-      <SafeAreaView style={styles.mainContainer} edges={['top', 'left', 'right']}>
-        <StatusBar barStyle="light-content" />
+      <SafeAreaView style={styles.mainContainer} edges={['top', 'left', 'right', 'bottom']}>
+        <StatusBar barStyle="light-content" hidden={true} />
         <View style={styles.gameArea}>
           <DreamScene 
             dreamJson={MOCK_DREAM_JSON} 

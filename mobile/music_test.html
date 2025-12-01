@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dream Drone with Echo + Subtle Pitch</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.39/Tone.js"></script>
+</head>
+
+<body style="background:black;color:white;font-family:Arial;padding:20px;">
+<h2>Dream Drone — Echo & Evolving Texture</h2>
+
+<input id="fileInput" type="file" accept="audio/*" /><br><br>
+<button onclick="startDrone()">Start Drone</button>
+<button onclick="stopDrone()">Stop Drone</button>
+
+<br><br>
+<h3>Dream Harmonic Modes</h3>
+<button onclick="setScale('major')">Creative — Major</button>
+<button onclick="setScale('minor')">Visitation — Minor</button>
+<button onclick="setScale('diminished')">Nightmare — Diminished</button>
+<button onclick="setScale('lydian')">Spiritual — Lydian</button>
+<button onclick="setScale('whole')">Surreal — Whole Tone</button>
+<button onclick="setScale('phrygian')">Prophetic — Phrygian</button>
+<button onclick="setScale('maj7')">Epiphany — Maj7</button>
+
+<br><br>
+<div id="statusBox" style="background:#111;padding:15px;border-radius:10px;width:360px;">
+  <h3>Status</h3>
+  <div id="modeText">Mode: None</div>
+  <div id="pitchText">Pitch shift: —</div>
+  <div id="grainText">Grain Size: —</div>
+  <div id="rateText">Rate: —</div>
+  <div id="delayText">Delay: —</div>
+</div>
+
+<script>
+let playerL, playerR, verb, delay, scale=[0];
+let intervalID, evolvePhase = 0;
+
+// chord sets — SHORT, DOWNWARD ONLY for subtle harmonic movement
+const SCALES = {
+  major:     [0,-2,-5,-9],
+  minor:     [0,-3,-7,-10],
+  diminished:[0,-3,-6,-9],
+  lydian:    [0,-2,-6,-11],
+  whole:     [0,-5,-7,-12],
+  phrygian:  [0,-1,-5,-8],
+  maj7:      [0,-4,-7,-11]
+};
+
+function setScale(name) {
+  scale = SCALES[name];
+  document.getElementById("modeText").innerText = "Mode: " + name;
+}
+
+document.getElementById("fileInput").addEventListener("change", e => {
+  const url = URL.createObjectURL(e.target.files[0]);
+
+  playerL = new Tone.GrainPlayer({ url, loop:true, grainSize:0.6, overlap:0.3, playbackRate:0.08 });
+  playerR = new Tone.GrainPlayer({ url, loop:true, grainSize:0.6, overlap:0.3, playbackRate:0.08 });
+
+  verb = new Tone.Reverb({ decay:80, wet:0.9 });
+  delay = new Tone.FeedbackDelay({ delayTime:0.8, feedback:0.35, wet:0.6 });
+
+  playerL.connect(new Tone.Panner(-0.4)).connect(delay).connect(verb).toDestination();
+  playerR.connect(new Tone.Panner(0.4)).connect(delay).connect(verb).toDestination();
+});
+
+async function startDrone() {
+  await Tone.start();
+  playerL.start();
+  playerR.start();
+  evolvePhase = 0;
+
+  intervalID = setInterval(() => evolve(), 4000);
+}
+
+function stopDrone() {
+  if (playerL) playerL.stop();
+  if (playerR) playerR.stop();
+  clearInterval(intervalID);
+}
+
+function evolve() {
+  evolvePhase++;
+
+  // wave style choice
+  const waveIndex = Math.abs(Math.sin(evolvePhase * 0.28));
+  const idx = Math.floor(waveIndex * (scale.length-1));
+  const basePitch = scale[idx];
+
+  // assign movement
+  playerL.detune = basePitch * 100;
+  playerR.detune = (basePitch - 0.5) * 100; // mild stereo difference
+
+  const newGrain = 0.45 + Math.sin(evolvePhase * 0.21) * 0.35;
+  playerL.grainSize = newGrain;
+  playerR.grainSize = newGrain;
+
+  const newRate = 0.05 + Math.sin(evolvePhase * 0.4) * 0.03;
+  playerL.playbackRate = newRate;
+  playerR.playbackRate = newRate;
+
+  const newDelay = 0.6 + Math.sin(evolvePhase * 0.17) * 0.4;
+  delay.delayTime.value = newDelay;
+  delay.feedback.value = 0.25 + Math.abs(Math.sin(evolvePhase * 0.25)) * 0.3;
+
+  // UI update
+  document.getElementById("pitchText").innerText = "Pitch: " + basePitch + " st";
+  document.getElementById("grainText").innerText = "Grain Size: " + newGrain.toFixed(3);
+  document.getElementById("rateText").innerText = "Rate: " + newRate.toFixed(3);
+  document.getElementById("delayText").innerText = "Delay: " + newDelay.toFixed(2) + " sec";
+}
+</script>
+</body>
+</html>

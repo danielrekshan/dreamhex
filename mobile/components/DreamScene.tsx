@@ -9,40 +9,16 @@ import { AnimatedSprite } from './AnimatedSprite';
 import { AnimatedBackground } from './AnimatedBackground';
 import { GyroControls } from './GyroControls';
 
-// ... (Keep your Interfaces: Station, DreamHex, etc. unchanged) ...
-export interface SpriteConfig {
-  filename: string;
-  cols: number;
-  rows: number;
-  count: number;
-}
+// ... (Interfaces unchanged) ...
+export interface SpriteConfig { filename: string; cols: number; rows: number; count: number; }
 export interface Station {
-  id: string;
-  position_index: number;
-  entity_name: string | null;
-  state_start: string | null;
-  state_end: string | null;
-  entity_greeting: string | null;
-  interaction_options: string[];
-  sprite_image?: string; 
-  sprite_sheet_config?: SpriteConfig;
+  id: string; position_index: number; entity_name: string | null; state_start: string | null; state_end: string | null; entity_greeting: string | null; interaction_options: string[]; sprite_image?: string; sprite_sheet_config?: SpriteConfig;
 }
 export interface DreamHex {
-  title: string;
-  description_360: string;
-  central_imagery: string;
-  background_image?: string; 
-  background_frames?: string[]; 
-  stations: Station[];
+  title: string; description_360: string; central_imagery: string; background_image?: string; background_frames?: string[]; stations: Station[];
 }
-export interface DreamData {
-  hex: DreamHex;
-  summary?: string;
-}
-interface DreamSceneProps {
-  dreamJson: DreamData;
-  onEntityPress?: (station: Station) => void;
-}
+export interface DreamData { hex: DreamHex; summary?: string; }
+interface DreamSceneProps { dreamJson: DreamData; onEntityPress?: (station: Station) => void; }
 
 const getStationPosition = (index: number): [number, number, number] => {
   if (index === 0) return [0, -2, -6]; 
@@ -70,7 +46,8 @@ const DreamScene: React.FC<DreamSceneProps> = ({ dreamJson, onEntityPress }) => 
         >
           <ambientLight intensity={1.5} />
           
-          {/* Debug Helper: Red=X, Green=Y, Blue=Z */}
+          {/* --- DEBUG: THE AXES HELPER --- */}
+          {/* Red = X, Green = Y, Blue = Z */}
           <axesHelper args={[5]} />
           
           <Suspense fallback={null}>
@@ -129,6 +106,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000', 
+    position: 'relative', 
   },
   overlay: {
     position: 'absolute',
@@ -143,8 +121,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     fontFamily: Platform.OS === 'ios' ? 'serif' : 'sans-serif', 
-    textShadowColor: 'black', 
-    textShadowRadius: 10,
+    ...Platform.select({
+      web: { textShadow: '0px 0px 10px rgba(0, 0, 0, 0.75)' },
+      default: {
+        textShadowColor: 'rgba(0, 0, 0, 0.75)',
+        textShadowOffset: { width: -1, height: 1 },
+        textShadowRadius: 10,
+      }
+    })
   },
   controlsBtn: {
       position: 'absolute',
