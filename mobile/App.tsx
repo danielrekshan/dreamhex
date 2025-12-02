@@ -25,8 +25,8 @@ const SHEET_IMG = getAssetUri(require('./assets/station_0.png'));
 
 const MOCK_DREAM_JSON: DreamData = {
   hex: {
-    title: "DreamHex Dual Mode",
-    description_360: "Testing Web/Gyro support.",
+    title: "DreamHex: Debug Mode 3",
+    description_360: "Visualizing Axes.",
     central_imagery: "Test",
     background_frames: BG_FRAMES,
     stations: [

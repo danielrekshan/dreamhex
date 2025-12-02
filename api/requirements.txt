@@ -1,0 +1,15 @@
+fastapi==0.109.0
+uvicorn==0.27.0
+python-multipart
+google-cloud-firestore
+google-cloud-storage
+diffusers
+transformers
+accelerate
+safetensors
+openai
+pydantic
+rembg
+onnxruntime-gpu
+imageio[ffmpeg]
+torch --index-url https://download.pytorch.org/whl/cu118

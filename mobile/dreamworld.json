@@ -1,0 +1,401 @@
+[
+  {
+    "title": "Mountain Hideout Under Fire",
+    "slug": "mountain-hideout-under-fire",
+    "description_360": "Tense mountain scene with camouflage sheets.",
+    "central_imagery": "The central image of this dream is a pair of camo sheets stretched between trees, acting as a makeshift shelter. The vivid contrast of the mountain's serene beauty and the unsettling sounds of gunfire creates a discordant atmosphere, emphasizing a feeling of fear and urgency. The camo sheets symbolize the desire for protection and concealment in a hostile environment, reflecting inner fears of vulnerability and the need for safety amidst chaos.",
+    "stations": [
+      {
+        "id": "station-0",
+        "position_index": 0,
+        "entity_name": "Camo Sheets",
+        "state_start": "Hiding behind sheets",
+        "state_end": "Flapping in the wind",
+        "entity_greeting": null,
+        "interaction_options": [
+          "Pull them tighter",
+          "Inspect for bullet holes",
+          "Crawl under them",
+          "Lift them to look out",
+          "Secure them better"
+        ],
+        "sprite_frames": [
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_0_0.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_0_1.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_0_2.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_0_3.png"
+        ]
+      },
+      {
+        "id": "station-1",
+        "position_index": 1,
+        "entity_name": "Husband",
+        "state_start": "Holding your hand",
+        "state_end": "Looking worried",
+        "entity_greeting": "Stay close to me!",
+        "interaction_options": [
+          "Ask if he's scared",
+          "Kiss him for comfort",
+          "Suggest a different hiding spot",
+          "Check for injuries",
+          "Reassure him all will be well"
+        ],
+        "sprite_frames": [
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_1_0.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_1_1.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_1_2.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_1_3.png"
+        ]
+      },
+      {
+        "id": "station-2",
+        "position_index": 2,
+        "entity_name": "Mountains",
+        "state_start": "Standing tall",
+        "state_end": "Echoing gunshots",
+        "entity_greeting": null,
+        "interaction_options": [
+          "Admire their beauty",
+          "Ask about their secrets",
+          "Feel their solid ground",
+          "Wonder about their history",
+          "Sense their looming presence"
+        ],
+        "sprite_frames": [
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_2_0.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_2_1.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_2_2.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_2_3.png"
+        ]
+      },
+      {
+        "id": "station-3",
+        "position_index": 3,
+        "entity_name": "Unknown Shooters",
+        "state_start": "Firing at us",
+        "state_end": "Revealed in the distance",
+        "entity_greeting": null,
+        "interaction_options": [
+          "Call out to them",
+          "Duck to avoid fire",
+          "Negotiate for peace",
+          "Throw rocks to distract",
+          "Listen to their conversation"
+        ],
+        "sprite_frames": [
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_3_0.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_3_1.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_3_2.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_3_3.png"
+        ]
+      },
+      {
+        "id": "station-4",
+        "position_index": 4,
+        "entity_name": "Trees",
+        "state_start": "Providing cover",
+        "state_end": "Swaying with the wind",
+        "entity_greeting": null,
+        "interaction_options": [
+          "Climb one for a view",
+          "Shake their branches",
+          "Hide behind them",
+          "Listen to their rustling",
+          "Ask them for help"
+        ],
+        "sprite_frames": [
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_4_0.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_4_1.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_4_2.png",
+          "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_station_4_3.png"
+        ]
+      },
+      {
+        "id": "station-5",
+        "position_index": 5,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "Signal for help",
+          "Search for an escape route",
+          "Stay low and quiet",
+          "Simulate a diversion",
+          "Reflect on the situation"
+        ]
+      },
+      {
+        "id": "station-6",
+        "position_index": 6,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "Plan our next move",
+          "Consider surrendering",
+          "Daydream about safety",
+          "Imagine a better place",
+          "Focus on breathing calmly"
+        ]
+      }
+    ],
+    "id": "mountain-hideout-under-fire",
+    "original_text": "I was in the mountains with my husband, and we were trying to hide behind \n    some kind of camo-ish sheets and people were shooting up towards us.",
+    "background_frames": [
+      "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_bg_0.jpeg",
+      "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_bg_1.jpeg",
+      "assets/mountain-hideout-under-fire/mountain-hideout-under-fire_bg_2.jpeg"
+    ]
+  },
+  {
+    "title": "Flight of the Golden Eagle",
+    "slug": "flight-of-the-golden-eagle",
+    "description_360": "City of glass beneath soaring eagle.",
+    "central_imagery": "The central image depicts a magnificent golden eagle soaring gracefully over a dazzling city constructed entirely of glass. The eagle, embodying freedom and strength, contrasts beautifully with the shimmering, reflective surfaces of the city below, creating an ethereal scene where nature and urbanity intertwine. This imagery represents liberation and transformation, highlighting the dreamer's desire to break free from constraints.",
+    "stations": [
+      {
+        "id": "station_0",
+        "position_index": 0,
+        "entity_name": "Golden Eagle",
+        "state_start": "Soaring high above",
+        "state_end": "Gliding over city",
+        "entity_greeting": "Welcome to the skies!",
+        "interaction_options": [
+          "Dive towards the city",
+          "Shout a triumphant call",
+          "Circle around the tallest tower",
+          "Land on the balcony",
+          "Explore the horizon"
+        ],
+        "sprite_frames": [
+          "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_station_0_0.png",
+          "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_station_0_1.png",
+          "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_station_0_2.png",
+          "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_station_0_3.png"
+        ]
+      },
+      {
+        "id": "station_1",
+        "position_index": 1,
+        "entity_name": "City of Glass",
+        "state_start": "Reflecting sunlight",
+        "state_end": "Sparkling in the distance",
+        "entity_greeting": "Gaze up in wonder!",
+        "interaction_options": [
+          "Touch a glass building",
+          "Ask about its secrets",
+          "Jump into a window",
+          "Map out your route",
+          "Listen for hidden sounds"
+        ],
+        "sprite_frames": [
+          "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_station_1_0.png",
+          "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_station_1_1.png",
+          "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_station_1_2.png",
+          "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_station_1_3.png"
+        ]
+      },
+      {
+        "id": "station_2",
+        "position_index": 2,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL"
+        ]
+      },
+      {
+        "id": "station_3",
+        "position_index": 3,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL"
+        ]
+      },
+      {
+        "id": "station_4",
+        "position_index": 4,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL"
+        ]
+      },
+      {
+        "id": "station_5",
+        "position_index": 5,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL"
+        ]
+      },
+      {
+        "id": "station_6",
+        "position_index": 6,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL"
+        ]
+      }
+    ],
+    "id": "flight-of-the-golden-eagle",
+    "original_text": "I realized I was dreaming and jumped off a balcony. Instead of falling, \n    I turned into a golden eagle and flew over a city made of glass.",
+    "background_frames": [
+      "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_bg_0.jpeg",
+      "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_bg_1.jpeg",
+      "assets/flight-of-the-golden-eagle/flight-of-the-golden-eagle_bg_2.jpeg"
+    ]
+  },
+  {
+    "title": "The Infinite Staircase",
+    "slug": "the-infinite-staircase",
+    "description_360": "A mesmerizing staircase spiraling into the clouds.",
+    "central_imagery": "The central image of the dream is an antique wooden box, beautifully carved and weathered, resting silently in a dusty attic. As the dreamer opens it, an infinite staircase begins to unfold, gracefully spiraling upwards into an expansive, cloud-filled sky, suggesting mystery and possibility. This juxtaposition of the mundane box and the extraordinary staircase evokes feelings of wonder and awe, as if time and space bend within this moment, inviting exploration into the unknown.",
+    "stations": [
+      {
+        "id": "station_0",
+        "position_index": 0,
+        "entity_name": "Box",
+        "state_start": "Box is closed.",
+        "state_end": "Box is open.",
+        "entity_greeting": "Welcome to my secrets.",
+        "interaction_options": [
+          "Lift the lid slowly",
+          "Smell the wood",
+          "Tap it gently",
+          "Reveal its contents",
+          "Close it quickly"
+        ],
+        "sprite_frames": [
+          "assets/the-infinite-staircase/the-infinite-staircase_station_0_0.png",
+          "assets/the-infinite-staircase/the-infinite-staircase_station_0_1.png",
+          "assets/the-infinite-staircase/the-infinite-staircase_station_0_2.png",
+          "assets/the-infinite-staircase/the-infinite-staircase_station_0_3.png"
+        ]
+      },
+      {
+        "id": "station_1",
+        "position_index": 1,
+        "entity_name": "Staircase",
+        "state_start": "Staircase spirals into sky.",
+        "state_end": "Staircase vanishes into clouds.",
+        "entity_greeting": "Climb, if you dare.",
+        "interaction_options": [
+          "Ascend cautiously",
+          "Run up the steps",
+          "Slide down the railing",
+          "Measure its length",
+          "Decorate its railings"
+        ],
+        "sprite_frames": [
+          "assets/the-infinite-staircase/the-infinite-staircase_station_1_0.png",
+          "assets/the-infinite-staircase/the-infinite-staircase_station_1_1.png",
+          "assets/the-infinite-staircase/the-infinite-staircase_station_1_2.png",
+          "assets/the-infinite-staircase/the-infinite-staircase_station_1_3.png"
+        ]
+      },
+      {
+        "id": "station_2",
+        "position_index": 2,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL"
+        ]
+      },
+      {
+        "id": "station_3",
+        "position_index": 3,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL"
+        ]
+      },
+      {
+        "id": "station_4",
+        "position_index": 4,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL"
+        ]
+      },
+      {
+        "id": "station_5",
+        "position_index": 5,
+        "entity_name": null,
+        "state_start": null,
+        "state_end": null,
+        "entity_greeting": null,
+        "interaction_options": [
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL",
+          "NULL"
+        ]
+      }
+    ],
+    "id": "the-infinite-staircase",
+    "original_text": "I found an antique wooden box in my grandmother's attic. When I opened it, \n    an infinite staircase spiraled out of it into the sky.",
+    "background_frames": [
+      "assets/the-infinite-staircase/the-infinite-staircase_bg_0.jpeg",
+      "assets/the-infinite-staircase/the-infinite-staircase_bg_1.jpeg",
+      "assets/the-infinite-staircase/the-infinite-staircase_bg_2.jpeg"
+    ]
+  }
+]
