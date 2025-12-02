@@ -1,54 +1,13 @@
 import os
-import io
 import re
-import json
-import torch
-import torch.nn as nn
-import numpy as np
-from PIL import Image
-from typing import List, Optional
 from pydantic import BaseModel, Field
+from typing import List, Optional
 from openai import OpenAI
-from diffusers import AutoPipelineForImage2Image
-from rembg import remove, new_session
-from google.cloud import storage
 
 # --- CONFIG ---
-GCS_BUCKET = os.environ.get("GCS_BUCKET_NAME", "dreamhex-assets")
+# This runs on the Cloud Run CPU instance
 OPENAI_KEY = os.environ.get("OPENAI_API_KEY")
-
-# --- INITIALIZATION (Lazy Load) ---
-pipe = None
-rembg_session = None
-client = None
-storage_client = None
-
-def init_models():
-    global pipe, rembg_session, client, storage_client
-    
-    if pipe is None:
-        print("⏳ Loading SDXL-Turbo...")
-        try:
-            pipe = AutoPipelineForImage2Image.from_pretrained(
-                "stabilityai/sdxl-turbo",
-                torch_dtype=torch.float16,
-                variant="fp16",
-                low_cpu_mem_usage=True
-            ).to("cuda")
-            pipe.enable_vae_slicing()
-            pipe.enable_vae_tiling()
-        except Exception as e:
-            print(f"⚠️ GPU/Model Error (Are you on Cloud Run with GPU?): {e}")
-            # Fallback for CPU testing if needed, or fail hard
-            
-    if rembg_session is None:
-        rembg_session = new_session("u2net")
-        
-    if client is None:
-        client = OpenAI(api_key=OPENAI_KEY)
-        
-    if storage_client is None:
-        storage_client = storage.Client()
+client = OpenAI(api_key=OPENAI_KEY)
 
 # --- DATA MODELS ---
 class Station(BaseModel):
@@ -58,10 +17,9 @@ class Station(BaseModel):
     state_start: Optional[str] = None
     state_end: Optional[str] = None
     entity_greeting: Optional[str] = None
-    interaction_options: List[str]
-    # We add this field to track asset generation status
-    asset_status: str = "PENDING" 
-    sprite_frames: List[str] = []
+    interaction_options: List[str] = Field(default_factory=list)
+    asset_status: str = "PENDING"
+    sprite_frames: List[str] = [] # Stores GCS URLs
 
 class DreamHex(BaseModel):
     title: str
@@ -73,95 +31,41 @@ class DreamHex(BaseModel):
 
 class DreamGenerationResponse(BaseModel):
     hex: DreamHex
-    summary: str
+    summary_short: str = Field(..., description="One sentence summary.")
+    summary_long: str = Field(..., description="3-5 sentence summary.")
+    entities: List[str] = Field(default_factory=list)
 
 class InteractionResponse(BaseModel):
     new_state_start: str
     new_state_end: str
     new_greeting: str
-    new_options: List[str]
-    unlock_trigger: Optional[str] = None # Added for Magic Book logic
+    new_options: List[str] = Field(min_items=5, max_items=5)
+    unlock_trigger: Optional[str] = None
 
-# --- SYSTEM PROMPTS ---
+# --- PROMPTS ---
 SYSTEM_PROMPT = """
-You are the Dream Scryer. Map the dream to a Single Hex with 7 Stations.
-1. Describe the CONTAINER (Background).
-2. Station 0 = Central Image. Stations 1-6 = Other entities (or NULL).
-3. Provide 5 Interaction Options per entity.
-4. Generate a 'slug' (kebab-case) for file naming.
-Return strictly structured JSON.
+You are the Dream Scryer. Analyze the dream report into a Hex World (7 Stations).
+1. Identify the Central Image (Station 0).
+2. Identify up to 6 other entities/objects (Stations 1-6).
+3. Generate 5 interaction options per entity.
+4. Create a kebab-case slug.
+5. Provide short/long summaries.
+Return strictly structured JSON. Ensure all arrays meet length requirements.
 """
 
 INTERACTION_PROMPT = """
 You are the Dungeon Master. Calculate the entity's REACTION.
-1. Output new animation prompts using **ACTIVE VERBS**.
-2. Provide **5 NEW Interaction Options**.
-3. If the user's action successfully uncovers a hidden secret or achieves a significant breakthrough, include a 'unlock_trigger' string with the value 'UNLOCK_NEW_DREAM'. Otherwise leave it null.
+1. Output new visual prompts using ACTIVE VERBS for the entity's new state.
+2. Provide 5 new interaction options.
+3. If the action reveals a major secret, set 'unlock_trigger' to 'UNLOCK_NEW_DREAM'.
 """
 
-# --- LOGIC ---
-
-def upload_to_gcs(image: Image.Image, path: str):
-    """Uploads PIL Image to GCS and returns public URL"""
-    if not storage_client: return f"https://mock-url/{path}"
-    
-    bucket = storage_client.bucket(GCS_BUCKET)
-    blob = bucket.blob(path)
-    
-    b = io.BytesIO()
-    image.save(b, format="PNG")
-    b.seek(0)
-    
-    blob.upload_from_file(b, content_type="image/png")
-    # For private buckets, we'd sign the URL. For this prototype, we assume public read or authenticated access.
-    # Here we return the authenticated storage browser URL or a signed URL.
-    # For RN app ease, we'll make the bucket contents public-read for now.
-    return f"https://storage.googleapis.com/{GCS_BUCKET}/{path}"
-
-def generate_frames(prompt_a, prompt_b=None, type="pano", frames=4):
-    """Generates images using SDXL-Turbo"""
-    if not pipe: 
-        print("❌ Pipe not loaded")
-        return []
-
-    # Seam Hack (Re-apply per call to be safe)
-    def make_seamless(m):
-        if isinstance(m, nn.Conv2d):
-            m.padding_mode = 'circular' if type == "pano" else 'zeros'
-        return m
-    
-    pipe.unet.apply(make_seamless)
-    pipe.vae.apply(make_seamless)
-
-    style = "Ink and watercolor, thick india ink lines, vintage paper texture, hazy. "
-    full_prompt = style + prompt_a + (", 360 equirectangular panorama, sepia" if type=="pano" else ", isolated cutout on white, cel shaded")
-    
-    width, height = (1024, 512) if type == "pano" else (512, 512)
-    
-    images = []
-    # Simplified loop for speed
-    current_img = Image.new("RGB", (width, height), (255,255,255))
-    
-    for i in range(frames):
-        # Logic for morphing prompts
-        p = prompt_a if i < frames//2 else (prompt_b or prompt_a)
-        strength = 0.5 if i > 0 else 1.0
-        
-        out = pipe(prompt=full_prompt, image=current_img, strength=strength, num_inference_steps=3, guidance_scale=0.0).images[0]
-        
-        if type == "sprite":
-            out = remove(out, session=rembg_session)
-            
-        images.append(out)
-        current_img = out # Feedback loop
-        
-    return images
-
 async def analyze_dream_text(text: str) -> DreamGenerationResponse:
-    init_models()
+    prompt = f"Dream Report: {text}\n\nAnalyze the report. Provide a short (1-sentence) summary, a long (3-5 sentence) summary, and a list of entities. Then generate the structured DreamHex data with 7 stations."
+    
     completion = client.beta.chat.completions.parse(
         model="gpt-4o-mini",
-        messages=[{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": text}],
+        messages=[{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": prompt}],
         response_format=DreamGenerationResponse,
     )
     data = completion.choices[0].message.parsed
@@ -169,8 +73,7 @@ async def analyze_dream_text(text: str) -> DreamGenerationResponse:
     return data
 
 async def analyze_interaction_text(entity, state, command) -> InteractionResponse:
-    init_models()
-    query = f"Entity: {entity} ({state}). User Action: {command}"
+    query = f"Entity: {entity} (State: {state}). Action: {command}"
     completion = client.beta.chat.completions.parse(
         model="gpt-4o-mini",
         messages=[{"role": "system", "content": INTERACTION_PROMPT}, {"role": "user", "content": query}],
