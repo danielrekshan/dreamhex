@@ -23,17 +23,19 @@ def get_db():
     Prioritizes the manually injected Project ID variable.
     """
     global _db_client
+    print("Getting DB client...")
     if _db_client is None:
+        print("no existing client, initializing...")
         try:
-            project_id = os.environ.get("DREAMHEX_PROJECT_ID") or \
-                         os.environ.get("GCP_PROJECT") or \
-                         os.environ.get("GCP_PROJECT_ID")
-            
+            project_id =   os.environ.get("GCP_PROJECT_ID")
+            print(f"Using Project ID: {project_id}")
             if not project_id:
                 print("⚠️ Warning: Project ID var missing. Attempting default init...")
                 _db_client = firestore.Client()
             else:
+                print(f"Initializing Firestore with Project ID: {project_id}")
                 _db_client = firestore.Client(project=project_id)
+                print
         except Exception as e:
             print(f"CRITICAL DB INIT ERROR: {e}")
             raise HTTPException(status_code=500, detail="Database connection failed.")
@@ -182,8 +184,11 @@ async def submit_dream(req: DreamReport, bg_tasks: BackgroundTasks):
 
 @app.get("/api/dreams/list")
 def list_dreams(user_id: str):
+    print("getting list")
     db_client = get_db()
+    print("get db client", db_client)
     u_doc = db_client.collection("users").document(user_id).get()
+    print("got user doc", u_doc)
     if not u_doc.exists: return []
 
     ids = u_doc.get("unlocked_dreams") or []

@@ -1,19 +1,15 @@
 import modal
 import io
 import os
+import json # Added json import
 
 # --- APP DEFINITION ---
 app = modal.App("dreamhex-worker")
 
 # --- CONFIG ---
-# Define model ID here for consistency
 MODEL_ID = "stabilityai/sdxl-turbo"
 
 def download_models():
-    """
-    Downloads models during the build phase.
-    This runs ONCE during deployment, not every time the app starts.
-    """
     import torch
     from diffusers import AutoPipelineForImage2Image
     from rembg import new_session
@@ -39,7 +35,6 @@ image = (
         "torch",
         extra_index_url="https://download.pytorch.org/whl/cu121"
     )
-    # FIX: Bake models into the image so cold starts are fast
     .run_function(download_models)
 )
 
@@ -50,15 +45,13 @@ with image.imports():
     from rembg import remove, new_session
     from PIL import Image
     from google.cloud import storage
+    from google.oauth2 import service_account # Added explicit auth import
 
 # --- WORKER CLASS ---
-@app.cls(gpu="A10G", image=image, secrets=[modal.Secret.from_name("gcp-credentials")])
+# FIX 1: Upgrade to A100 to ensure we have enough VRAM for the Proof of Concept
+@app.cls(gpu="A100", image=image, secrets=[modal.Secret.from_name("gcp-credentials")])
 class DreamPainter:
     def __init__(self):
-        """
-        Initialize attributes to None to prevent AttributeError.
-        This runs instantly on object creation.
-        """
         self.pipe = None 
         self.rembg = None
         self.storage_client = None
@@ -66,48 +59,61 @@ class DreamPainter:
 
     @modal.enter()
     def load_models(self):
-        """
-        Load models into memory when the container starts.
-        """
         print("🎨 RUNTIME: Loading Models from disk...")
         try:
-            # FIX: Load locally (already downloaded) and use CPU offloading to save VRAM
             self.pipe = AutoPipelineForImage2Image.from_pretrained(
                 MODEL_ID, 
                 torch_dtype=torch.float16, 
                 variant="fp16",
-                local_files_only=True # Fail if not found (prevents slow download)
+                local_files_only=True 
             )
             
-            # This is the Magic Fix for OOM on A10G with SDXL
             self.pipe.enable_model_cpu_offload()
-            print("✅ SDXL-Turbo Loaded with CPU Offload.")
+            print("✅ SDXL-Turbo Loaded.")
             
             self.rembg = new_session("u2net")
             print("✅ RemBG Loaded.")
 
-            self.storage_client = storage.Client()
-            self.bucket_name = os.environ.get("GCS_BUCKET_NAME", "dreamhex-assets-dreamhex") 
+            # FIX 2: Handle JSON content in Env Var directly
+            # This detects if 'GOOGLE_APPLICATION_CREDENTIALS' is the JSON string itself
+            creds_val = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+            project_id = None
+            
+            if creds_val and creds_val.strip().startswith("{"):
+                print("🔑 Found JSON content in env var. Parsing directly...")
+                service_account_info = json.loads(creds_val)
+                creds = service_account.Credentials.from_service_account_info(service_account_info)
+                project_id = service_account_info.get("project_id")
+                self.storage_client = storage.Client(credentials=creds, project=project_id)
+            else:
+                print("Cm Looking for file-path credentials or default auth...")
+                self.storage_client = storage.Client()
+
+            self.bucket_name = os.environ.get("GCS_BUCKET_NAME", f"dreamhex-assets-{project_id}" if project_id else "dreamhex-assets-dreamhex") 
+            print(f"✅ Storage Client Connected. Bucket: {self.bucket_name}")
             
         except Exception as e:
             print(f"❌ CRITICAL LOAD ERROR in load_models: {e}")
-            # We do NOT raise here, so the container stays alive to report the error in logs
-            # self.pipe remains None, which is handled in generate_sequence
+            # Do not raise, allow debugging via logs if partial load succeeds
 
     def _upload(self, image, path):
         if not self.storage_client:
             print("⚠️ Upload failed: Storage client not initialized.")
             return "error_url"
             
-        bucket = self.storage_client.bucket(self.bucket_name)
-        blob = bucket.blob(path)
-        b = io.BytesIO()
-        fmt = "JPEG" if path.endswith('.jpg') else "PNG"
-        image.save(b, format=fmt)
-        b.seek(0)
-        content_type = "image/jpeg" if fmt == "JPEG" else "image/png"
-        blob.upload_from_file(b, content_type=content_type)
-        return f"https://storage.googleapis.com/{self.bucket_name}/{path}"
+        try:
+            bucket = self.storage_client.bucket(self.bucket_name)
+            blob = bucket.blob(path)
+            b = io.BytesIO()
+            fmt = "JPEG" if path.endswith('.jpg') else "PNG"
+            image.save(b, format=fmt)
+            b.seek(0)
+            content_type = "image/jpeg" if fmt == "JPEG" else "image/png"
+            blob.upload_from_file(b, content_type=content_type)
+            return f"https://storage.googleapis.com/{self.bucket_name}/{path}"
+        except Exception as e:
+            print(f"❌ UPLOAD ERROR: {e}")
+            return "error_url_upload_exception"
 
     def _make_seamless(self, type):
         if not self.pipe: return
@@ -117,15 +123,13 @@ class DreamPainter:
                 m.padding_mode = 'circular' if type == "pano" else 'zeros'
             return m
         
-        # Apply patch to the correct sub-modules
         self.pipe.unet.apply(patch)
         self.pipe.vae.apply(patch)
 
     @modal.method()
     def generate_sequence(self, prompt_a, prompt_b, type, frames, path_prefix):
-        # FIX: Robust check handling both "None" and "Missing Attribute" (though __init__ fixes missing)
         if not getattr(self, 'pipe', None):
-            print("❌ Generation failed: SDXL model is not loaded (self.pipe is None).")
+            print("❌ Generation failed: SDXL model is not loaded.")
             return []
             
         print(f"🖌️ Generating {type}: {path_prefix}")
@@ -138,7 +142,6 @@ class DreamPainter:
             urls = []
             curr = Image.new("RGB", (width, height), (255, 255, 255))
             
-            # Use inference_mode to save memory
             with torch.inference_mode():
                 for i in range(frames):
                     strength = 0.5 if i > 0 else 1.0
@@ -153,8 +156,6 @@ class DreamPainter:
                     if type == "sprite":
                         if self.rembg:
                             out = remove(out, session=self.rembg)
-                        else:
-                            print("⚠️ RemBG session unavailable. Skipping background removal.")
                         
                     file_ext = 'jpg' if type=='pano' else 'png'
                     url = self._upload(out, f"{path_prefix}_{i}.{file_ext}")
