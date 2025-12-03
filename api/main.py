@@ -15,6 +15,8 @@ app = FastAPI()
 # --- FIX 1: LAZY DATABASE INITIALIZATION ---
 _db_client = None
 
+modal_app = modal.App("dreamhex-worker")
+
 def get_db():
     """
     Connects to Firestore on demand.
@@ -56,19 +58,31 @@ app.add_middleware(
 # --- FIX 2: LAZY MODAL LOOKUP (Use modal.Cls.lookup) ---
 def get_painter():
     """
-    Connects to the Modal GPU worker on demand using the universal lookup method.
+    Connects to the Modal GPU worker on demand.
+    Uses modal.Cls.lookup to ensure we get a handle to the remote class.
     """
     try:
-        # Debug: Print version to ensure Cloud Run installed the correct package
-        print(f"Modal Client Version: {modal.__version__}")
 
-        # Use modal.Cls.lookup("AppName", "ClassName")
-        # This is the standard way to get a handle to a remote class.
-        DreamPainter = modal.App.lookup("dreamhex-worker", "DreamPainter")
+        # Use modal.Cls.lookup (the standard for classes in recent modal versions)
+        DreamPainter = modal.Cls.from_name("dreamhex-worker", "DreamPainter")
+        print("DreamPainter lookup successful:", DreamPainter)
         return DreamPainter() # Return an instance handle
     except Exception as e:
-        print(f"❌ MODAL CONNECT ERROR: {e}")
-        return None
+        # FIX: Revert to the modal.lookup() structure that is often more robust 
+        # when dealing with versioning, although Cls.lookup is technically correct.
+        print(f"❌ MODAL CONNECT ERROR 1 (Cls.lookup): {e}")  
+        try:
+            painter_app = modal.App("dreamhex-worker")
+            print("painter_app:", painter_app)
+            DreamPainter = painter_app["DreamPainter"]
+            return DreamPainter()
+        except Exception as e_fallback:
+            print(f"❌ MODAL CONNECT ERROR 2 (Lookup): {e_fallback}")
+            print("--- ENVIRONMENT DIAGNOSIS ---")
+            print(f"Token ID: {os.environ.get('MODAL_TOKEN_ID', 'NOT_SET')}")
+            print(f"Secret set: {bool(os.environ.get('MODAL_TOKEN_SECRET'))}")
+            print("-----------------------------")
+            return None
 
 # --- MODELS ---
 class DreamReport(BaseModel):
