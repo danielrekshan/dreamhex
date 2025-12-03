@@ -1,1 +1,4 @@
 node_modules
+/api/.env
+__pycache__
+/api/__pycache__
