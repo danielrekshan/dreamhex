@@ -7,8 +7,7 @@ import json
 app = modal.App("dreamhex-worker")
 
 # --- CONFIG ---
-# Switch to A10G (Much cheaper, still fast for SDXL Turbo)
-GPU_CONFIG = "A10G" 
+GPU_CONFIG = "T4" 
 MODEL_ID = "stabilityai/sdxl-turbo"
 
 # --- IMAGE DEFINITION ---
