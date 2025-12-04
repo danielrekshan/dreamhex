@@ -35,13 +35,14 @@ image = (
 )
 
 # --- WORKER CLASS ---
-@app.cls(gpu=GPU_CONFIG, image=image, secrets=[modal.Secret.from_name("gcp-credentials")], enable_memory_snapshot=True,container_idle_timeout=60)
+@app.cls(gpu=GPU_CONFIG, image=image, secrets=[modal.Secret.from_name("gcp-credentials")], enable_memory_snapshot=True,scaledown_window=120,min_containers=1)
 class DreamPainter:
     def __init__(self):
         self.pipe = None 
         self.rembg = None
         self.bucket = None
         self.storage = None
+        self.bucket_name = None 
 
     @modal.enter()
     def setup(self):
@@ -75,9 +76,9 @@ class DreamPainter:
         else:
             self.storage = storage.Client()
             
-        self.bucket = self.storage.bucket(
-            os.environ.get("GCS_BUCKET_NAME", f"dreamhex-assets-{project_id}" if project_id else "dreamhex-assets")
-        )
+        bucket_name_env = os.environ.get("GCS_BUCKET_NAME", f"dreamhex-assets-{project_id}" if project_id else "dreamhex-assets")
+        self.bucket = self.storage.bucket(bucket_name_env)
+        self.bucket_name = self.bucket.name
         print("✅ READY.")
 
     @modal.method()
@@ -86,26 +87,36 @@ class DreamPainter:
         print("⏰ Wake up call received!")
         return True
 
-    def _upload(self, img, path):
-        b = io.BytesIO()
-        if path.endswith(".jpg"):
-            img.save(b, format="JPEG", quality=85)
-            ct = "image/jpeg"
-        else:
-            img.save(b, format="PNG")
-            ct = "image/png"
-        b.seek(0)
-        blob = self.bucket.blob(path)
-        blob.upload_from_file(b, content_type=ct)
-        return f"https://storage.googleapis.com/{self.bucket.name}/{path}"
-
+    def _upload(self, image, path):
+        if not self.storage or not self.bucket: 
+            print("⚠️ Upload failed: Storage client or bucket not initialized.")
+            return "error_url"
+            
+        try:
+            # Use the pre-initialized self.bucket object
+            blob = self.bucket.blob(path) 
+            b = io.BytesIO()
+            fmt = "JPEG" if path.endswith('.jpg') else 'PNG' # Changed to ternary operator for consistency
+            image.save(b, format=fmt)
+            b.seek(0)
+            content_type = "image/jpeg" if fmt == "JPEG" else "image/png"
+            
+            # FIX: Removed predefined_acl='publicRead'
+            blob.upload_from_file(
+                b, 
+                content_type=content_type
+            )
+            
+            # Use the stored bucket name for the final URL
+            return f"https://storage.googleapis.com/{self.bucket_name}/{path}"
+        except Exception as e:
+            print(f"❌ UPLOAD ERROR: {e}")
+            return "error_url_upload_exception"
+        
     @modal.method()
     def generate_frames(self, prompt_a, prompt_b, type, frames, path_prefix):
         """
         Generates individual frames.
-        Removed sprite-sheet logic. 
-        Removed explicit seamless patching loop if not strictly needed (SDXL tends to tile okay),
-        but keeping a minimal tiling patch for 'pano' ensures the background loops perfectly.
         """
         import torch
         from PIL import Image
@@ -131,28 +142,22 @@ class DreamPainter:
         width, height = (1024, 512) if type == "pano" else (512, 512)
         urls = []
         
-        # Simple Logic: First frame = Prompt A. Last frame = Prompt B (if exists)
-        # We blend for frames in between.
-        
         curr_image = Image.new("RGB", (width, height), (128,128,128))
         
         for i in range(frames):
-            # Interpolate prompt? For simplicity in Turbo, we just switch prompt halfway
-            # or keep it simple.
             p = prompt_a if i < frames/2 else (prompt_b or prompt_a)
             
-            # Strength: High for first frame, lower for subsequent to maintain temporal consistency
             strength = 0.5 if i > 0 else 1.0
             
             out = self.pipe(
                 prompt=f"Ink and watercolor style, {p}",
                 image=curr_image,
                 strength=strength,
-                num_inference_steps=2, # Turbo is FAST
+                num_inference_steps=2,
                 guidance_scale=0.0
             ).images[0]
             
-            curr_image = out # Feed forward for consistency
+            curr_image = out 
 
             if type == "sprite":
                 out = remove(out, session=self.rembg)

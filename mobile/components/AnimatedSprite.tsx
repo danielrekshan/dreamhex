@@ -1,76 +1,80 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useTexture, Billboard } from '@react-three/drei/native';
 import * as THREE from 'three';
+import { Texture } from 'three'; // Import Texture type for clarity
 
 interface AnimatedSpriteProps {
-  uri: string;
-  columns: number;
-  rows: number;
-  frameCount: number;
+  frames: string[]; // List of individual frame URLs
   fps?: number;
   position?: [number, number, number];
   onPress?: () => void;
 }
 
+const PLACEHOLDER_SPRITE_COLOR = 0x5d4037; // Brown/Red color for a book/magic feel
+
 export const AnimatedSprite: React.FC<AnimatedSpriteProps> = ({
-  uri,
-  columns,
-  rows,
-  frameCount,
-  fps = 8, // Default to 8fps for that "hand-drawn" jerky feel
+  frames,
+  fps = 8,
   position = [0, 0, 0],
   onPress
 }) => {
-  const texture = useTexture(uri);
+  let loadedTextures: (Texture | undefined)[] = [];
+  
+  try {
+    // useTexture might return an array with undefined elements if loading fails partially
+    loadedTextures = useTexture(frames);
+  } catch (e) {
+    console.error("Failed to load sprite textures, using placeholder logic.", e);
+  }
+  
+  // CRITICAL: Filter out any failed or undefined textures. This ensures resilience.
+  const validTextures = loadedTextures.filter((t): t is Texture => t instanceof THREE.Texture);
 
-  // Clone texture to ensure independent offsets if multiple sprites use the same sheet
-  const spriteTexture = useMemo(() => {
-    const t = texture.clone();
-    // Set the "Window" size (e.g., if 2 cols, window is 0.5 wide)
-    t.repeat.set(1 / columns, 1 / rows);
-    
-    // LinearFilter is better for watercolor/ink styles. 
-    // Use NearestFilter if you want pixel-art crispness.
-    t.magFilter = THREE.LinearFilter; 
-    t.minFilter = THREE.LinearFilter;
-    
-    t.needsUpdate = true;
-    return t;
-  }, [texture, columns, rows]);
+  // Fallback to a simple geometric placeholder if no valid textures are loaded
+  if (validTextures.length === 0) {
+      return (
+        <group position={position} onClick={onPress}>
+          <mesh position={[0, 1.5, 0]}>
+             <boxGeometry args={[2, 3, 0.1]} />
+             <meshBasicMaterial color={PLACEHOLDER_SPRITE_COLOR} wireframe={false} />
+          </mesh>
+        </group>
+      );
+  }
 
-  // Animation Logic
+  // 2. Animation State (Only runs if we have frames)
+  const [currentIndex, setCurrentIndex] = useState(0);
   const timer = useRef(0);
-  const currentFrame = useRef(0);
   const interval = 1 / fps;
+  const frameCount = validTextures.length;
 
   useFrame((state, delta) => {
-    timer.current += delta;
-    
-    if (timer.current >= interval) {
-      timer.current = 0;
-      currentFrame.current = (currentFrame.current + 1) % frameCount;
-
-      const col = currentFrame.current % columns;
-      const row = Math.floor(currentFrame.current / columns);
-
-      // Move the texture window
-      // GL coordinates (0,0) are bottom-left. Images are top-left.
-      // We calculate x normally, but flip y.
-      spriteTexture.offset.x = col / columns;
-      spriteTexture.offset.y = (rows - 1 - row) / rows; 
+    // Only animate if we have more than one frame
+    if (frameCount > 1) {
+        timer.current += delta;
+        if (timer.current >= interval) {
+          timer.current = 0;
+          setCurrentIndex((prev) => (prev + 1) % frameCount);
+        }
     }
   });
+  
+  // The current texture to display
+  const currentTexture = validTextures[currentIndex];
+  
+  if (!currentTexture) return null;
 
   return (
     <Billboard position={position} follow={true} lockX={false} lockY={false} lockZ={false}>
-      <mesh onClick={onPress}>
+      {/* Mesh visibility is managed by the animation logic through map switching */}
+      <mesh onClick={onPress} visible={true}>
         <planeGeometry args={[3, 3]} />
         <meshBasicMaterial 
-          map={spriteTexture} 
+          map={currentTexture} // Use the current valid texture
           transparent={true} 
           side={THREE.DoubleSide} 
-          alphaTest={0.1} // Helps discard invisible pixels
+          alphaTest={0.1}
         />
       </mesh>
     </Billboard>

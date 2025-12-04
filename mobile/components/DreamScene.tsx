@@ -5,8 +5,8 @@ import { OrbitControls } from '@react-three/drei/native';
 import * as THREE from 'three';
 
 // --- IMPORTS ---
-import { AnimatedSprite } from './AnimatedSprite';
-import { AnimatedBackground } from './AnimatedBackground';
+import { AnimatedSprite } from './AnimatedSprite'; // Now imports the sequence component
+import { AnimatedBackground } from './AnimatedBackground'; // Now imports the resilient component
 import { GyroControls } from './GyroControls';
 import { MagicBook } from './MagicBook'; 
 
@@ -30,6 +30,12 @@ const getStationPosition = (index: number): [number, number, number] => {
   const angle = index * (Math.PI * 2) / 6 + (Math.PI / 6); 
   return [radius * Math.cos(angle), -1.5, radius * Math.sin(angle)];
 };
+
+const cursiveStyle = { 
+    fontStyle: 'italic', 
+    fontFamily: Platform.select({ ios: 'Snell Roundhand', android: 'serif', default: 'serif' })
+};
+
 
 const DreamScene: React.FC<DreamSceneProps> = ({ activeDream, onOpenBook, onInteract }) => {
   // Use optional chaining for safety
@@ -62,7 +68,10 @@ const DreamScene: React.FC<DreamSceneProps> = ({ activeDream, onOpenBook, onInte
   };
 
   const bgFrames = activeDream.hex.background_frames || [];
-  const isProcessing = activeDream.status === 'PROCESSING';
+  const stations = activeDream.hex.stations || [];
+  const hasBg = bgFrames.length > 0;
+  const isProcessing = activeDream.status === 'PROCESSING' || activeDream.status === 'GENERATING_ENTITIES';
+
 
   return (
     <View style={styles.container} onLayout={onLayout}>
@@ -76,24 +85,23 @@ const DreamScene: React.FC<DreamSceneProps> = ({ activeDream, onOpenBook, onInte
             <ambientLight intensity={1.5} />
             <Suspense fallback={null}>
               
-              {/* Background: Array of GCS URIs */}
-              {bgFrames.length > 0 && (
-                 <AnimatedBackground 
-                    key={activeDream.hex.id} 
-                    frames={bgFrames} 
-                    fps={isProcessing ? 0 : 3} // Freeze if processing
-                 />
-              )}
+              {/* Background: The component now handles its own fallback/placeholder */}
+              {/* NOTE: If bgFrames is empty, AnimatedBackground renders the placeholder sphere */}
+              <AnimatedBackground 
+                  key={activeDream.hex.id} 
+                  frames={bgFrames} 
+                  fps={isProcessing ? 0 : 3} // Freeze if processing
+              />
 
-              {/* Stations: Array of GCS URIs */}
-              {activeDream.hex.stations.map((s, i) => {
-                // Only render if entity name exists and asset URLs have been provided
-                if (!s.entity_name || s.sprite_frames.length === 0) return null;
+              {/* Stations: The component now handles its own fallback/placeholder */}
+              {stations.map((s, i) => {
+                // Only render if entity name exists 
+                if (!s.entity_name) return null;
                 
                 return (
                   <AnimatedSprite
-                    // Key changes if the first frame URL changes (on interaction/regen)
-                    key={`${activeDream.hex.id}-${s.id}-${s.sprite_frames[0]}`} 
+                    // Pass ALL frame URLs to the new sequence component
+                    key={`${activeDream.hex.id}-${s.id}-${s.sprite_frames[0] || 'placeholder'}`} 
                     frames={s.sprite_frames} 
                     position={getStationPosition(i)}
                     onPress={() => setSelectedStation(s)}
@@ -112,25 +120,28 @@ const DreamScene: React.FC<DreamSceneProps> = ({ activeDream, onOpenBook, onInte
       
       {/* --- UI LAYER --- */}
       
-      {/* 1. Processing / Placeholder Indicator */}
+      {/* 1. Processing / Status Indicator */}
       {isProcessing && (
           <View style={styles.processingIndicator}>
               <ActivityIndicator size="small" color="#d7ccc8" />
-              <Text style={styles.processingText}>Generating Dream Assets...</Text>
+              <Text style={styles.processingText}>
+                 {activeDream.status === 'PROCESSING' ? "Scrying World..." : "Summoning Entities..."}
+              </Text>
           </View>
       )}
 
       {/* 2. Title */}
       <View style={styles.titleOverlay}>
-          <Text style={styles.title}>{activeDream.hex.title}</Text>
+          <Text style={styles.cursiveTitle}>{activeDream.hex.title}</Text>
+          <Text style={styles.statusText}>{activeDream.status.replace('_', ' ')}</Text>
       </View>
       
       {/* 3. Dialog */}
       {selectedStation && (
         <View style={styles.dialogOverlay}>
             <View style={styles.dialogBox}>
-                <Text style={styles.dialogTitle}>{selectedStation.entity_name}</Text>
-                <Text style={styles.dialogText}>"{selectedStation.entity_greeting}"</Text>
+                <Text style={styles.cursiveDialogTitle}>{selectedStation.entity_name}</Text>
+                <Text style={styles.cursiveDialogText}>"{selectedStation.entity_greeting}"</Text>
                 
                 {/* Interaction Options */}
                 {selectedStation.interaction_options.map((opt, i) => (
@@ -158,23 +169,38 @@ const DreamScene: React.FC<DreamSceneProps> = ({ activeDream, onOpenBook, onInte
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#000' },
-  titleOverlay: { position: 'absolute', top: 40, width: '100%', alignItems: 'center', zIndex: 10 },
-  title: { color: 'white', fontSize: 24, fontWeight: 'bold' },
   
-  processingIndicator: {
-    position: 'absolute', top: 80, padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.7)', borderRadius: 5, flexDirection: 'row', alignItems: 'center', zIndex: 11
+  titleOverlay: { position: 'absolute', top: 40, width: '100%', alignItems: 'center', zIndex: 10 },
+  cursiveTitle: { 
+    color: '#d7ccc8', 
+    fontSize: 36, 
+    ...cursiveStyle,
+    textShadowColor:'black', 
+    textShadowRadius: 10,
+    textShadowOffset: {width: 2, height: 2}
   },
-  processingText: { color: '#d7ccc8', marginLeft: 8 },
+  statusText: { color: '#888', fontSize: 12, marginTop: 5, textTransform: 'uppercase', letterSpacing: 2 },
+
+  processingIndicator: {
+    position: 'absolute', top: 100, alignSelf: 'center', 
+    padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.7)', 
+    borderRadius: 5, flexDirection: 'row', alignItems: 'center', zIndex: 11
+  },
+  processingText: { color: '#d7ccc8', marginLeft: 8, fontSize: 12 },
 
   dialogOverlay: { ...StyleSheet.absoluteFillObject, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.6)', zIndex: 20 },
-  dialogBox: { width: 300, backgroundColor: '#222', padding: 20, borderRadius: 10, borderLeftWidth: 4, borderColor: '#d7ccc8' },
-  dialogTitle: { color: 'white', fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
-  dialogText: { color: '#ccc', marginBottom: 15, fontStyle: 'italic' },
-  optBtn: { paddingVertical: 10, borderBottomWidth: 1, borderColor: '#333' },
-  optText: { color: '#4fc3f7' },
-  closeBtn: { marginTop: 15, alignItems: 'center' },
-  closeText: { color: '#888' },
-  toggleBtn: { position: 'absolute', bottom: 20, right: 20, padding: 10, backgroundColor: '#333', borderRadius: 5 }
+  dialogBox: { width: 320, backgroundColor: '#222', padding: 25, borderRadius: 4, borderLeftWidth: 4, borderColor: '#d7ccc8', shadowColor: "#000", shadowOffset: {width: 0, height: 10}, shadowOpacity: 0.5, shadowRadius: 10 },
+  
+  cursiveDialogTitle: { color: '#d7ccc8', fontSize: 28, ...cursiveStyle, marginBottom: 15 },
+  cursiveDialogText: { color: '#ccc', fontSize: 20, ...cursiveStyle, marginBottom: 20, lineHeight: 26 },
+  
+  optBtn: { paddingVertical: 12, borderBottomWidth: 1, borderColor: '#333' },
+  optText: { color: '#4fc3f7', fontSize: 16 },
+  
+  closeBtn: { marginTop: 20, alignItems: 'center' },
+  closeText: { color: '#888', fontSize: 14 },
+  
+  toggleBtn: { position: 'absolute', bottom: 30, right: 20, padding: 10, backgroundColor: 'rgba(50,50,50,0.8)', borderRadius: 5 }
 });
 
 export default DreamScene;
