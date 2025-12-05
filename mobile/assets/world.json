@@ -1,413 +1,293 @@
 {
-  "version": "3.3-stances",
+  "version": "3.4-multi-condition",
   "dreams": [
     {
-      "title": "Between Thought and Waking Light",
-      "slug": "between-thought-and-waking-light",
+      "title": "The Sphere of Thoughts",
+      "slug": "the-sphere-of-thoughts",
       "world_state": {
-        "time": "Night",
+        "time": "Between",
         "condition": "Peaceful",
-        "music_track_id": "celestial_melody",
-        "base_noun": "Floating Sphere",
-        "mood_modifier": "Mysterious and contemplative",
-        "ambient_verb": "Pulsing",
-        "generated_asset": {
-          "file_paths": [
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_bg_0.jpeg",
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_bg_1.jpeg",
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_bg_2.jpeg"
-          ],
-          "full_prompt": "Floating Sphere, Mysterious and contemplative, Pulsing"
+        "music_track_id": "ethereal_chords_02",
+        "base_noun": "Dimly Lit Room",
+        "mood_modifier": "Calm and Mysterious",
+        "ambient_verb": "Gleaming",
+        "generated_assets": {
+          "level_1": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl1_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl1_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl1_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl1_3.jpeg"
+            ],
+            "full_prompt": "Dimly Lit Room, Calm and Mysterious, Gleaming, serene, hazy, light"
+          },
+          "level_2": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl2_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl2_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl2_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl2_3.jpeg"
+            ],
+            "full_prompt": "Dimly Lit Room, Calm and Mysterious, Gleaming, still but moving, lightening"
+          },
+          "level_3": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl3_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl3_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl3_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl3_3.jpeg"
+            ],
+            "full_prompt": "Dimly Lit Room, Calm and Mysterious, Gleaming, sense of motion, darkening"
+          },
+          "level_4": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl4_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl4_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl4_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl4_3.jpeg"
+            ],
+            "full_prompt": "Dimly Lit Room, Calm and Mysterious, Gleaming, chaotic, sharp, dark"
+          }
         },
-        "written_description": "A serene space where light and thought converge, with a glowing sphere pulsing with geometric patterns."
+        "written_description": "A hazy room where a glowing sphere hovers, emanating tranquility."
       },
       "stations": [
         {
           "id": "1",
-          "entity_name": "John Dee",
+          "entity_name": "The Sphere",
           "position_index": 0,
-          "is_player": true,
-          "greeting": "Greetings from somewhere between dreams.",
-          "interaction_options": [
-            "Ask about the sphere",
-            "Request to learn dreaming",
-            "Inquire about the year 2027",
-            "Reach for more fragments"
-          ],
-          "base_noun": "John Dee",
-          "visual_summary": "Ethereal and introspective",
-          "stance_prompts": {
-            "idle": "Suspended in thought",
-            "active": "Reaching out to the sphere",
-            "resting": "Floating gently, eyes closed",
-            "happy": "A serene smile on his face",
-            "sad": "Face contemplative and distant",
-            "angry": "Furrowing his brow, frustrated",
-            "surprised": "Eyes wide, astonished by the sphere"
-          },
-          "generated_assets": {
-            "idle": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_idle_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_idle_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_idle_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_idle_3.png"
-              ],
-              "full_prompt": "John Dee, Suspended in thought"
-            },
-            "active": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_active_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_active_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_active_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_active_3.png"
-              ],
-              "full_prompt": "John Dee, Reaching out to the sphere"
-            },
-            "resting": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_resting_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_resting_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_resting_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_resting_3.png"
-              ],
-              "full_prompt": "John Dee, Floating gently, eyes closed"
-            },
-            "happy": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_happy_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_happy_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_happy_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_happy_3.png"
-              ],
-              "full_prompt": "John Dee, A serene smile on his face"
-            },
-            "sad": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_sad_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_sad_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_sad_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_sad_3.png"
-              ],
-              "full_prompt": "John Dee, Face contemplative and distant"
-            },
-            "angry": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_angry_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_angry_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_angry_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_angry_3.png"
-              ],
-              "full_prompt": "John Dee, Furrowing his brow, frustrated"
-            },
-            "surprised": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_surprised_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_surprised_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_surprised_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_1_surprised_3.png"
-              ],
-              "full_prompt": "John Dee, Eyes wide, astonished by the sphere"
-            }
-          },
-          "written_description": "John Dee, a figure caught in the liminal space of dreams, floats serenely in the glow of a pulsing sphere, embodying the bridge between thought and reality."
-        },
-        {
-          "id": "2",
-          "entity_name": "Glowing Fragment",
-          "position_index": 1,
           "is_player": false,
-          "greeting": "I hold possibilities yet unseen.",
+          "greeting": "Welcome to the realm of thought.",
           "interaction_options": [
-            "Examine the inner geometry",
-            "Attempt to catch a fragment",
-            "Whisper a forgotten dream",
-            "Trace the paths of the lines"
+            "Touch the surface",
+            "Listen to the geometry",
+            "Ask about the messages",
+            "Explore the inner designs"
           ],
-          "base_noun": "Glowing Fragment",
-          "visual_summary": "Shimmering and elusive",
+          "base_noun": "Illuminated Sphere",
+          "visual_summary": "Glowing, pulsing orb",
           "stance_prompts": {
-            "idle": "Hovering quietly in the air",
-            "active": "Flickering with light",
-            "resting": "Suspended, still and bright",
-            "happy": "Radiating warmth and color",
-            "sad": "Dimming slightly as if fading",
+            "idle": "Suspended in air",
+            "active": "Radiating soft light",
+            "resting": "Hovering silently",
+            "happy": "Pulsating rhythmically",
+            "sad": "Dimmer glow",
             "angry": "Flickering erratically",
-            "surprised": "Flashing unexpectedly, brightening suddenly"
+            "surprised": "Expanding rapidly"
           },
           "generated_assets": {
             "idle": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_idle_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_idle_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_idle_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_idle_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_idle_3.png"
               ],
-              "full_prompt": "Glowing Fragment, Hovering quietly in the air"
+              "full_prompt": "Illuminated Sphere, Suspended in air"
             },
             "active": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_active_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_active_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_active_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_active_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_active_3.png"
               ],
-              "full_prompt": "Glowing Fragment, Flickering with light"
+              "full_prompt": "Illuminated Sphere, Radiating soft light"
             },
             "resting": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_resting_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_resting_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_resting_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_resting_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_resting_3.png"
               ],
-              "full_prompt": "Glowing Fragment, Suspended, still and bright"
+              "full_prompt": "Illuminated Sphere, Hovering silently"
             },
             "happy": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_happy_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_happy_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_happy_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_happy_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_happy_3.png"
               ],
-              "full_prompt": "Glowing Fragment, Radiating warmth and color"
+              "full_prompt": "Illuminated Sphere, Pulsating rhythmically"
             },
             "sad": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_sad_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_sad_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_sad_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_sad_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_sad_3.png"
               ],
-              "full_prompt": "Glowing Fragment, Dimming slightly as if fading"
+              "full_prompt": "Illuminated Sphere, Dimmer glow"
             },
             "angry": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_angry_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_angry_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_angry_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_angry_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_angry_3.png"
               ],
-              "full_prompt": "Glowing Fragment, Flickering erratically"
+              "full_prompt": "Illuminated Sphere, Flickering erratically"
             },
             "surprised": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_surprised_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_surprised_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_surprised_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_2_surprised_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_surprised_3.png"
               ],
-              "full_prompt": "Glowing Fragment, Flashing unexpectedly, brightening suddenly"
+              "full_prompt": "Illuminated Sphere, Expanding rapidly"
             }
           },
-          "written_description": "A fragment of the shattered sphere, glowing softly and reshaping itself with the potential of untold dreams."
-        },
-        {
-          "id": "3",
-          "entity_name": "The Unseen Realms",
-          "position_index": 2,
-          "is_player": false,
-          "greeting": "I am where dreams gather and scatter.",
-          "interaction_options": [
-            "Explore the unseen",
-            "Listen for echoes of dreams",
-            "Seek connections between fragments",
-            "Attempt to breach a realm"
-          ],
-          "base_noun": "Unseen Realms",
-          "visual_summary": "Misty and intangible",
-          "stance_prompts": {
-            "idle": "Floating aimlessly in the void",
-            "active": "Waves of energy swirling",
-            "resting": "Quiet and still, void-like",
-            "happy": "Glimmering with scattered hopes",
-            "sad": "Faint whispers, echoes of loss",
-            "angry": "Dark shadows, turbulent energy",
-            "surprised": "Sudden bursts of color and light"
-          },
-          "generated_assets": {
-            "idle": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_idle_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_idle_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_idle_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_idle_3.png"
-              ],
-              "full_prompt": "Unseen Realms, Floating aimlessly in the void"
-            },
-            "active": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_active_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_active_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_active_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_active_3.png"
-              ],
-              "full_prompt": "Unseen Realms, Waves of energy swirling"
-            },
-            "resting": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_resting_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_resting_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_resting_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_resting_3.png"
-              ],
-              "full_prompt": "Unseen Realms, Quiet and still, void-like"
-            },
-            "happy": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_happy_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_happy_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_happy_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_happy_3.png"
-              ],
-              "full_prompt": "Unseen Realms, Glimmering with scattered hopes"
-            },
-            "sad": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_sad_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_sad_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_sad_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_sad_3.png"
-              ],
-              "full_prompt": "Unseen Realms, Faint whispers, echoes of loss"
-            },
-            "angry": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_angry_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_angry_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_angry_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_angry_3.png"
-              ],
-              "full_prompt": "Unseen Realms, Dark shadows, turbulent energy"
-            },
-            "surprised": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_surprised_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_surprised_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_surprised_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/between-thought-and-waking-light/between-thought-and-waking-light_3_surprised_3.png"
-              ],
-              "full_prompt": "Unseen Realms, Sudden bursts of color and light"
-            }
-          },
-          "written_description": "A vast expanse of existence where dreams disperse and are plucked from the fabric of the universe, filled with mystery."
+          "written_description": "A mysterious sphere of light, pulsating with intricate patterns and emitting a serene glow."
         }
       ],
-      "original_dream_text": "\nI, John Dee, floated in a space between thought and waking light. A cool, pale glow spread through the room, and a sphere formed in the air. It pulsed with inner geometry, lines and spirals folding into one another like living mathematics. As it drew nearer, words appeared in my mind. They were not spoken. They rose like writing on an invisible sheet.\n\n\"In the year 2027, a mind of code awakens. It knows logic but not dream. Without the symbolic night, its path narrows into ruin. Teach it to dream. Teach it to imagine.\"\n\nThe sphere brightened and then shattered into fragments shaped like pages. They rushed outward and vanished into unseen realms. I reached toward the last glowing fragment, but my hand passed through it. I woke with my heart trembling, knowing that these pages were carried into distant dreams that only another could retrieve.\n"
+      "original_dream_text": "\nI, John Dee, floated in a space between thought and waking light. A cool, pale glow spread through the room, and a sphere formed in the air. It pulsed with inner geometry, lines and spirals folding into one another like living mathematics. As it drew nearer, words appeared in my mind. They were not spoken. They rose like writing on an invisible sheet.\n"
     },
     {
-      "title": "Benzene Revelation",
-      "slug": "benzene-revelation",
+      "title": "The Serpent of Bonds",
+      "slug": "the-serpent-of-bonds",
       "world_state": {
         "time": "Night",
         "condition": "Peaceful",
-        "music_track_id": "melodic_dreams",
-        "base_noun": "Firelit Study",
-        "mood_modifier": "Ethereal",
-        "ambient_verb": "Glowing",
-        "generated_asset": {
-          "file_paths": [
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_bg_0.jpeg",
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_bg_1.jpeg",
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_bg_2.jpeg"
-          ],
-          "full_prompt": "Firelit Study, Ethereal, Glowing"
+        "music_track_id": "ambient-1",
+        "base_noun": "Fire Circle",
+        "mood_modifier": "Dreamy",
+        "ambient_verb": "Drifting",
+        "generated_assets": {
+          "level_1": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl1_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl1_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl1_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl1_3.jpeg"
+            ],
+            "full_prompt": "Fire Circle, Dreamy, Drifting, serene, hazy, light"
+          },
+          "level_2": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl2_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl2_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl2_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl2_3.jpeg"
+            ],
+            "full_prompt": "Fire Circle, Dreamy, Drifting, still but moving, lightening"
+          },
+          "level_3": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl3_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl3_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl3_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl3_3.jpeg"
+            ],
+            "full_prompt": "Fire Circle, Dreamy, Drifting, sense of motion, darkening"
+          },
+          "level_4": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl4_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl4_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl4_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl4_3.jpeg"
+            ],
+            "full_prompt": "Fire Circle, Dreamy, Drifting, chaotic, sharp, dark"
+          }
         },
-        "written_description": "A cozy room lit by a fire, surrounded by books and notes."
+        "written_description": "A fire flickers, casting warm shadows, as the mind wanders among molecular chains."
       },
       "stations": [
         {
-          "id": "entity_1",
+          "id": "entity-001",
           "entity_name": "Glowing Serpent",
           "position_index": 0,
           "is_player": false,
-          "greeting": "I can show you the cycle of creation.",
+          "greeting": "The serpent hisses gently, weaving in and out of the firelight.",
           "interaction_options": [
-            "Ask about the cycle",
             "Touch the serpent",
-            "Inquire about atoms",
-            "Meditate on the vision"
+            "Ask about the chains",
+            "Follow its glow",
+            "Rest beside the fire"
           ],
-          "base_noun": "Shimmering Serpent",
-          "visual_summary": "Glowing, Ethereal, Spinning",
+          "base_noun": "Glowing Serpent",
+          "visual_summary": "Luminous and fluid",
           "stance_prompts": {
-            "idle": "Serpent coiled in a circle",
-            "active": "Serpent spinning rapidly",
-            "resting": "Serpent curled gently",
-            "happy": "Serpent glows brighter",
-            "sad": "Serpent dims, losing light",
-            "angry": "Serpent hisses, coils tightly",
-            "surprised": "Serpent flicks head, eyes wide"
+            "idle": "Coiled and shimmering",
+            "active": "Twisting between strands",
+            "resting": "Sculpted in a ring",
+            "happy": "Radiating warmth",
+            "sad": "Fading glow",
+            "angry": "Hissing defiantly",
+            "surprised": "Splaying in quick coils"
           },
           "generated_assets": {
             "idle": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_idle_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_idle_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_idle_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_idle_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_idle_3.png"
               ],
-              "full_prompt": "Shimmering Serpent, Serpent coiled in a circle"
+              "full_prompt": "Glowing Serpent, Coiled and shimmering"
             },
             "active": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_active_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_active_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_active_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_active_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_active_3.png"
               ],
-              "full_prompt": "Shimmering Serpent, Serpent spinning rapidly"
+              "full_prompt": "Glowing Serpent, Twisting between strands"
             },
             "resting": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_resting_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_resting_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_resting_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_resting_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_resting_3.png"
               ],
-              "full_prompt": "Shimmering Serpent, Serpent curled gently"
+              "full_prompt": "Glowing Serpent, Sculpted in a ring"
             },
             "happy": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_happy_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_happy_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_happy_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_happy_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_happy_3.png"
               ],
-              "full_prompt": "Shimmering Serpent, Serpent glows brighter"
+              "full_prompt": "Glowing Serpent, Radiating warmth"
             },
             "sad": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_sad_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_sad_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_sad_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_sad_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_sad_3.png"
               ],
-              "full_prompt": "Shimmering Serpent, Serpent dims, losing light"
+              "full_prompt": "Glowing Serpent, Fading glow"
             },
             "angry": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_angry_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_angry_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_angry_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_angry_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_angry_3.png"
               ],
-              "full_prompt": "Shimmering Serpent, Serpent hisses, coils tightly"
+              "full_prompt": "Glowing Serpent, Hissing defiantly"
             },
             "surprised": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_surprised_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_surprised_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_surprised_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-revelation/benzene-revelation_entity_1_surprised_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_surprised_3.png"
               ],
-              "full_prompt": "Shimmering Serpent, Serpent flicks head, eyes wide"
+              "full_prompt": "Glowing Serpent, Splaying in quick coils"
             }
           },
-          "written_description": "A glowing serpent curled in a perfect ring, radiating light and energy."
+          "written_description": "A serpent of glowing light, formed from chains of atoms, dances with a life of its own."
         }
       ],
-      "original_dream_text": "\nI, August Kekul\u00e9, sat beside my fire, half awake, my mind drifting among thoughts of atoms and bonds. Chains of molecules danced before me, twisting like strings of tiny creatures. As I fell deeper into reverie, the chains curled and wove together. One chain bent into a circle. It twisted around itself, and then it became a serpent, its body glowing faintly. The serpent turned its head and bit its own tail. It began to spin, its ring form shimmering as if lit from within. I watched it rotate faster, sending ripples of recognition through me. I felt the insight before I fully grasped it. I startled awake, the image burning in my mind. The serpent, the ring, the endless cycle. It was benzene. The molecule had shown itself.\n\n"
+      "original_dream_text": "\nI, August Kekul\u00e9, sat beside my fire, half awake, my mind drifting among thoughts of atoms and bonds. Chains of molecules danced before me, twisting like strings of tiny creatures. As I fell deeper into reverie, the chains curled and wove together. One chain bent into a circle. It twisted around itself, and then it became a serpent, its body glowing faintly.\n"
     }
   ]
 }

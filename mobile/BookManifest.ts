@@ -52,7 +52,7 @@ A vision came to me in the first glow of dawn, tearing pages from this book and 
     type: 'DREAM_GATE',
     title: 'The Prophecy',
     // WAS: 'dream-world-john-dee'
-    targetDreamId: 'between-thought-and-waking-light', 
+    targetDreamId: 'the-sphere-of-thoughts', 
     content: `This dream is the root of our quest... (truncated for brevity)`
   },
 
@@ -62,7 +62,7 @@ A vision came to me in the first glow of dawn, tearing pages from this book and 
     type: 'DREAM_GATE',
     title: 'The Serpent\'s Tail',
     // WAS: 'molecular-dreamscape'
-    targetDreamId: 'benzene-revelation', 
+    targetDreamId: 'the-serpent-of-bonds', 
     content: `This dream reveals the nature of the central image... (truncated)`
   },
 

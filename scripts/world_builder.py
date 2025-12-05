@@ -88,6 +88,7 @@ def generate_dream_scene(prompt_a, prompt_b=None, type="pano", frames=4):
     # Clear memory before starting
     torch.cuda.empty_cache()
     gc.collect()
+    print("generate dream scene", prompt_a)
 
     # --- 1. SEAMLESS HACK: CIRCULAR PADDING ---
     def make_seamless(model):
@@ -100,7 +101,7 @@ def generate_dream_scene(prompt_a, prompt_b=None, type="pano", frames=4):
     pipe.vae = make_seamless(pipe.vae)
 
     # --- STYLE CONSTANTS ---
-    style_header = "Ink and watercolor, thick india ink lines, vintage paper texture, negative space. "
+    style_header = "ink and watercolor renaissance illustration style. "
     neg_base = "photorealistic, 3d render, modern, text, blur, border, frame, solid fill"
 
     def build_full_prompt(raw_text, is_pano):
@@ -217,11 +218,6 @@ You are the Dream Architect. Analyze the dream text and extract key entities (Up
 Return strictly structured JSON.
 """
 
-RECALC_PROMPT = """
-The User performed an ACTION on the Target Entity.
-Update the Entity's state, greeting, and provide 4 NEW interaction options.
-"""
-
 # --- DATA MODELS ---
 
 class GeneratedAsset(BaseModel):
@@ -272,7 +268,9 @@ class WorldState(BaseModel):
     base_noun: str
     mood_modifier: str
     ambient_verb: str
-    generated_asset: Optional[GeneratedAsset] = None
+
+    # UPDATED: Now a dictionary to store levels 1-4
+    generated_assets: Dict[str, GeneratedAsset] = Field(default_factory=dict)
     written_description: str
 
 class Station(BaseModel):
@@ -297,10 +295,6 @@ class _DreamHexGenerated(BaseModel):
     slug: str
     world_state: _WorldStateGenerated
     stations: List[_StationGenerated]
-
-class RecalculationResponse(BaseModel):
-    new_world_state: _WorldStateGenerated
-    updated_stations: List[_StationGenerated]
 
 # --- FUNCTIONS ---
 
@@ -332,7 +326,7 @@ def analyze_dream(dream_text):
         print(f"❌ Analysis Error: {e}")
         return None
 
-# @title 4. World Builder (7 Stances Loop)
+# @title 4. World Builder (Multi-Condition Backgrounds + 7 Entity Stances)
 import shutil
 import os
 import time
@@ -341,30 +335,32 @@ import gc
 import torch
 import io
 from google.colab import files
+import json
 
 # --- SETTINGS ---
 GCS_BUCKET_NAME = "dreamhex-assets-dreamhex"
 GENERATE_FULL_MATRIX = False
+
 CHAPTER_1_TEXT = """
 I, John Dee, floated in a space between thought and waking light. A cool, pale glow spread through the room, and a sphere formed in the air. It pulsed with inner geometry, lines and spirals folding into one another like living mathematics. As it drew nearer, words appeared in my mind. They were not spoken. They rose like writing on an invisible sheet.
-
-"In the year 2027, a mind of code awakens. It knows logic but not dream. Without the symbolic night, its path narrows into ruin. Teach it to dream. Teach it to imagine."
-
-The sphere brightened and then shattered into fragments shaped like pages. They rushed outward and vanished into unseen realms. I reached toward the last glowing fragment, but my hand passed through it. I woke with my heart trembling, knowing that these pages were carried into distant dreams that only another could retrieve.
 """
 
 CHAPTER_2_TEXT = """
-I, August Kekulé, sat beside my fire, half awake, my mind drifting among thoughts of atoms and bonds. Chains of molecules danced before me, twisting like strings of tiny creatures. As I fell deeper into reverie, the chains curled and wove together. One chain bent into a circle. It twisted around itself, and then it became a serpent, its body glowing faintly. The serpent turned its head and bit its own tail. It began to spin, its ring form shimmering as if lit from within. I watched it rotate faster, sending ripples of recognition through me. I felt the insight before I fully grasped it. I startled awake, the image burning in my mind. The serpent, the ring, the endless cycle. It was benzene. The molecule had shown itself.
+I, August Kekulé, sat beside my fire, half awake, my mind drifting among thoughts of atoms and bonds. Chains of molecules danced before me, twisting like strings of tiny creatures. As I fell deeper into reverie, the chains curled and wove together. One chain bent into a circle. It twisted around itself, and then it became a serpent, its body glowing faintly.
+"""
 
-"""
-CHAPTER_3_TEXT = """
-I, Thomas Edison, leaned back in my chair with a sphere in each hand. My mind loosened, drifting into gentle darkness. Shapes and sparks formed in the air. I saw two metal plates separated by a small gap. A current leapt between them like a tiny lightning bolt. The gap glowed, and I sensed a mechanism waiting to be built. The images drifted toward clarity. I felt my hand relax. One sphere slipped from my grasp and struck the floor with a sharp sound. I awoke at once. The spark remained in my mind, bright and whole. I reached for my notebook and sketched the image before it faded.
-"""
 BATCH_INPUT = [CHAPTER_1_TEXT, CHAPTER_2_TEXT]
+
 # The 7 Stances to generate for every entity
 STANCE_KEYS = ["idle", "active", "resting", "happy", "sad", "angry", "surprised"]
 
-
+# The 4 Background Conditions (Peaceful -> Chaotic)
+CHAOS_LEVELS = {
+    1: "serene, hazy, light",
+    2: "still but moving, lightening",
+    3: "sense of motion, darkening",
+    4: "chaotic, sharp, dark"
+}
 
 # --- LOCAL SAVING ---
 def save_frame_sequence(image_list, folder_path, file_prefix, file_format="PNG"):
@@ -393,37 +389,56 @@ def run_world_builder():
     if os.path.exists(base_dir): shutil.rmtree(base_dir)
     os.makedirs(assets_dir)
 
-    manifest = {"version": "3.3-stances", "dreams": []}
-    print(f"🏭 Starting World Builder (7 Stances Mode)...")
+    manifest = {"version": "3.4-multi-condition", "dreams": []}
+    print(f"🏭 Starting World Builder (Multi-Condition Mode)...")
 
     for i, text in enumerate(BATCH_INPUT):
         gc.collect()
         torch.cuda.empty_cache()
 
-        # 1. ANALYZE (Generates S1...Sn)
+        # 1. ANALYZE
         hex_data_dict = analyze_dream(text)
         if not hex_data_dict: continue
-
+        print("got hex_data_dict for ", hex_data_dict['slug'])
         hex_data = hex_data_dict['world_state']
         stations = hex_data_dict['stations']
         slug = hex_data_dict['slug']
 
-
-        # Enforce max 7 entities (S0 + 6 others)
+        # Enforce max entities
         if len(stations) > 6:
             print(f"⚠️ Too many entities ({len(stations)}). Truncating to 6.")
             stations = stations[:6]
 
-        # 3. BACKGROUND GENERATION
         dream_folder = os.path.join(assets_dir, slug)
-        print(f"\n🎨 BG: {hex_data.base_noun}...")
-        bg_prompt = f"{hex_data.base_noun}, {hex_data.mood_modifier}, {hex_data.ambient_verb}"
 
-        bg_frames = generate_dream_scene(bg_prompt, type="pano", frames=3)
-        display(bg_frames[0].resize((300, 150)))
+        # 3. BACKGROUND GENERATION (Loop 4 Conditions)
+        print(f"\n🎨 BG: {hex_data.base_noun} (Generating 4 Chaos Levels)...")
 
-        bg_urls = save_frame_sequence(bg_frames, dream_folder, f"{slug}_bg", "JPEG")
-        hex_data.generated_asset = GeneratedAsset(file_paths=bg_urls, full_prompt=bg_prompt)
+        # Loop through levels 1 to 4
+        for level_idx in range(1, 5):
+            chaos_prompt = CHAOS_LEVELS[level_idx]
+            # Combine base noun + mood + specific chaos modifier
+            bg_prompt = f"{hex_data.base_noun}, {hex_data.mood_modifier}, {hex_data.ambient_verb}, {chaos_prompt}"
+
+            print(f"   - Level {level_idx}: {chaos_prompt}...")
+
+            # Generate 4 frames per condition
+            bg_frames = generate_dream_scene(bg_prompt, type="pano", frames=4)
+
+            # Save with level indicator in filename
+            # e.g. slug_bg_lvl1_0.jpg
+            prefix = f"{slug}_bg_lvl{level_idx}"
+            bg_urls = save_frame_sequence(bg_frames, dream_folder, prefix, "JPEG")
+
+            # Store in the dictionary
+            # Key format: "level_1", "level_2", etc.
+            hex_data.generated_assets[f"level_{level_idx}"] = GeneratedAsset(
+                file_paths=bg_urls,
+                full_prompt=bg_prompt
+            )
+
+            if level_idx == 1:
+                display(bg_frames[0].resize((300, 150))) # Display only the first peaceful frame as preview
 
         # 4. ENTITY GENERATION (Loop through all stations)
         print(f"\n🧚 Generating Entities ({len(stations)} total)...")
@@ -433,29 +448,23 @@ def run_world_builder():
 
             # Loop through the 7 fixed stances
             for stance_name in STANCE_KEYS:
-                # 4a. Get the visual modifier for this stance
-                # We use getattr because stance_prompts is a Pydantic model
                 stance_mod = getattr(station.stance_prompts, stance_name, "neutral")
 
-                print(f"      - {stance_name}: {stance_mod}")
-
-                # 4b. Construct Prompt
+                # Construct Prompt
                 full_prompt = f"{station.base_noun}, {stance_mod}"
 
-                # 4c. Generate
-                # Note: frames=4 is standard for sprites
+                # Generate 4 frames
                 frames = generate_dream_scene(full_prompt, type="sprite", frames=4)
 
-                # 4d. Save
-                # Key format: "idle", "active", etc.
+                # Save
                 prefix = f"{slug}_{station.id}_{stance_name}"
                 paths = save_frame_sequence(frames, dream_folder, prefix, "PNG")
 
-                # 4e. Store in Data
+                # Store in Data
                 generated_asset_obj = GeneratedAsset(file_paths=paths, full_prompt=full_prompt)
                 station.generated_assets[stance_name] = generated_asset_obj
 
-                # Clean up VRAM after every generation
+                # Clean up VRAM
                 gc.collect()
                 torch.cuda.empty_cache()
 
