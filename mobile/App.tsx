@@ -8,11 +8,11 @@ import { BookReader } from './components/BookReader';
 import { EntityDialog } from './components/EntityDialog';
 import { MusicPlayer } from './components/MusicPlayer'; 
 import { BOOK_CONTENT, BookPage } from './BookManifest';
-import { interactEntity } from './api'; // Import API function
+import { interactEntity } from './api'; 
 
 const DREAM_DATABASE: any = require('./assets/world.json');
 const SESSION_KEY = 'dreamhex_session_v3';
-const USER_ID_KEY = 'dreamhex_user_id'; // Key for persistent user ID
+const USER_ID_KEY = 'dreamhex_user_id'; 
 
 type DreamProgress = {
     [key: string]: {
@@ -41,8 +41,6 @@ export default function App() {
   const [interactionHistory, setInteractionHistory] = useState<string[]>([]); 
 
   const [dreamProgress, setDreamProgress] = useState<DreamProgress>({});
-
-  // NEW: Track if user has interacted to enable audio
   const [hasInteracted, setHasInteracted] = useState(false);
 
   const availablePages = useMemo(() => {
@@ -57,7 +55,6 @@ export default function App() {
     const loadSession = async () => {
         setLoading(true);
         try {
-            // Load or Create User ID
             let storedUserId = await AsyncStorage.getItem(USER_ID_KEY);
             if (!storedUserId) {
                 storedUserId = 'user_' + Math.random().toString(36).substr(2, 9);
@@ -164,7 +161,7 @@ export default function App() {
   };
 
   const handleOpenBook = () => {
-      setHasInteracted(true); // User interacted
+      setHasInteracted(true); 
       const currentPageIndex = availablePages.findIndex(
           p => p.type === 'DREAM_GATE' && p.targetDreamId === currentDreamSlug
       );
@@ -179,7 +176,7 @@ export default function App() {
   };
 
   const handleInteractStation = (targetStation: any) => {
-    setHasInteracted(true); // User interacted
+    setHasInteracted(true);
     checkPageUnlock(currentDreamSlug); 
 
     updateProgress('VISIT_STATION', targetStation.id);
@@ -207,23 +204,19 @@ export default function App() {
     setInteractionLoading(true);
 
     try {
-        // 1. Retrieve the full station object
         const station = dreamData.stations.find((s: any) => s.id === activeEntity.stationId);
         
-        // 2. Call the API
         const response = await interactEntity(
             userId,
             currentDreamSlug,
             activeEntity.stationId,
             option,
             station,
-            dreamData // Pass full world context
+            dreamData
         );
 
-        // 3. Process Response
         const updatedStation = response.station;
         
-        // 4. Update Global Dream Data (so it persists)
         const updatedStations = dreamData.stations.map((s: any) => 
             s.id === updatedStation.id ? updatedStation : s
         );
@@ -233,7 +226,6 @@ export default function App() {
             stations: updatedStations
         }));
 
-        // 5. Update Active Dialog State
         setActiveEntity((prev: any) => ({
              ...prev,
              greeting: updatedStation.entity_greeting,
@@ -269,13 +261,7 @@ export default function App() {
         setIsExiting(false);
         setNextDreamSlug(null);
         setFoundPageNotification(null);
-        
-        const gateIndex = availablePages.findIndex(p => p.targetDreamId === nextDreamSlug);
-        if (gateIndex !== -1) {
-             setBookPageIndex(gateIndex);
-        } else {
-             setBookPageIndex(0);
-        }
+        setBookPageIndex(0);
     }
   };
   
@@ -315,7 +301,7 @@ export default function App() {
         <MusicPlayer 
             currentDreamSlug={currentDreamSlug} 
             isExiting={isExiting} 
-            hasInteracted={hasInteracted} // Pass the prop
+            hasInteracted={hasInteracted} 
         />
         
         <BookReader 
@@ -326,6 +312,7 @@ export default function App() {
             setPageIndex={setBookPageIndex} 
             onAction={handleBookAction}
             currentDreamSlug={currentDreamSlug}
+            dreamText={dreamData?.original_dream_text} // Pass the dream text here
         />
 
         {activeEntity && (
