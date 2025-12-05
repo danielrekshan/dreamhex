@@ -15,27 +15,30 @@ export const BOOK_CONTENT: BookPage[] = [
     id: 'intro_1',
     type: 'INTRO',
     title: 'Hexarchia Oneirica',
-    content: `Welcome, traveler.
+    content: `*Welcome, traveler.*
 
-I am Doctor John Dee, and this is the Hexarchia Oneirica, my Magick Book of the Sixfold Dream Order. Long ago its pages were whole, carrying the wisdom of my dreams and visions. But a powerful vision shattered the book and cast its leaves across realms far beyond waking sight.
+I am Doctor John Dee, and this is the Hexarchia Oneirica, my Magick Book of the Six Dream Powers. Long ago its pages were whole, carrying the wisdom of my dreams and visions. But a powerful dream shattered the book and cast its leaves across realms far beyond waking sight. 
 
-You now hold the key to restoring what was lost. Speak your dream into the scrying stone. I will write it onto these pages, and together we will walk the world created by your vision.`
+You must find the missing pages hidden within the dream world.`
   },
   {
     id: 'intro_2',
     type: 'LORE',
-    title: 'The Method',
-    content: `Every dream you record becomes a hexal world shaped by symbol and emotion. At the center lies your viewpoint. Six more positions belong to the entities that inhabit the dream.
+    title: 'The Dream Alchemist',
+    content: `In my age I served England as mathematician, advisor, and navigator. But my deeper work was contemplative: the study of symbols rising from the inner world. Through scrying—an art you might compare to modern dreamwork or hypnosis—I learned that dreams reveal truths concealed by waking light.
 
-Step into their standpoints to feel the dream from their perspective. Speak with them. Ask questions. When you interact, they change in form and insight. Their transformations reveal lessons the dream wishes to offer and guide you to Lost Pages hidden in the dreamscape.`
+Through a scrying stone I observe the dream world through time, or at least I did until my book was torn apart. I guide you not to interpret them, but to locate the fragments of my shattered book embedded within them.
+
+Each page you recover brings us closer to the truth my prophetic dream revealed.`
   },
   {
     id: 'intro_3',
     type: 'LORE',
-    title: 'The Alchemist',
-    content: `In my age I served England as a mathematician, advisor, and navigator. Many called me a polymath. Yet I also practiced scrying, a contemplative art similar to your modern dreamwork.
-
-The mind grows quiet, inner symbols rise, and meaning takes shape. Through this stone I can witness your dreams and guide your exploration. I have learned through long study that prophetic dreams are the secret key of magic.`
+    title: 'The Method',
+    content: `Each page of this book corresponds to a dream realm.  You must start with the first page, enter that dream, and find the next page hidden within it.
+    
+    Once you find all my missing pages, we'll have a chance to restore the Hexarchia Oneirica and unlock its full power.
+    `
   },
   {
     id: 'intro_4',
@@ -62,7 +65,7 @@ A vision came to me in the first glow of dawn, tearing pages from this book and 
     type: 'DREAM_GATE',
     title: 'The Serpent\'s Tail',
     // WAS: 'molecular-dreamscape'
-    targetDreamId: 'serpent-of-chemistry', 
+    targetDreamId: 'molecular-reverie', 
     content: `This dream reveals the nature of the central image... (truncated)`
   },
 

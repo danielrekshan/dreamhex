@@ -1,3 +1,5 @@
+// { type: "uploaded file", fileName: "danielrekshan/dreamhex/dreamhex-c40b1817e6f8a8dacdbb60691ae6b58b5951408b/mobile/components/EntityDialog.tsx" }
+
 import React, { useState, useEffect } from 'react';
 import { 
     View, Text, StyleSheet, TouchableOpacity, Modal, 
@@ -18,6 +20,9 @@ export interface EntityInteractionProps {
   onClose: () => void;
 }
 
+// Module-level cache to track seen content across re-renders/unmounts
+const viewedContentCache = new Set<string>();
+
 // Helper Component: Typewriter Text
 const TypewriterText: React.FC<{ 
     text: string; 
@@ -26,10 +31,8 @@ const TypewriterText: React.FC<{
     startTyping?: boolean;
     onFinishTyping?: () => void;
 }> = ({ text, style, isLoading, startTyping = true, onFinishTyping }) => {
-  // Use a regex to split by any whitespace, including newlines, but keeping the delimiters
   const wordTokens = text.split(/(\s+)/).filter(token => token.length > 0);
   
-  // FIX: Initialize to empty string if not loading/animating to prevent flash.
   const [displayed, setDisplayed] = useState(isLoading ? text : '');
 
   useEffect(() => {
@@ -39,16 +42,19 @@ const TypewriterText: React.FC<{
     }
     
     if (!startTyping) {
+        // If we are not typing, and not loading, we might want to show empty or full
+        // depending on context, but usually if startTyping is false we wait.
+        // However, for the "skip animation" logic, the parent will unmount/remount 
+        // or we rely on the parent rendering a normal Text component instead of TypewriterText.
         setDisplayed(text); 
         return;
     }
 
-    // Animation Start Logic (Using setTimeout(..., 0) to prevent flash)
     const resetAndStart = () => {
-        setDisplayed(''); // Reset to empty string
+        setDisplayed(''); 
         
         let i = 0;
-        const speed = 1; // NEARLY INSTANT (1ms per word/token)
+        const speed = 1; 
         
         const timer = setInterval(() => {
             if (i >= wordTokens.length) {
@@ -57,7 +63,6 @@ const TypewriterText: React.FC<{
                 return;
             }
             
-            // Append the next token (word, space, or newline)
             const nextToken = wordTokens[i];
             setDisplayed(prev => prev + nextToken);
             i++;
@@ -65,7 +70,6 @@ const TypewriterText: React.FC<{
         return timer;
     }
 
-    // Execute reset and animation start in the next microtask to avoid flash
     const startTimer = setTimeout(() => {
         const intervalId = resetAndStart();
         return () => clearInterval(intervalId);
@@ -103,61 +107,82 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
 }) => {
   const [customInput, setCustomInput] = useState('');
   const [typingPhase, setTypingPhase] = useState<'idle' | 'greeting' | 'monologue' | 'options' | 'done'>('idle');
-  const [lastCompletedOptionIndex, setLastCompletedOptionIndex] = useState(-1);
+  // Determines how many option buttons are currently visible
+  const [visibleOptionsCount, setVisibleOptionsCount] = useState(0);
 
   const contentKey = `${greeting}${monologue}${options.join('|')}`;
   
   const hasSubstantialMonologue = !!monologue && monologue.trim().split(/\s+/).filter(w => w.length > 0).length > 2;
 
-  // Reset logic & Start sequence
+  // 1. Reset & Cache Check Logic
   useEffect(() => {
       if (isLoading) {
           setTypingPhase('idle');
-          setLastCompletedOptionIndex(-1);
+          setVisibleOptionsCount(0);
           return;
       }
       
+      // When dialog becomes visible and we are ready
       if (visible && !isLoading && typingPhase === 'idle') {
-          setTypingPhase('greeting');
+          // Check if we have already seen this specific content interaction
+          if (viewedContentCache.has(contentKey)) {
+              // SKIP ANIMATION
+              setTypingPhase('done');
+              setVisibleOptionsCount(options.length); 
+          } else {
+              // PLAY ANIMATION
+              setTypingPhase('greeting');
+          }
       }
+  }, [visible, isLoading, contentKey, typingPhase, options.length]);
 
-  }, [visible, isLoading, contentKey]);
+  // 2. Mark content as viewed when animation finishes
+  useEffect(() => {
+      if (visible && !isLoading && typingPhase === 'done') {
+          viewedContentCache.add(contentKey);
+      }
+  }, [visible, isLoading, typingPhase, contentKey]);
 
-  // Handlers to sequence the main text
+  // 3. Option Sequencing Logic (Independent of Text Typing)
+  useEffect(() => {
+    if (typingPhase === 'options') {
+        if (options.length === 0) {
+            setTypingPhase('done');
+            return;
+        }
+
+        // Initialize sequence
+        setVisibleOptionsCount(0);
+        let current = 0;
+
+        const interval = setInterval(() => {
+            current += 1;
+            setVisibleOptionsCount(current);
+
+            if (current >= options.length) {
+                clearInterval(interval);
+                setTypingPhase('done');
+            }
+        }, 300); // 300ms delay between each button appearing
+
+        return () => clearInterval(interval);
+    }
+  }, [typingPhase, options.length]);
+
+
+  // Text Sequence Handlers
   const handleGreetingFinish = () => {
       if (hasSubstantialMonologue) {
           setTypingPhase('monologue');
       } else {
           setTypingPhase('options');
-          if (options.length > 0) {
-              setLastCompletedOptionIndex(0);
-          } else {
-              setTypingPhase('done');
-          }
       }
   };
 
   const handleMonologueFinish = () => {
       setTypingPhase('options');
-      if (options.length > 0) {
-          setLastCompletedOptionIndex(0);
-      } else {
-          setTypingPhase('done');
-      }
   };
   
-  // Handler to sequence the option buttons
-  const handleOptionFinish = (finishedIndex: number) => {
-      if (finishedIndex === lastCompletedOptionIndex) {
-          if (finishedIndex < options.length - 1) {
-              setLastCompletedOptionIndex(finishedIndex + 1);
-          } else {
-              setTypingPhase('done');
-          }
-      }
-  };
-
-
   const handleCustomSubmit = () => {
       if (customInput.trim().length > 0) {
           onSelectOption(customInput);
@@ -168,14 +193,11 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
   const contentOpacity = isLoading ? 0.4 : 1;
   const isSequencing = typingPhase !== 'done' && !isLoading;
 
-  // NEW LOGIC: Monologue should be hidden when in the 'greeting' phase,
-  // to be revealed when the 'monologue' phase starts.
   const monologueOpacity = isLoading 
-    ? 0.4 // Dimmed when loading (show full content)
+    ? 0.4 
     : (typingPhase === 'greeting' && isSequencing) 
-        ? 0 // Hidden when animating Greeting (or first loading)
-        : 1; // Fully visible when animating monologue/options, or done
-
+        ? 0 
+        : 1; 
 
   return (
     <Modal visible={visible} animationType="fade" transparent={true} onRequestClose={onClose}>
@@ -185,10 +207,8 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
       >
         <View style={styles.dialogContainer}>
             
-            {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.entityName}>{entityName}</Text>
-                {/* Close X is ONLY hidden during API loading */}
                 {!isLoading && (
                     <TouchableOpacity onPress={onClose} hitSlop={{top:10, bottom:10, left:10, right:10}}>
                         <Text style={styles.closeText}>✕</Text>
@@ -200,46 +220,47 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
                 
                 <EntityAvatar frames={frames} />
 
-                {/* Static Description */}
                 {description ? <Text style={styles.descriptionText}>{description}</Text> : null}
                 
-                {/* Greeting - Typewriter 1 (Starts the chain) */}
-                <TypewriterText 
-                    text={`"${greeting}"`} 
-                    isLoading={isLoading}
-                    startTyping={typingPhase === 'greeting'} 
-                    onFinishTyping={handleGreetingFinish}
-                    style={[styles.greetingText, { opacity: contentOpacity }]} 
-                />
+                {/* Greeting - uses Typewriter if animating, or standard Text if 'done' */}
+                {typingPhase === 'done' ? (
+                    <Text style={[styles.greetingText, { opacity: contentOpacity }]}>"{greeting}"</Text>
+                ) : (
+                    <TypewriterText 
+                        text={`"${greeting}"`} 
+                        isLoading={isLoading}
+                        startTyping={typingPhase === 'greeting'} 
+                        onFinishTyping={handleGreetingFinish}
+                        style={[styles.greetingText, { opacity: contentOpacity }]} 
+                    />
+                )}
 
-                {/* Monologue - Typewriter 2 */}
+                {/* Monologue */}
                 {monologue ? (
                     <View style={[styles.monologueContainer, { opacity: monologueOpacity }]}>
-                        <TypewriterText 
-                            text={monologue} 
-                            isLoading={isLoading}
-                            // Only start typing if the monologue is substantial AND we are in the 'monologue' phase
-                            startTyping={hasSubstantialMonologue && typingPhase === 'monologue'} 
-                            onFinishTyping={handleMonologueFinish}
-                            style={styles.monologueText} 
-                        />
-                        {/* FALLBACK: If monologue is present but not substantial enough to animate, 
-                            we ensure the text is visible once the greeting finishes.
-                            The opacity of the container already handles visibility based on typingPhase. */}
-                        {!hasSubstantialMonologue && typingPhase !== 'greeting' && !isLoading && (
-                            <Text style={styles.monologueText}>{monologue}</Text>
+                        {typingPhase === 'done' || !hasSubstantialMonologue ? (
+                             <Text style={styles.monologueText}>{monologue}</Text>
+                        ) : (
+                            <TypewriterText 
+                                text={monologue} 
+                                isLoading={isLoading}
+                                startTyping={hasSubstantialMonologue && typingPhase === 'monologue'} 
+                                onFinishTyping={handleMonologueFinish}
+                                style={styles.monologueText} 
+                            />
                         )}
                     </View>
                 ) : null}
                 
                 <View style={styles.separator} />
                 
-                {/* Options - Sequenced Typewriters */}
+                {/* Options - No Typewriter, Sequenced Fade In */}
                 <View style={{width: '100%', marginBottom: 15, opacity: contentOpacity}}>
                     {options.map((opt, index) => {
-                        const shouldType = typingPhase === 'options' && index === lastCompletedOptionIndex;
-                        const hasCompletedTyping = index < lastCompletedOptionIndex;
-                        const isTextVisible = typingPhase === 'done' || shouldType || hasCompletedTyping;
+                        // Visible if we are done, or if the sequencer has reached this index
+                        const isVisible = typingPhase === 'done' || (typingPhase === 'options' && index < visibleOptionsCount);
+                        
+                        if (!isVisible) return null;
 
                         return (
                             <TouchableOpacity 
@@ -249,13 +270,7 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
                                 disabled={isLoading || isSequencing}
                                 activeOpacity={isLoading || isSequencing ? 1 : 0.7}
                             >
-                                <TypewriterText 
-                                    text={`✦ ${opt}`} 
-                                    isLoading={isLoading}
-                                    startTyping={shouldType} 
-                                    onFinishTyping={() => handleOptionFinish(index)} 
-                                    style={[styles.optionText, { color: isTextVisible ? styles.optionText.color : 'transparent' }]} 
-                                />
+                                <Text style={styles.optionText}>✦ {opt}</Text>
                             </TouchableOpacity>
                         );
                     })}
@@ -280,7 +295,6 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
                     </TouchableOpacity>
                 </View>
 
-                {/* Loading Indicator Overlay */}
                 {isLoading && (
                     <View style={styles.loadingOverlay}>
                         <ActivityIndicator size="large" color="#3e2723" />
