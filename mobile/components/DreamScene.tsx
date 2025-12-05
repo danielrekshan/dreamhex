@@ -43,9 +43,22 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, onOpenBook, o
      if (width > 0 && height > 0) setViewSize({ width, height });
   };
 
-  const bgAsset = dreamData?.world_state?.generated_asset?.file_paths || [];
-  // Fallback for old data structure
-  const bgFrames = bgAsset.length > 0 ? bgAsset : (dreamData?.hex?.background_frames || []);
+  // --- BACKGROUND LOGIC ---
+  // Default to level 2 (Moving/Lightening) as requested
+  const currentLevel = dreamData?.world_state?.chaos_level ?? 2;
+  const levelKey = `level_${currentLevel}`;
+
+  // Try to find the specific level asset
+  let bgFrames = dreamData?.world_state?.generated_assets?.[levelKey]?.file_paths || [];
+
+  // Fallback 1: Legacy 'generated_asset' (single background)
+  if (bgFrames.length === 0) {
+      bgFrames = dreamData?.world_state?.generated_asset?.file_paths || [];
+  }
+  // Fallback 2: Old Hex format
+  if (bgFrames.length === 0) {
+      bgFrames = dreamData?.hex?.background_frames || [];
+  }
   
   const stations = dreamData?.stations || dreamData?.hex?.stations || [];
 

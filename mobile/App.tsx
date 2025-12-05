@@ -142,30 +142,44 @@ export default function App() {
             worldContext    
         );
 
-        if (response && response.station) {
+        if (response) {
             
-            // Log History
-            const newLog = `User: ${option} -> Entity (${response.station.entity_name}): ${response.station.entity_greeting}`;
-            setInteractionHistory(prev => [...prev, newLog]);
+            // 1. History Logging
+            if (response.station) {
+                const newLog = `User: ${option} -> Entity (${response.station.entity_name}): ${response.station.entity_greeting}`;
+                setInteractionHistory(prev => [...prev, newLog]);
+            }
 
-            // Update State
-            const updatedStations = dreamData.stations.map((s: any) => 
-                s.id === response.station.id ? response.station : s
-            );
+            // 2. Global State Update (Entities + World)
+            setDreamData((prev: any) => {
+                const newState = { ...prev };
+                
+                // Update Entity
+                if (response.station) {
+                     newState.stations = prev.stations.map((s: any) => 
+                        s.id === response.station.id ? response.station : s
+                    );
+                }
 
-            setDreamData((prev: any) => ({
-                ...prev,
-                stations: updatedStations
-            }));
-            
-            const newFrames = getEntityFrames(response.station);
-            setActiveEntity({
-                ...activeEntity,
-                greeting: response.station.entity_greeting,
-                monologue: response.station.entity_monologue,
-                options: response.station.interaction_options,
-                frames: newFrames 
+                // Update World (Chaos Level / Background)
+                if (response.world_state) {
+                    newState.world_state = response.world_state;
+                }
+
+                return newState;
             });
+            
+            // 3. UI Update (Dialog)
+            if (response.station) {
+                const newFrames = getEntityFrames(response.station);
+                setActiveEntity({
+                    ...activeEntity,
+                    greeting: response.station.entity_greeting,
+                    monologue: response.station.entity_monologue,
+                    options: response.station.interaction_options,
+                    frames: newFrames 
+                });
+            }
         }
 
     } catch (e) {
