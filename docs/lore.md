@@ -32,7 +32,7 @@ Short half-page style.
 
 *Welcome, traveler.*
 
-I am Doctor John Dee, and this is the Hexarchia Oneirica, my Magick Book of the Sixfold Dream Order. Long ago its pages were whole, carrying the wisdom of my dreams and visions. But a powerful dream shattered the book and cast its leaves across realms far beyond waking sight. You now hold the key to restoring what was lost. Speak your dream into the scrying stone. I will write it onto these pages, and together we will walk the world created by your vision.
+I am Doctor John Dee, and this is the Hexarchia Oneirica, my Magick Book of the Six Dream Powers. Long ago its pages were whole, carrying the wisdom of my dreams and visions. But a powerful dream shattered the book and cast its leaves across realms far beyond waking sight. You now hold the key to restoring what was lost. Speak your dream into the scrying stone. I will write it onto these pages, and together we will walk the world created by your vision.
 
 ---
 
@@ -126,7 +126,7 @@ Otto Loewi’s dream demonstrates repetition with purpose. He had long sought to
 ### **First-Person Dream Report**  
 
 
-I dreamed of two small frog hearts resting in separate dishes. One beat with a slow rhythm. The other was still. A drop of fluid moved from the first dish to the second, shimmering like a tiny bead of light. As soon as it touched the silent heart, the second heart began to beat. Their rhythms matched, gentle and sure. I knew this was the mechanism I had searched for. I woke with excitement, reached for a pen, and discovered that the details had already slipped away. The next night the dream returned with renewed clarity. I saw the hearts, the dishes, the shimmering drop. I woke and rushed to my laboratory. The dream had shown me the truth. The hearts responded exactly as I had seen in sleep.
+I, Otto Loewi, dreamed of two small frog hearts resting in separate dishes. One beat with a slow rhythm. The other was still. A drop of fluid moved from the first dish to the second, shimmering like a tiny bead of light. As soon as it touched the silent heart, the second heart began to beat. Their rhythms matched, gentle and sure. I knew this was the mechanism I had searched for. I woke with excitement, reached for a pen, and discovered that the details had already slipped away. The next night the dream returned with renewed clarity. I saw the hearts, the dishes, the shimmering drop. I woke and rushed to my laboratory. The dream had shown me the truth. The hearts responded exactly as I had seen in sleep.
 
 ---
 
@@ -144,7 +144,7 @@ Elias Howe could not solve the central challenge of his sewing machine. He incub
 ### **First-Person Dream Report**  
 
 
-I wandered through a foreign land and was seized by warriors. They dragged me before their leader, who scowled and pointed at my unfinished invention. They commanded me to complete it or face death. The warriors approached, each holding a spear. I noticed holes near the spear tips, small circles that glimmered faintly. They raised their weapons, and for a moment the holes aligned like a constellation. The pattern struck me with sudden force. I gasped and woke in terror. Then understanding flooded in. The needle must hold the thread near the tip, not the end. The dream had shown me the final piece. I ran to my workbench with shaking hands and completed the design.
+I, Elias Howe, wandered through a foreign land and was seized by warriors. They dragged me before their leader, who scowled and pointed at my unfinished invention. They commanded me to complete it or face death. The warriors approached, each holding a spear. I noticed holes near the spear tips, small circles that glimmered faintly. They raised their weapons, and for a moment the holes aligned like a constellation. The pattern struck me with sudden force. I gasped and woke in terror. Then understanding flooded in. The needle must hold the thread near the tip, not the end. The dream had shown me the final piece. I ran to my workbench with shaking hands and completed the design.
 
 ---
 
@@ -158,7 +158,7 @@ Sometimes creativity manifests fully during sleep, rising like a gift from the d
 ### **First-Person Dream Report**  
 
 
-I slept lightly, drifting in a pleasant warmth, when a melody began to play. It sounded clear, complete, and familiar, as if someone sat beside my bed with a soft instrument. The tune grew richer, carrying an emotion I could not name. I floated in it, listening as the notes settled into a perfect shape. When I woke, the melody continued inside me, vivid and gentle. I rushed to the piano and played it exactly as I had heard. The song flowed effortlessly, as though I were remembering rather than composing. The dream had given it to me whole.
+I, Paul McCartney, slept lightly, drifting in a pleasant warmth, when a melody began to play. It sounded clear, complete, and familiar, as if someone sat beside my bed with a soft instrument. The tune grew richer, carrying an emotion I could not name. I floated in it, listening as the notes settled into a perfect shape. When I woke, the melody continued inside me, vivid and gentle. I rushed to the piano and played it exactly as I had heard. The song flowed effortlessly, as though I were remembering rather than composing. The dream had given it to me whole.
 
 ---
 
@@ -172,7 +172,7 @@ Creative incubation can unravel complex problems by placing them into symbolic f
 ### **First-Person Dream Report**  
 
 
-I dreamed I carried the entire internet as if it were a stack of pages. They floated and shifted like thin, luminous cards. Each page had glowing lines connecting it to others. Some pages blazed with many links pointing toward them. Others flickered faintly with only a few connections. I watched the pattern ripple outward like a web of light. Suddenly I understood. The importance of a page was shown not by its words but by how many paths led to it. I woke filled with excitement and wrote down the idea as fast as I could. The dream had arranged the internet into a map. The ranking system was already there.
+I, Larry Page, dreamed I carried the entire internet as if it were a stack of pages. They floated and shifted like thin, luminous cards. Each page had glowing lines connecting it to others. Some pages blazed with many links pointing toward them. Others flickered faintly with only a few connections. I watched the pattern ripple outward like a web of light. Suddenly I understood. The importance of a page was shown not by its words but by how many paths led to it. I woke filled with excitement and wrote down the idea as fast as I could. The dream had arranged the internet into a map. The ranking system was already there.
 
 ---
 
@@ -190,7 +190,7 @@ René Descartes experienced a series of dreams that he believed were a turning p
 ### **First-Person Dream Report**  
 
 
-I found myself walking through a violent storm. The wind roared and pushed me toward a narrow passage. I felt fear, then resolve. When I entered the passage, the storm ceased at once. I stepped into a quiet room filled with books. The air felt heavy with significance. A man appeared and handed me a dictionary, his eyes thoughtful and calm. Another figure approached with a book of poetry. I sensed both logic and imagination pressing upon me. Then an unseen presence whispered that my path lay in uniting reason with vision. I woke with certainty that my life had changed. The dream had pointed toward my purpose.
+I, René Descartes, found myself walking through a violent storm. The wind roared and pushed me toward a narrow passage. I felt fear, then resolve. When I entered the passage, the storm ceased at once. I stepped into a quiet room filled with books. The air felt heavy with significance. A man appeared and handed me a dictionary, his eyes thoughtful and calm. Another figure approached with a book of poetry. I sensed both logic and imagination pressing upon me. Then an unseen presence whispered that my path lay in uniting reason with vision. I woke with certainty that my life had changed. The dream had pointed toward my purpose.
 
 ---
 
@@ -204,7 +204,7 @@ Black Elk’s vision is one of the most profound dream experiences documented. I
 ### **First-Person Dream Report**  
 
 
-I rose into the sky upon the backs of horses of many colors. They carried me swiftly to a place of great light. I stood before wise grandfathers seated upon a cloud. They spoke without words, filling me with warmth and gravity. One handed me a cup filled with healing waters. Another placed a bow in my hands that glowed with pale fire. They showed me the world below: green land, dark woods, shining rivers, and distant smoke rising from suffering places. I felt the ache and strength of my people. The grandfathers said I must help them. I woke with tears and a sense of destiny.
+I, Black Elk, rose into the sky upon the backs of horses of many colors. They carried me swiftly to a place of great light. I stood before wise grandfathers seated upon a cloud. They spoke without words, filling me with warmth and gravity. One handed me a cup filled with healing waters. Another placed a bow in my hands that glowed with pale fire. They showed me the world below: green land, dark woods, shining rivers, and distant smoke rising from suffering places. I felt the ache and strength of my people. The grandfathers said I must help them. I woke with tears and a sense of destiny.
 
 ---
 
@@ -218,7 +218,7 @@ Hélène Smith’s dreams revealed entire symbolic languages and worlds. Modern 
 ### **First-Person Dream Report**  
 
 
-I found myself speaking in a language I had never heard. The sounds slipped effortlessly from my mouth. The sky above shimmered with unfamiliar symbols. Beings gathered around me, tall and graceful. They listened with curiosity, then spoke in the same melodic tongue. Their words filled me with warmth and fascination. I felt as if I belonged among them, though I had never seen this world before. Colors and shapes moved like living script around us. When I woke, I could still hear their voices, and strange symbols lingered in my mind like fragments of a forgotten poetry.
+I, Hélène Smith, found myself speaking in a language I had never heard. The sounds slipped effortlessly from my mouth. The sky above shimmered with unfamiliar symbols. Beings gathered around me, tall and graceful. They listened with curiosity, then spoke in the same melodic tongue. Their words filled me with warmth and fascination. I felt as if I belonged among them, though I had never seen this world before. Colors and shapes moved like living script around us. When I woke, I could still hear their voices, and strange symbols lingered in my mind like fragments of a forgotten poetry.
 
 ---
 
@@ -236,7 +236,7 @@ Nikola Tesla possessed an extraordinary visionary capacity. Many of his inventio
 ### **First-Person Dream Report**  
 
 
-I drifted into a deep darkness lit by a gentle electric glow. A machine hovered before me, slowly rotating. It had beams extending from a central core, each moving in perfect harmony. Sparks leapt across the structure like tiny stars. I felt no fear, only wonder. I examined the machine from every angle. I rotated it in my mind and saw how each part fit together. The more I studied it, the clearer it became. When I woke, every detail remained. I reached immediately for paper and drew the machine with absolute precision, as though I had built it already.
+I, Nikola Tesla, drifted into a deep darkness lit by a gentle electric glow. A machine hovered before me, slowly rotating. It had beams extending from a central core, each moving in perfect harmony. Sparks leapt across the structure like tiny stars. I felt no fear, only wonder. I examined the machine from every angle. I rotated it in my mind and saw how each part fit together. The more I studied it, the clearer it became. When I woke, every detail remained. I reached immediately for paper and drew the machine with absolute precision, as though I had built it already.
 
 ---
 
@@ -250,7 +250,7 @@ Some dreams carry emotional truth so heavy that they cross thresholds of time. A
 ### **First-Person Dream Report**  
 
 
-I walked through the silent halls of the White House. Every room seemed washed in a pale, mournful light. The air felt heavy, as if mourning had already begun. In the East Room I saw a coffin surrounded by guards. Mourners whispered in low voices. I approached one and asked who had died. He looked at me with sorrow and said, "The President." I felt a chill that cut through my bones. I tried to speak but no words came. The scene blurred, and I woke shaking in the dark. The sense of doom lingered long after the images faded.
+I, Abraham Lincoln, walked through the silent halls of the White House. Every room seemed washed in a pale, mournful light. The air felt heavy, as if mourning had already begun. In the East Room I saw a coffin surrounded by guards. Mourners whispered in low voices. I approached one and asked who had died. He looked at me with sorrow and said, "The President." I felt a chill that cut through my bones. I tried to speak but no words came. The scene blurred, and I woke shaking in the dark. The sense of doom lingered long after the images faded.
 
 ---
 
@@ -264,7 +264,7 @@ Srinivasa Ramanujan’s dreams bridged intuition and sacred imagery. He often de
 ### **First-Person Dream Report**  
 
 
-I slept with a sense of quiet expectancy, as though some presence waited just beyond my thoughts. Suddenly a radiant figure appeared before me, glowing with a light both soft and brilliant. She wrote symbols in the air, each equation shining like a small star. Lines curved into elegant forms, connecting with grace and precision. I understood the patterns instantly, as if they were familiar truths. I reached toward them and felt warmth spread through me. When I woke, the symbols were still clear. I wrote them down at once, marveling at their strange and perfect beauty.
+I, Srinivasa Ramanujan, slept with a sense of quiet expectancy, as though some presence waited just beyond my thoughts. Suddenly a radiant figure appeared before me, glowing with a light both soft and brilliant. She wrote symbols in the air, each equation shining like a small star. Lines curved into elegant forms, connecting with grace and precision. I understood the patterns instantly, as if they were familiar truths. I reached toward them and felt warmth spread through me. When I woke, the symbols were still clear. I wrote them down at once, marveling at their strange and perfect beauty.
 
 ---
 

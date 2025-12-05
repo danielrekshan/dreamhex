@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DreamScene } from './components/DreamScene';
 import { BookReader } from './components/BookReader';
 import { EntityDialog } from './components/EntityDialog';
+import { MusicPlayer } from './components/MusicPlayer'; 
 import { BOOK_CONTENT, BookPage } from './BookManifest';
 import * as api from './api';
 
@@ -20,7 +21,7 @@ export default function App() {
   const [dreamData, setDreamData] = useState<any>(null);
   
   // NEW TRANSITION STATES
-  const [isExiting, setIsExiting] = useState(false);
+  const [isExiting, setIsExiting] = useState(false); 
   const [nextDreamSlug, setNextDreamSlug] = useState<string | null>(null);
   
   // UI States
@@ -241,6 +242,9 @@ export default function App() {
                 onExitAnimationComplete={handleExitAnimationComplete} // Controls state change
             />
         )}
+
+        {/* Music Player persists across dreams, now receives isExiting state */}
+        <MusicPlayer currentDreamSlug={currentDreamSlug} isExiting={isExiting} />
 
         <BookReader 
             visible={isBookOpen}

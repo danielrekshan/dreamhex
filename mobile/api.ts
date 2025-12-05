@@ -109,3 +109,15 @@ export const reprocessDream = async (dreamId: string, userId: string) => {
     throw error;
   }
 };
+
+export const getRandomMusic = async () => {
+  try {
+    const res = await fetch(`${API_URL}/music/random`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.url;
+  } catch (error) {
+    console.warn("Error fetching random music:", error);
+    return null;
+  }
+};

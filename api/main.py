@@ -2,9 +2,11 @@ import os
 import asyncio
 import uuid 
 import modal
+import random
 from fastapi import FastAPI, BackgroundTasks, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from google.cloud import firestore
+from google.cloud import storage
 from pydantic import BaseModel
 from typing import List, Optional, Any, Dict
 
@@ -13,6 +15,7 @@ import dream_analyzer
 app = FastAPI()
 
 _db_client = None
+_storage_client = None
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 
 def get_db():
@@ -21,9 +24,15 @@ def get_db():
         _db_client = firestore.Client(project=PROJECT_ID)
     return _db_client
 
+def get_storage():
+    global _storage_client
+    if _storage_client is None:
+        _storage_client = storage.Client(project=PROJECT_ID)
+    return _storage_client
+
 # --- CONFIG ---
 TEST_MODE = os.environ.get("TEST_MODE", "false").lower() == "true"
-GCS_BUCKET = os.environ.get("GCS_BUCKET_NAME")
+GCS_BUCKET = os.environ.get("GCS_BUCKET_NAME", "dreamhex-assets-dreamhex")
 if GCS_BUCKET:
     BASE_URL = f"https://storage.googleapis.com/{GCS_BUCKET}"
 else:
@@ -129,6 +138,28 @@ async def waterfall_generation(dream_data: dict[str, Any], doc_ref: firestore.Do
         doc_ref.update({"status": "ERROR"})
 
 # --- ENDPOINTS ---
+
+@app.get("/music/random")
+def get_random_music():
+    try:
+        client = get_storage()
+        bucket = client.bucket(GCS_BUCKET) 
+        
+        # List files in the music folder
+        blobs = list(bucket.list_blobs(prefix="music/"))
+        mp3s = [b for b in blobs if b.name.endswith(".mp3")]
+        
+        if not mp3s:
+            # Fallback if empty
+            return {"url": None}
+        
+        selected = random.choice(mp3s)
+        # Construct public URL
+        url = f"https://storage.googleapis.com/{GCS_BUCKET}/{selected.name}"
+        return {"url": url}
+    except Exception as e:
+        print(f"Error fetching music: {e}")
+        return {"url": None}
 
 @app.post("/warmup")
 async def warmup_gpu(req: WarmupRequest):

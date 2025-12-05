@@ -1,6 +1,8 @@
-fastapi==0.109.0
-uvicorn[standard]==0.27.0
+fastapi
+uvicorn
 google-cloud-firestore
-openai
+google-cloud-storage
+modal
 pydantic
-modal>=1.2
+python-dotenv
+requests
