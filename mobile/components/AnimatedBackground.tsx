@@ -1,31 +1,56 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei/native';
 import * as THREE from 'three';
 
 interface AnimatedBackgroundProps {
   frames: string[];
   fps?: number;
-  isVisible: boolean; // ADDED PROP
+  isVisible: boolean; 
 }
 
-// 1x1 Pixel Transparent PNG Base64 to satisfy hook when frames are empty
 const PLACEHOLDER_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
 export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ frames, fps = 0.5, isVisible }) => {
-  // 1. Defensive Hook Usage: Always pass a non-empty array
-  const textureSources = (frames && frames.length > 0) ? frames : [PLACEHOLDER_IMG];
-  
-  // 2. Load Textures (Always called)
-  const loadedTextures = useTexture(textureSources);
+  const [loadedTextures, setLoadedTextures] = useState<THREE.Texture[]>([]);
+  const [isPlaceholder, setIsPlaceholder] = useState(true);
 
-  // 3. Logic to determine if we are in "Real" mode or "Placeholder" mode
-  const isPlaceholder = !frames || frames.length === 0;
+  // Manual Loader to handle 404s gracefully
+  useEffect(() => {
+    const textureLoader = new THREE.TextureLoader();
+    // Default to placeholder immediately
+    const placeholderTex = textureLoader.load(PLACEHOLDER_IMG);
+    
+    if (!frames || frames.length === 0) {
+        setLoadedTextures([placeholderTex]);
+        setIsPlaceholder(true);
+        return;
+    }
+
+    const loadTextureSafe = (url: string) => {
+        return new Promise<THREE.Texture>((resolve) => {
+            textureLoader.load(
+                url,
+                (tex) => resolve(tex), // Success
+                undefined,
+                (err) => { // Error
+                    console.warn(`Failed to load background frame: ${url}. Status: 404/Error.`);
+                    resolve(placeholderTex); // Fallback
+                }
+            );
+        });
+    };
+
+    Promise.all(frames.map(frame => loadTextureSafe(frame))).then(textures => {
+        setLoadedTextures(textures);
+        setIsPlaceholder(false);
+    });
+  }, [frames]);
+
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const timer = useRef(0);
   const interval = 1 / fps;
-  const materialRef = useRef<THREE.MeshBasicMaterial>(null); // ADDED REF
+  const materialRef = useRef<THREE.MeshBasicMaterial>(null); 
 
   useFrame((state, delta) => {
     if (!isPlaceholder && loadedTextures.length > 1) {
@@ -36,39 +61,38 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ frames, 
       }
     }
 
-    // NEW: Opacity animation for entrance/exit (FADE IN/OUT)
     if (materialRef.current) {
         const targetOpacity = isVisible ? 1 : 0;
-        // Simple linear interpolation (lerp) for smooth fade
         materialRef.current.opacity = THREE.MathUtils.lerp(
             materialRef.current.opacity,
             targetOpacity,
-            delta * 10 // UPDATED: Faster fade speed
+            delta * 10 
         );
 
-        // Ensure transparency is enabled if we're fading
         if (materialRef.current.transparent === false) {
              materialRef.current.transparent = true;
         }
     }
   });
 
+  // Safely get current texture, defaulting to first if index is out of bounds
+  const activeTexture = loadedTextures[currentIndex] || loadedTextures[0];
+
+  if (!activeTexture) return null;
+
   return (
     <group rotation={[0, -Math.PI / 2, 0]}>
-      {/* Huge sphere for 360 effect */}
       <mesh scale={[-1, 1, 1]}> 
         <sphereGeometry args={[40, 32, 32]} />
         {isPlaceholder ? (
-           // Placeholder: Dark Void
            <meshBasicMaterial color="#050505" side={THREE.BackSide} />
         ) : (
-           // Real Texture
            <meshBasicMaterial 
-             ref={materialRef} // ADDED REF
-             map={loadedTextures[currentIndex]} 
+             ref={materialRef} 
+             map={activeTexture} 
              side={THREE.BackSide} 
-             transparent={true} // Must be true for opacity to work
-             opacity={0} // Start hidden
+             transparent={true} 
+             opacity={0} 
            />
         )}
       </mesh>

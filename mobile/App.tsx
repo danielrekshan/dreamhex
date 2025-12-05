@@ -39,6 +39,9 @@ export default function App() {
 
   const [dreamProgress, setDreamProgress] = useState<DreamProgress>({});
 
+  // NEW: Track if user has interacted to enable audio
+  const [hasInteracted, setHasInteracted] = useState(false);
+
   const availablePages = useMemo(() => {
     return BOOK_CONTENT.filter(p => unlockedPageIds.includes(p.id));
   }, [unlockedPageIds]);
@@ -149,25 +152,23 @@ export default function App() {
       });
   };
 
-  // NEW HANDLER: Set the book page index to the current dream's page when the book is opened
   const handleOpenBook = () => {
-      // 1. Find the index of the current dream's page in the availablePages array
+      setHasInteracted(true); // User interacted
       const currentPageIndex = availablePages.findIndex(
           p => p.type === 'DREAM_GATE' && p.targetDreamId === currentDreamSlug
       );
       
-      // 2. Set the book page index to the current dream page, or default to 0 if not found
       if (currentPageIndex !== -1) {
           setBookPageIndex(currentPageIndex);
       } else {
           setBookPageIndex(0); 
       }
 
-      // 3. Open the book
       setBookOpen(true);
   };
 
   const handleInteractStation = (targetStation: any) => {
+    setHasInteracted(true); // User interacted
     checkPageUnlock(currentDreamSlug); 
 
     updateProgress('VISIT_STATION', targetStation.id);
@@ -272,7 +273,11 @@ export default function App() {
             />
         )}
 
-        <MusicPlayer currentDreamSlug={currentDreamSlug} isExiting={isExiting} />
+        <MusicPlayer 
+            currentDreamSlug={currentDreamSlug} 
+            isExiting={isExiting} 
+            hasInteracted={hasInteracted} // Pass the prop
+        />
         
         <BookReader 
             visible={isBookOpen}
