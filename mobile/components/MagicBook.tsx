@@ -11,9 +11,7 @@ interface MagicBookProps extends GroupProps {
 }
 
 // Constants reflecting the component's design
-// UPDATED: Lowered by 1.5 units from -4.5 to -6.0
 const BASE_POSITION: [number, number, number] = [0, -6.0, 0]; 
-// UPDATED: Increased scale by 2x from 0.5 to 1.0
 const BASE_SCALE = 1.0; 
 const ANIMATION_SPEED = 8; 
 
@@ -23,15 +21,27 @@ const PAGE_HEIGHT = 8; // Depth (Z-axis in this group space)
 const PAGE_THICKNESS = 0.2;
 const COVER_THICKNESS = 0.3;
 const SPINE_RADIUS = 0.4;
-
-// Pages are now perfectly flat and squared up
 const OPEN_ANGLE = 0; 
 
-// Helper to truncate text for 3D display
-const truncate = (str: string | undefined, length: number) => {
+// Helper to strip markdown and truncate text for 3D display
+const stripMarkdown = (str: string | undefined) => {
     if (!str) return "";
-    // Remove markdown symbols roughly for the 3D preview
-    const clean = str.replace(/[*#_]/g, '');
+    // Aggressively remove markdown syntax: bold, italic, headers, links, and list markers
+    let clean = str
+        .replace(/(\*\*|__)(.*?)\1/g, '$2')  // Remove **bold**
+        .replace(/(\*|_)(.*?)\1/g, '$2')    // Remove *italic*
+        .replace(/#+\s/g, '')               // Remove headers (##, ###)
+        .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove [links](url)
+        .replace(/`([^`]+)`/g, '$1')        // Remove inline code
+        .replace(/^-\s/gm, '')              // Remove list items (- item)
+        .replace(/\n\n+/g, '\n\n')          // Consolidate extra newlines
+        .trim();
+        
+    return clean;
+};
+
+const truncate = (str: string | undefined, length: number) => {
+    const clean = stripMarkdown(str);
     return clean.length > length ? clean.substring(0, length) + "..." : clean;
 };
 

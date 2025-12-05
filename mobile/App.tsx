@@ -11,7 +11,7 @@ import { BOOK_CONTENT, BookPage, UnlockConditionType } from './BookManifest';
 import * as api from './api';
 
 const DREAM_DATABASE: any = require('./assets/world.json');
-const SESSION_KEY = 'dreamhex_session_v2'; // Changed key to avoid conflict with old state
+const SESSION_KEY = 'dreamhex_session_v2'; 
 
 // Type for Dream Progress Tracking
 type DreamProgress = {
@@ -19,6 +19,7 @@ type DreamProgress = {
         centralOpenCount: number;
         stationsVisited: Set<string>;
         interactedCount: number;
+        scarabFound: boolean; // NEW: Track if scarab for this dream is found
     }
 };
 
@@ -34,7 +35,6 @@ export default function App() {
   // Book & Page Logic
   const [isBookOpen, setBookOpen] = useState(false);
   const [bookPageIndex, setBookPageIndex] = useState(0); 
-  // Default pages unlocked: Intro pages + 1st Gate
   const [unlockedPageIds, setUnlockedPageIds] = useState<string[]>(['intro_1', 'intro_2', 'intro_3', 'intro_4', 'gate_john_dee']);
   const [foundPageNotification, setFoundPageNotification] = useState<BookPage | null>(null);
 
@@ -44,22 +44,35 @@ export default function App() {
   const [userId] = useState("user-demo-" + Math.floor(Math.random() * 1000));
   const [interactionHistory, setInteractionHistory] = useState<string[]>([]); 
 
-  // Dream Progress Tracking (for Unlock Conditions)
+  // Dream Progress Tracking
   const [dreamProgress, setDreamProgress] = useState<DreamProgress>({});
 
-  // --- DERIVED STATE ---
+  // Scarab logic derived from dreamProgress
+  const scarabCount = useMemo(() => {
+    return Object.values(dreamProgress).filter(p => p.scarabFound).length;
+  }, [dreamProgress]);
+
+  // --- DERIVED STATE (Book Content) ---
   const availablePages = useMemo(() => {
-    return BOOK_CONTENT.filter(p => unlockedPageIds.includes(p.id));
+    // Filter pages that are unlocked 
+    const pages = BOOK_CONTENT.filter(p => unlockedPageIds.includes(p.id));
+    
+    // Dynamically include the credits page if its immediate predecessor is present, 
+    // to allow user to reach the end.
+    const creditsPage = BOOK_CONTENT.find(p => p.id === 'credits');
+    if (creditsPage && !unlockedPageIds.includes('credits') && pages.length === BOOK_CONTENT.length - 1) { 
+         return [...pages, creditsPage];
+    }
+    
+    return pages;
+
   }, [unlockedPageIds]);
   
   const currentLeftPage = availablePages[bookPageIndex] || { content: " " };
   const currentRightPage = availablePages[bookPageIndex + 1] || { content: " " };
-
-  // Combine text for backwards compatibility with DreamScene logic structure
   const currentBookText = `${currentLeftPage.content} ${currentRightPage.content}`;
 
-
-  // --- INITIAL LOAD ---
+  // --- PERSISTENCE ---
   useEffect(() => {
     const loadSession = async () => {
         setLoading(true);
@@ -67,13 +80,11 @@ export default function App() {
             const savedState = await AsyncStorage.getItem(SESSION_KEY);
             if (savedState) {
                 const parsed = JSON.parse(savedState);
-                console.log("Loaded session from storage");
                 setDreamData(parsed.dreamData);
-                setInteractionHistory(parsed.history || []);
                 setCurrentDreamSlug(parsed.slug || 'floating-in-thought');
                 setUnlockedPageIds(parsed.unlockedPageIds || ['intro_1', 'intro_2', 'intro_3', 'intro_4', 'gate_john_dee']);
                 
-                // CRITICAL FIX: Ensure stationsVisited is re-hydrated as a Set
+                // Re-hydrate Sets
                 const loadedProgress = parsed.dreamProgress ? Object.entries(parsed.dreamProgress).reduce((acc, [key, val]: any) => {
                     acc[key] = { ...val, stationsVisited: new Set(val.stationsVisited) };
                     return acc;
@@ -93,38 +104,43 @@ export default function App() {
     loadSession();
   }, []);
 
-  const loadFromJSON = (slug: string) => {
-      const dreams = DREAM_DATABASE.dreams || [];
-      const found = dreams.find((d: any) => d.slug === slug);
-      setDreamData(found ? JSON.parse(JSON.stringify(found)) : dreams[0]);
-  };
-
-  // --- SAVE SESSION ---
   useEffect(() => {
       if (dreamData) {
           const session = {
               dreamData,
-              history: interactionHistory,
-              slug: currentDreamSlug,
-              unlockedPageIds,
               // Convert Set back to Array for serialization
               dreamProgress: Object.entries(dreamProgress).reduce((acc, [key, val]) => {
-                  acc[key] = { ...val, stationsVisited: Array.from(val.stationsVisited) };
+                  acc[key] = { 
+                      ...val, 
+                      stationsVisited: Array.from(val.stationsVisited),
+                      scarabFound: val.scarabFound || false 
+                  };
                   return acc;
-              }, {} as any)
+              }, {} as any),
+              slug: currentDreamSlug,
+              unlockedPageIds,
+              history: interactionHistory,
           };
           AsyncStorage.setItem(SESSION_KEY, JSON.stringify(session)).catch(e => console.warn("Save failed", e));
       }
   }, [dreamData, interactionHistory, currentDreamSlug, unlockedPageIds, dreamProgress]);
 
-  // --- PROGRESS AND UNLOCK LOGIC ---
+  const loadFromJSON = (slug: string) => {
+      const dreams = DREAM_DATABASE.dreams || [];
+      const found = dreams.find((d: any) => d.slug === slug);
+      setDreamData(found ? JSON.parse(JSON.stringify(found)) : dreams[0]);
+  };
+  
+  // --- SCARAB LOGIC (Hard Criteria) ---
 
-  const checkUnlockCondition = (slug: string, progress: DreamProgress[string], currentDreamStations: any[]) => {
-      const hiddenPage = BOOK_CONTENT.find(p => p.hiddenInDream === slug);
-      if (!hiddenPage || unlockedPageIds.includes(hiddenPage.id)) return;
+  const checkScarabCondition = (slug: string, progress: DreamProgress[string], currentDreamStations: any[]) => {
+      // Find the page whose scarabCondition applies to the CURRENT dream slug
+      const pageToUnlockScarab = BOOK_CONTENT.find(p => p.hiddenInDream === slug);
       
+      if (!pageToUnlockScarab || progress.scarabFound || !pageToUnlockScarab.scarabCondition) return; 
+
       let conditionMet = false;
-      switch (hiddenPage.condition as UnlockConditionType) {
+      switch (pageToUnlockScarab.scarabCondition as Exclude<UnlockConditionType, 'FIRST_INTERACTION'>) {
           case 'OPEN_CENTRAL_2X':
               if (progress.centralOpenCount >= 2) conditionMet = true;
               break;
@@ -135,53 +151,74 @@ export default function App() {
           case 'INTERACT_ONCE':
               if (progress.interactedCount >= 1) conditionMet = true;
               break;
-          case 'ENTER_OTHER_INTERACTION':
-              if (progress.interactedCount > 0) conditionMet = true; 
-              break;
           default:
               break;
       }
 
       if (conditionMet) {
-          setUnlockedPageIds(prev => {
-              if (!prev.includes(hiddenPage.id)) {
-                  setFoundPageNotification(hiddenPage);
-                  return [...prev, hiddenPage.id];
+          setDreamProgress(prev => {
+              const current = prev[slug];
+              if (current && !current.scarabFound) {
+                  Alert.alert("Golden Scarab Found!", `You have earned a Golden Scarab for completing the challenge in the ${dreamData?.title} dream.`);
+                  return { ...prev, [slug]: { ...current, scarabFound: true } };
               }
               return prev;
           });
       }
   };
 
+  // --- PAGE UNLOCK LOGIC (Easy Criteria) ---
+
+  const checkPageUnlock = (currentSlug: string) => {
+      // Find the NEXT page that is hidden in the current dream
+      const nextPage = BOOK_CONTENT.find(p => p.hiddenInDream === currentSlug);
+
+      if (nextPage && 
+          nextPage.pageUnlockCondition === 'FIRST_INTERACTION' &&
+          !unlockedPageIds.includes(nextPage.id)
+      ) {
+          setUnlockedPageIds(prev => {
+              if (!prev.includes(nextPage.id)) {
+                  setFoundPageNotification(nextPage);
+                  return [...prev, nextPage.id];
+              }
+              return prev;
+          });
+      }
+  }
+
+
   const updateProgress = (type: 'CENTRAL_OPEN' | 'VISIT_STATION' | 'INTERACT', stationId?: string) => {
       setDreamProgress(prev => {
-          // FIX: Ensure 'stationsVisited' is always initialized as a Set for safe mutation.
           const existingProgress = prev[currentDreamSlug];
+          
+          // Safely initialize or re-hydrate state properties
           const current = {
               centralOpenCount: existingProgress?.centralOpenCount || 0,
               stationsVisited: existingProgress?.stationsVisited || new Set(),
               interactedCount: existingProgress?.interactedCount || 0,
+              scarabFound: existingProgress?.scarabFound || false,
           };
           
           if (type === 'CENTRAL_OPEN') {
               current.centralOpenCount += 1;
           }
           if (type === 'VISIT_STATION' && stationId) {
-              current.stationsVisited.add(stationId); // .add() is now safe to call
+              current.stationsVisited.add(stationId); 
           }
           if (type === 'INTERACT') {
               current.interactedCount += 1;
           }
 
-          // Must create a new Set here so React detects the state change
+          // Create a new object and Set to ensure state updates correctly
           const newProgress = { 
-              centralOpenCount: current.centralOpenCount,
+              ...current,
               stationsVisited: new Set(current.stationsVisited),
-              interactedCount: current.interactedCount
           };
           const newState = { ...prev, [currentDreamSlug]: newProgress };
           
-          checkUnlockCondition(currentDreamSlug, newProgress, dreamData?.stations || []);
+          // Check for scarab unlock on every progress update
+          checkScarabCondition(currentDreamSlug, newProgress, dreamData?.stations || []);
           
           return newState;
       });
@@ -189,13 +226,18 @@ export default function App() {
 
   // --- HANDLERS ---
   const handleInteractStation = (targetStation: any) => {
+    // 1. Page Unlock Logic (occurs on first dialogue open of any entity in the current dream)
+    if (!activeEntity) { 
+        checkPageUnlock(currentDreamSlug); 
+    }
+
+    // 2. Scarab Progress Tracking
     updateProgress('VISIT_STATION', targetStation.id);
-    
-    // Central station is always position_index 0 in the array
     if (targetStation.position_index === 0) {
         updateProgress('CENTRAL_OPEN');
     }
 
+    // 3. Open Dialog
     let frames = getEntityFrames(targetStation);
 
     setActiveEntity({
@@ -222,7 +264,7 @@ export default function App() {
              setActiveEntity(prev => ({
                  ...prev,
                  greeting: `The entity responded to your inquiry: "${option}".`,
-                 monologue: "The truth still eludes you, but the threads of the dream shift slightly.",
+                 monologue: "The threads of the dream shift slightly.",
                  options: ["Ask something else"]
              }));
         }, 1000);
@@ -240,7 +282,11 @@ export default function App() {
           setIsExiting(true); 
           setBookOpen(false); 
       } else if (page.type === 'CREDITS_UNLOCK') {
-          Alert.alert("The Great Work", "You have finished the current content!");
+           if (page.requiredScarabs && scarabCount >= page.requiredScarabs) {
+               Alert.alert("The Great Work", "You have finished the current content!");
+           } else {
+               Alert.alert("Insufficient Scarabs", `You need ${page.requiredScarabs} Golden Scarabs to unlock The Great Work. You currently have ${scarabCount}.`);
+           }
       }
   };
 
@@ -251,7 +297,7 @@ export default function App() {
         setIsExiting(false);
         setNextDreamSlug(null);
         setFoundPageNotification(null);
-        // Reset reader index to show the first page of the new manifest state
+        
         const gateIndex = availablePages.findIndex(p => p.targetDreamId === nextDreamSlug);
         if (gateIndex !== -1) {
              setBookPageIndex(gateIndex);
@@ -286,7 +332,6 @@ export default function App() {
             <DreamScene 
                 key={currentDreamSlug} 
                 dreamData={dreamData}
-                // Now passes concatenated text, which DreamScene splits for left/right
                 bookText={currentBookText} 
                 onOpenBook={() => setBookOpen(true)}
                 onInteractStation={handleInteractStation}
@@ -296,6 +341,9 @@ export default function App() {
         )}
 
         <MusicPlayer currentDreamSlug={currentDreamSlug} isExiting={isExiting} />
+        
+        {/* Scarab counter is now ONLY managed by the BookReader component */}
+        
 
         <BookReader 
             visible={isBookOpen}
@@ -304,7 +352,7 @@ export default function App() {
             pageIndex={bookPageIndex}       
             setPageIndex={setBookPageIndex} 
             onAction={handleBookAction}
-            scarabCount={0}
+            scarabCount={scarabCount}
         />
 
         {activeEntity && (
@@ -315,15 +363,14 @@ export default function App() {
                 greeting={activeEntity.greeting}
                 monologue={activeEntity.monologue}
                 options={activeEntity.options}
-                // Ensure we get frames from the latest dreamData, not the entity cache
                 frames={getEntityFrames(dreamData.stations.find((s: any) => s.id === activeEntity.stationId))} 
                 isLoading={interactionLoading}
                 onSelectOption={handleOptionSelect}
                 onClose={() => {
                     setActiveEntity(null);
-                    setFoundPageNotification(null); // Clear notification on close
+                    setFoundPageNotification(null); 
                 }}
-                foundPage={foundPageNotification} // Pass notification
+                foundPage={foundPageNotification} 
             />
         )}
         
@@ -334,5 +381,5 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#000' },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center' }
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 });

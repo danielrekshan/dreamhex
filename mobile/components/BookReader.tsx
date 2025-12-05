@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, Dimensions, ScrollView, Image } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import { BookPage } from '../BookManifest';
 
@@ -12,24 +12,55 @@ interface BookReaderProps {
   // Controlled State Props
   pageIndex: number;
   setPageIndex: (i: number) => void;
+  
+  // ADDED SCARAB COUNT
+  scarabCount: number;
 }
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
+// Custom Markdown Renderer to ensure images are handled correctly
+const customRenderers = {
+  // Explicitly tell the library to render images as React Native <Image> components
+  image: (node: any, children: any, parentStyles: any, styles: any) => {
+    const uri = node.attributes.src;
+    
+    // Check if URI is valid before rendering
+    if (!uri) return null;
+
+    return (
+      // 1. Use the imageContainer style to center the image block horizontally
+      <View key={node.key} style={styles.imageContainer}>
+        <Image 
+          source={{ uri: uri }}
+          // 2. Use the image style to apply fixed width/height to satisfy the library requirement
+          style={styles.image} 
+          accessibilityLabel={node.attributes.alt || 'image'}
+        />
+      </View>
+    );
+  }
+};
+
+
 export const BookReader: React.FC<BookReaderProps> = ({ 
     visible, onClose, pages, onAction, 
-    pageIndex, setPageIndex 
+    pageIndex, setPageIndex, scarabCount
 }) => {
   
   const activePage = pages[pageIndex];
-  // Simple safety check
   if (!activePage) return null;
 
   const hasNext = pageIndex < pages.length - 1;
   const hasPrev = pageIndex > 0;
+  const isLastPage = pageIndex === pages.length - 1;
 
   const handleNext = () => { if (hasNext) setPageIndex(pageIndex + 1); };
   const handlePrev = () => { if (hasPrev) setPageIndex(pageIndex - 1); };
+
+  const isUnlockableAction = activePage.type === 'DREAM_GATE' || 
+                           (activePage.type === 'CREDITS_UNLOCK' && scarabCount >= (activePage.requiredScarabs || 0));
+
 
   return (
     <Modal visible={visible} animationType="slide" transparent={true} onRequestClose={onClose}>
@@ -39,6 +70,14 @@ export const BookReader: React.FC<BookReaderProps> = ({
             {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.pageIndicator}>Page {pageIndex + 1} of {pages.length}</Text>
+                
+                {/* CONDITIONAL RENDERING OF SCARAB COUNTER: Only visible on the last page */}
+                {isLastPage && (
+                    <View style={styles.scarabCounter}>
+                        <Text style={styles.scarabText}>Golden Scarabs: {scarabCount}</Text>
+                    </View>
+                )}
+                
                 <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                     <Text style={styles.closeText}>✕</Text>
                 </TouchableOpacity>
@@ -47,13 +86,17 @@ export const BookReader: React.FC<BookReaderProps> = ({
             {/* Content Area - Fixed Height for consistency */}
             <View style={styles.contentArea}>
                 <Text style={styles.titleText}>{activePage.title}</Text>
-                <View style={styles.markdownContainer}>
-                    {/* The Markdown component would typically be wrapped in a ScrollView 
-                        if the text can exceed the container size in a production app. */}
-                    <Markdown style={markdownStyles}>
+                
+                {/* WRAPPED MARKDOWN IN SCROLLVIEW FOR VERTICAL SCROLLING */}
+                <ScrollView style={styles.markdownScroll} contentContainerStyle={styles.markdownContentContainer}>
+                    <Markdown 
+                        key={pageIndex} 
+                        style={markdownStyles}
+                        renderers={customRenderers} 
+                    >
                         {activePage.content}
                     </Markdown>
-                </View>
+                </ScrollView>
             </View>
 
             {/* Footer Navigation - Fixed position */}
@@ -67,10 +110,18 @@ export const BookReader: React.FC<BookReaderProps> = ({
                 </TouchableOpacity>
 
                 {/* Action Button (Center) */}
-                {activePage.type === 'DREAM_GATE' || activePage.type === 'CREDITS_UNLOCK' ? (
+                {activePage.type === 'DREAM_GATE' ? (
                     <TouchableOpacity onPress={() => onAction(activePage)} style={styles.actionBtn}>
+                        <Text style={styles.actionText}>ENTER DREAM</Text>
+                    </TouchableOpacity>
+                ) : activePage.type === 'CREDITS_UNLOCK' ? (
+                    <TouchableOpacity 
+                        onPress={() => onAction(activePage)} 
+                        style={[styles.actionBtn, !isUnlockableAction && styles.lockedActionBtn]}
+                        disabled={!isUnlockableAction}
+                    >
                         <Text style={styles.actionText}>
-                             {activePage.type === 'DREAM_GATE' ? 'ENTER DREAM' : 'VIEW ENDING'}
+                             {scarabCount >= (activePage.requiredScarabs || 0) ? 'VIEW ENDING' : `LOCKED (${activePage.requiredScarabs})`}
                         </Text>
                     </TouchableOpacity>
                 ) : (
@@ -92,7 +143,7 @@ export const BookReader: React.FC<BookReaderProps> = ({
   );
 };
 
-// Markdown Styles for rendering rich text
+// Markdown Styles for rendering rich text and images
 const markdownStyles = StyleSheet.create({
     body: {
         fontSize: 18,
@@ -110,6 +161,18 @@ const markdownStyles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         fontFamily: 'serif',
+    },
+    // Fix: Set fixed width/height in pixels to satisfy the underlying library.
+    // The value 300px is chosen as it is roughly 50% of the 600px max container width.
+    image: {
+        width: 300, 
+        height: 300, 
+        resizeMode: 'contain',
+    },
+    // Custom style for the surrounding container of the image to ensure center alignment
+    imageContainer: {
+        alignItems: 'center', // This is what centers the image block horizontally
+        marginVertical: 10,
     }
 });
 
@@ -143,11 +206,30 @@ const styles = StyleSheet.create({
       borderBottomWidth: 1, 
       borderBottomColor: '#d7ccc8',
       paddingBottom: 15,
-      marginBottom: 15
+      marginBottom: 15,
+      position: 'relative'
   },
   pageIndicator: { fontFamily: 'serif', color: '#8d6e63', fontSize: 14, fontStyle: 'italic' },
   closeButton: { padding: 5 },
   closeText: { fontSize: 24, color: '#5d4037', fontWeight: 'bold' },
+  
+  // SCARAB STYLES
+  scarabCounter: {
+      position: 'absolute',
+      alignSelf: 'center',
+      backgroundColor: 'rgba(62, 39, 35, 0.2)', 
+      borderRadius: 15,
+      paddingVertical: 5,
+      paddingHorizontal: 10,
+      left: '50%',
+      transform: [{ translateX: -50 }],
+  },
+  scarabText: {
+      color: '#ffdd00',
+      fontSize: 12,
+      fontWeight: 'bold',
+      fontFamily: 'serif'
+  },
 
   contentArea: {
       flex: 1, 
@@ -160,10 +242,14 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       marginBottom: 20
   },
-  markdownContainer: {
+  // New Styles for ScrollView wrapping Markdown
+  markdownScroll: {
       flex: 1,
-      // Note: In a real app, large content would need an external ScrollView wrapping the Markdown component.
   },
+  markdownContentContainer: {
+      paddingBottom: 20, // Add some bottom padding for the scroll content
+  },
+
 
   footer: { 
       flexDirection: 'row', 
@@ -183,6 +269,9 @@ const styles = StyleSheet.create({
       paddingVertical: 10, 
       paddingHorizontal: 20, 
       borderRadius: 4 
+  },
+  lockedActionBtn: {
+      backgroundColor: '#a1887f', 
   },
   actionText: { color: '#fcfbf7', fontFamily: 'serif', fontWeight: 'bold', fontSize: 14 }
 });
