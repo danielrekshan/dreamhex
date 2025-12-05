@@ -306,7 +306,7 @@ In this world, observe how beauty and knowledge intertwine within dream vision.
     // hiddenInDream: 'abraham-lincolns-mourning-dream',
     // pageUnlockCondition: 'FIRST_INTERACTION', 
     content: `
-![Central Image](https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions_1_active_0.png)     
+![Central Image](https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_active_0.png)     
     
 **Dream Realm: Or perhaps the beginning?**
 

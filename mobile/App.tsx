@@ -8,9 +8,11 @@ import { BookReader } from './components/BookReader';
 import { EntityDialog } from './components/EntityDialog';
 import { MusicPlayer } from './components/MusicPlayer'; 
 import { BOOK_CONTENT, BookPage } from './BookManifest';
+import { interactEntity } from './api'; // Import API function
 
 const DREAM_DATABASE: any = require('./assets/world.json');
 const SESSION_KEY = 'dreamhex_session_v3';
+const USER_ID_KEY = 'dreamhex_user_id'; // Key for persistent user ID
 
 type DreamProgress = {
     [key: string]: {
@@ -24,6 +26,7 @@ export default function App() {
   const [currentDreamSlug, setCurrentDreamSlug] = useState('floating-in-thought');
   const [dreamData, setDreamData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState<string>('guest_user');
   
   const [isExiting, setIsExiting] = useState(false); 
   const [nextDreamSlug, setNextDreamSlug] = useState<string | null>(null);
@@ -54,6 +57,14 @@ export default function App() {
     const loadSession = async () => {
         setLoading(true);
         try {
+            // Load or Create User ID
+            let storedUserId = await AsyncStorage.getItem(USER_ID_KEY);
+            if (!storedUserId) {
+                storedUserId = 'user_' + Math.random().toString(36).substr(2, 9);
+                await AsyncStorage.setItem(USER_ID_KEY, storedUserId);
+            }
+            setUserId(storedUserId);
+
             const savedState = await AsyncStorage.getItem(SESSION_KEY);
             if (savedState) {
                 const parsed = JSON.parse(savedState);
@@ -196,17 +207,45 @@ export default function App() {
     setInteractionLoading(true);
 
     try {
-        setTimeout(() => {
-             setInteractionLoading(false);
-             setActiveEntity(prev => ({
-                 ...prev,
-                 greeting: `The entity responded to your inquiry: "${option}".`,
-                 monologue: "The threads of the dream shift slightly.",
-                 options: ["Ask something else"]
-             }));
-        }, 1000);
+        // 1. Retrieve the full station object
+        const station = dreamData.stations.find((s: any) => s.id === activeEntity.stationId);
+        
+        // 2. Call the API
+        const response = await interactEntity(
+            userId,
+            currentDreamSlug,
+            activeEntity.stationId,
+            option,
+            station,
+            dreamData // Pass full world context
+        );
+
+        // 3. Process Response
+        const updatedStation = response.station;
+        
+        // 4. Update Global Dream Data (so it persists)
+        const updatedStations = dreamData.stations.map((s: any) => 
+            s.id === updatedStation.id ? updatedStation : s
+        );
+        
+        setDreamData((prev: any) => ({
+            ...prev,
+            stations: updatedStations
+        }));
+
+        // 5. Update Active Dialog State
+        setActiveEntity((prev: any) => ({
+             ...prev,
+             greeting: updatedStation.entity_greeting,
+             monologue: updatedStation.entity_monologue,
+             options: updatedStation.interaction_options,
+             frames: getEntityFrames(updatedStation) 
+        }));
+        
+        setInteractionLoading(false);
 
     } catch (e) {
+        console.error("Interaction Error:", e);
         Alert.alert("Connection Error", "The dream resists your touch. (API Error)");
         setInteractionLoading(false);
     }
