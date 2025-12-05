@@ -17,10 +17,8 @@ const getStationConfig = (index: number, total: number) => {
   // CONFIG 1: The Central Station (Index 0)
   if (index === 0) {
     return {
-      // Raised up to 1.5. With scale 3 (Height ~12), bottom is at -4.5. 
-      // Book is at -5.5. This leaves a visible floating gap.
       position: [0, 1.5, 0] as [number, number, number], 
-      scale: 3.0 // 3x Scale
+      scale: 3.0 
     };
   }
 
@@ -46,26 +44,46 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, onOpenBook, o
   };
 
   const bgAsset = dreamData?.world_state?.generated_asset?.file_paths || [];
-  const stations = dreamData?.stations || [];
+  // Fallback for old data structure
+  const bgFrames = bgAsset.length > 0 ? bgAsset : (dreamData?.hex?.background_frames || []);
+  
+  const stations = dreamData?.stations || dreamData?.hex?.stations || [];
 
   return (
     <View style={styles.container} onLayout={onLayout}>
       {viewSize && (
         <Canvas 
             style={{ width: viewSize.width, height: viewSize.height }}
-            // Camera pulled back (z=16) and raised (y=2) to see the giant entity
             camera={{ position: [0, 2, 16], fov: 60 }} 
         >
           <color attach="background" args={['#000']} />
           <ambientLight intensity={1.5} />
           
           <Suspense fallback={null}>
-            <AnimatedBackground frames={bgAsset} />
+            <AnimatedBackground frames={bgFrames} />
 
             {stations.map((s: any, i: number) => {
-                const assetKeys = Object.keys(s.generated_assets || {});
-                const firstKey = assetKeys[0];
-                const frames = firstKey ? s.generated_assets[firstKey].file_paths : [];
+                // LOGIC: Check for generated_assets (world.json structure)
+                // If present, use the 'current_stance' to pick keys.
+                // Fallback to 'idle' or the first available key.
+                let frames: string[] = [];
+                
+                if (s.generated_assets) {
+                    const stance = s.current_stance || 'idle';
+                    if (s.generated_assets[stance]) {
+                        frames = s.generated_assets[stance].file_paths;
+                    } else if (s.generated_assets['idle']) {
+                        frames = s.generated_assets['idle'].file_paths;
+                    } else {
+                        // Fallback: take first key
+                        const keys = Object.keys(s.generated_assets);
+                        if (keys.length > 0) frames = s.generated_assets[keys[0]].file_paths;
+                    }
+                } else {
+                    // Fallback for old API generated data
+                    frames = s.sprite_frames || [];
+                }
+
                 const config = getStationConfig(i, stations.length);
 
                 return (
@@ -84,7 +102,7 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, onOpenBook, o
 
           <OrbitControls 
             enableZoom={false} 
-            enablePan={false} // DISABLES PANNING (Truck/Dolly)
+            enablePan={false} 
             maxPolarAngle={Math.PI / 1.6} 
           />
         </Canvas>

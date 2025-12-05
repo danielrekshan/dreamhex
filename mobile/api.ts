@@ -50,7 +50,15 @@ export const submitDream = async (userId: string, text: string) => {
   }
 };
 
-export const interactEntity = async (userId: string, dreamId: string, stationId: string, command: string) => {
+// UPDATED: Now accepts worldContext and stationData
+export const interactEntity = async (
+    userId: string, 
+    dreamId: string, 
+    stationId: string, 
+    command: string, 
+    stationData: any,
+    worldContext: any 
+) => {
   try {
     const res = await fetch(`${API_URL}/dreams/interact`, {
       method: 'POST',
@@ -59,7 +67,9 @@ export const interactEntity = async (userId: string, dreamId: string, stationId:
         user_id: userId, 
         dream_id: dreamId, 
         station_id: stationId, 
-        user_command: command 
+        user_command: command,
+        station_data: stationData,
+        world_context: worldContext // NEW: Rich context for the LLM
       })
     });
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -69,8 +79,6 @@ export const interactEntity = async (userId: string, dreamId: string, stationId:
     throw error;
   }
 };
-
-// --- NEW FUNCTIONS ---
 
 export const deleteDream = async (dreamId: string, userId: string) => {
   try {

@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, Image } from 'react-native';
+import { 
+    View, Text, StyleSheet, TouchableOpacity, Modal, 
+    ScrollView, Image, TextInput, ActivityIndicator, 
+    KeyboardAvoidingView, Platform 
+} from 'react-native';
 
 export interface EntityInteractionProps {
   visible: boolean;
   entityName: string;
+  description: string; // NEW: Added description
   greeting: string;
   options: string[];
-  frames: string[]; // NEW: Pass sprite frames to dialog
+  frames: string[]; 
+  isLoading: boolean; // NEW: Loading state
   onSelectOption: (option: string) => void;
   onClose: () => void;
 }
 
-// Sub-component to handle simple frame animation in RN View
 const EntityAvatar: React.FC<{ frames: string[] }> = ({ frames }) => {
   const [frameIndex, setFrameIndex] = useState(0);
   
@@ -19,7 +24,7 @@ const EntityAvatar: React.FC<{ frames: string[] }> = ({ frames }) => {
     if (!frames || frames.length <= 1) return;
     const interval = setInterval(() => {
         setFrameIndex(prev => (prev + 1) % frames.length);
-    }, 150); // ~6-7 FPS
+    }, 200); 
     return () => clearInterval(interval);
   }, [frames]);
 
@@ -39,47 +44,87 @@ const EntityAvatar: React.FC<{ frames: string[] }> = ({ frames }) => {
 };
 
 export const EntityDialog: React.FC<EntityInteractionProps> = ({ 
-  visible, entityName, greeting, options, frames, onSelectOption, onClose 
+  visible, entityName, description, greeting, options, frames, isLoading, onSelectOption, onClose 
 }) => {
+  const [customInput, setCustomInput] = useState('');
+
+  const handleCustomSubmit = () => {
+      if (customInput.trim().length > 0) {
+          onSelectOption(customInput);
+          setCustomInput('');
+      }
+  };
+
   return (
     <Modal visible={visible} animationType="fade" transparent={true} onRequestClose={onClose}>
-      <View style={styles.overlay}>
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+        style={styles.overlay}
+      >
         <View style={styles.dialogContainer}>
             
             {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.entityName}>{entityName}</Text>
-                <TouchableOpacity onPress={onClose} hitSlop={{top:10, bottom:10, left:10, right:10}}>
-                    <Text style={styles.closeText}>✕</Text>
-                </TouchableOpacity>
+                {/* Hide close button while loading to prevent state mismatch */}
+                {!isLoading && (
+                    <TouchableOpacity onPress={onClose} hitSlop={{top:10, bottom:10, left:10, right:10}}>
+                        <Text style={styles.closeText}>✕</Text>
+                    </TouchableOpacity>
+                )}
             </View>
 
-            {/* Content: Avatar + Text */}
-            <ScrollView style={styles.contentBody} contentContainerStyle={{alignItems: 'center'}}>
+            <ScrollView style={styles.contentBody} contentContainerStyle={{alignItems: 'center', paddingBottom: 20}}>
                 
-                {/* Animated Entity Display */}
+                {/* Avatar (Always Visible) */}
                 <EntityAvatar frames={frames} />
 
-                <Text style={styles.greetingText}>"{greeting}"</Text>
-                
-                <View style={styles.separator} />
-                
-                {/* Options List */}
-                <View style={{width: '100%'}}>
-                    {options.map((opt, index) => (
-                        <TouchableOpacity 
-                            key={index} 
-                            style={styles.optionBtn} 
-                            onPress={() => onSelectOption(opt)}
-                        >
-                            <Text style={styles.optionText}>✦ {opt}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
+                {isLoading ? (
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color="#3e2723" />
+                        <Text style={styles.loadingText}>Scrying response...</Text>
+                    </View>
+                ) : (
+                    <>
+                        {/* Description & Greeting */}
+                        {description ? <Text style={styles.descriptionText}>{description}</Text> : null}
+                        <Text style={styles.greetingText}>"{greeting}"</Text>
+                        
+                        <View style={styles.separator} />
+                        
+                        {/* Options List */}
+                        <View style={{width: '100%', marginBottom: 15}}>
+                            {options.map((opt, index) => (
+                                <TouchableOpacity 
+                                    key={index} 
+                                    style={styles.optionBtn} 
+                                    onPress={() => onSelectOption(opt)}
+                                >
+                                    <Text style={styles.optionText}>✦ {opt}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+
+                        {/* Write-in Option */}
+                        <View style={styles.inputContainer}>
+                            <TextInput
+                                style={styles.textInput}
+                                placeholder="Say something else..."
+                                placeholderTextColor="#8d6e63"
+                                value={customInput}
+                                onChangeText={setCustomInput}
+                            />
+                            <TouchableOpacity style={styles.sendBtn} onPress={handleCustomSubmit}>
+                                <Text style={styles.sendBtnText}>SEND</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                )}
+
             </ScrollView>
 
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -87,13 +132,13 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
 const styles = StyleSheet.create({
   overlay: { 
       flex: 1, 
-      backgroundColor: 'rgba(0,0,0,0.7)', 
-      justifyContent: 'center', // Centered vertically
-      alignItems: 'center'      // Centered horizontally
+      backgroundColor: 'rgba(0,0,0,0.8)', 
+      justifyContent: 'center', 
+      alignItems: 'center'      
   },
   dialogContainer: { 
-    width: '90%',     // Take up most width
-    height: '85%',    // Take up most height
+    width: '90%',     
+    height: '85%',    
     backgroundColor: '#f5f5dc', 
     borderRadius: 12, 
     borderWidth: 4, 
@@ -112,27 +157,73 @@ const styles = StyleSheet.create({
   
   contentBody: { flex: 1, padding: 20 },
   
-  // Avatar Styles
   avatarContainer: {
-      width: 200,
-      height: 200,
-      marginBottom: 20,
+      width: 180,
+      height: 180,
+      marginBottom: 15,
       justifyContent: 'center',
       alignItems: 'center',
-      // Optional: Add a subtle glow or background behind the entity
       backgroundColor: 'rgba(62, 39, 35, 0.1)',
-      borderRadius: 100
+      borderRadius: 90
   },
-  avatarImage: {
-      width: '100%',
-      height: '100%'
-  },
+  avatarImage: { width: '100%', height: '100%' },
   placeholderAvatar: { width: 150, height: 150, backgroundColor: '#ccc', borderRadius: 75, marginBottom: 20 },
 
-  greetingText: { fontSize: 22, fontFamily: 'serif', color: '#3e2723', fontStyle: 'italic', marginBottom: 20, textAlign: 'center' },
+  descriptionText: { fontSize: 16, color: '#5d4037', textAlign: 'center', marginBottom: 10, fontStyle: 'italic', paddingHorizontal: 10 },
+  greetingText: { fontSize: 20, fontFamily: 'serif', color: '#3e2723', fontWeight: 'bold', marginBottom: 10, textAlign: 'center' },
   
   separator: { height: 2, backgroundColor: '#d7ccc8', width: '100%', marginVertical: 15 },
   
-  optionBtn: { paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: '#efebe9', width: '100%' },
-  optionText: { fontSize: 18, color: '#5d4037', fontFamily: 'serif', textAlign: 'center' }
+  optionBtn: { 
+      paddingVertical: 12, 
+      paddingHorizontal: 10,
+      marginBottom: 8,
+      backgroundColor: '#efebe9', 
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: '#d7ccc8'
+  },
+  optionText: { fontSize: 16, color: '#3e2723', fontFamily: 'serif', textAlign: 'center' },
+
+  inputContainer: {
+      flexDirection: 'row',
+      width: '100%',
+      marginTop: 10,
+      borderTopWidth: 1,
+      borderTopColor: '#d7ccc8',
+      paddingTop: 15
+  },
+  textInput: {
+      flex: 1,
+      backgroundColor: '#fff',
+      borderWidth: 1,
+      borderColor: '#8d6e63',
+      borderRadius: 8,
+      padding: 10,
+      fontSize: 16,
+      color: '#3e2723',
+      fontFamily: 'serif'
+  },
+  sendBtn: {
+      marginLeft: 10,
+      backgroundColor: '#3e2723',
+      justifyContent: 'center',
+      paddingHorizontal: 15,
+      borderRadius: 8
+  },
+  sendBtnText: {
+      color: '#f5f5dc',
+      fontWeight: 'bold',
+      fontSize: 14
+  },
+  loadingContainer: {
+      marginTop: 30,
+      alignItems: 'center'
+  },
+  loadingText: {
+      marginTop: 10,
+      color: '#5d4037',
+      fontSize: 16,
+      fontStyle: 'italic'
+  }
 });

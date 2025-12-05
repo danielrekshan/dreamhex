@@ -6,13 +6,12 @@ from fastapi import FastAPI, BackgroundTasks, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from google.cloud import firestore
 from pydantic import BaseModel
-from typing import List, Optional, Any # Added Any for type clarity
+from typing import List, Optional, Any, Dict
 
 import dream_analyzer
 
 app = FastAPI()
 
-# --- FIX 1: LAZY DATABASE INITIALIZATION ---
 _db_client = None
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 
@@ -59,11 +58,12 @@ class InteractionRequest(BaseModel):
     dream_id: str
     station_id: str
     user_command: str
+    station_data: dict # Current state of the entity
+    world_context: dict # NEW: Summary of the dream world
 
 class WarmupRequest(BaseModel):
     user_id: Optional[str] = None 
 
-# NEW: Model for simple action endpoints (Delete/Reprocess)
 class DreamAction(BaseModel):
     user_id: str
 
@@ -75,7 +75,6 @@ async def waterfall_generation(dream_data: dict[str, Any], doc_ref: firestore.Do
     slug = dream_data["hex"]["slug"]
     stations = dream_data["hex"]["stations"]
     
-    # Configuration for Test Mode vs Prod
     frame_count_bg = 2 if TEST_MODE else 3
     frame_count_sprite = 2 if TEST_MODE else 4
     
@@ -97,20 +96,15 @@ async def waterfall_generation(dream_data: dict[str, Any], doc_ref: firestore.Do
             "status": "GENERATING_ENTITIES" 
         })
         
-        # Reload fresh data, as waterfall_generation might have been called twice (reprocess)
         dream_data = doc_ref.get().to_dict()
         stations = dream_data["hex"]["stations"]
 
-        # STEP 2: STATIONS (One by One)
+        # STEP 2: STATIONS
         active_stations = [s for s in stations if s["entity_name"]]
-        
-        if TEST_MODE: 
-            active_stations = active_stations[:1]
+        if TEST_MODE: active_stations = active_stations[:1]
 
         for station_data in active_stations:
             print(f"    2. Generating Station: {station_data['entity_name']}...")
-            
-            # Find the original index of the station
             s_idx = next(i for i, s in enumerate(stations) if s["id"] == station_data["id"])
             
             sprite_urls = await painter.generate_frames.remote.aio(
@@ -121,14 +115,10 @@ async def waterfall_generation(dream_data: dict[str, Any], doc_ref: firestore.Do
                 path_prefix=f"{slug}/stations/{station_data['id']}/frame"
             )
             
-            # Update the local object
             stations[s_idx]["sprite_frames"] = sprite_urls
             stations[s_idx]["asset_status"] = "COMPLETE"
 
-            # Immediate DB Update: This sprite is ready!
-            doc_ref.update({
-                "hex.stations": stations
-            })
+            doc_ref.update({"hex.stations": stations})
 
         # STEP 3: FINALIZE
         doc_ref.update({"status": "COMPLETE"})
@@ -137,7 +127,6 @@ async def waterfall_generation(dream_data: dict[str, Any], doc_ref: firestore.Do
     except Exception as e:
         print(f"❌ Error in waterfall: {e}")
         doc_ref.update({"status": "ERROR"})
-
 
 # --- ENDPOINTS ---
 
@@ -150,37 +139,28 @@ async def warmup_gpu(req: WarmupRequest):
         painter.wake_up.remote()
     return {"status": "warming"}
 
-
 @app.post("/dreams/report")
 async def submit_dream(req: DreamReport, bg_tasks: BackgroundTasks):
     db_client = get_db()
-    
-    # 1. LLM Analysis (Fast CPU task)
     analysis = await dream_analyzer.analyze_dream_text(req.report_text)
     dream_id = analysis.hex.slug
     
-    # 2. Initial DB Save (Placeholder)
     doc = analysis.dict()
     doc["id"] = dream_id
     doc["owner_id"] = req.user_id
     doc["status"] = "ANALYSIS_COMPLETE" 
-    
     doc["hex"]["background_frames"] = [] 
     
     doc_ref = db_client.collection("dreams").document(dream_id)
     doc_ref.set(doc)
     
-    # Update User
     user_ref = db_client.collection("users").document(req.user_id)
     try:
         user_ref.update({"unlocked_dreams": firestore.ArrayUnion([dream_id])})
     except:
         user_ref.set({"unlocked_dreams": [dream_id]})
     
-    # 3. Queue Waterfall
-    # Pass dict instead of pydantic model instance to avoid issues inside background task
     bg_tasks.add_task(waterfall_generation, doc, doc_ref)
-    
     return doc
 
 @app.get("/dreams/list")
@@ -199,72 +179,79 @@ def list_dreams(user_id: str):
             results.append({
                 "id": data["id"],
                 "title": data["hex"]["title"],
-                "description": data["summary_short"] if "summary_short" in data else "Dream analyzed.",
+                "description": data.get("summary_short", "Dream analyzed."),
                 "status": data["status"],
-                "thumbnail": data["hex"]["background_frames"][0] if data["hex"].get("background_frames") and data["hex"]["background_frames"] else None
+                "thumbnail": data["hex"]["background_frames"][0] if data["hex"].get("background_frames") else None
             })
     return results
 
 @app.post("/dreams/interact")
 async def interact(req: InteractionRequest, bg_tasks: BackgroundTasks):
+    print(f"🎭 Interaction requested by {req.user_id} on Dream {req.dream_id}, Station {req.station_id}")
     db_client = get_db()
-    doc_ref = db_client.collection("dreams").document(req.dream_id)
-    data = doc_ref.get().to_dict()
     
-    if not data: raise HTTPException(404, "Dream not found")
+    # 1. Use data provided by the client (stateless processing)
+    station = req.station_data
+    world_context = req.world_context
     
-    s_idx = next((i for i, s in enumerate(data["hex"]["stations"]) if s["id"] == req.station_id), -1)
-    if s_idx == -1: raise HTTPException(404, "Station not found")
-    station = data["hex"]["stations"][s_idx]
+    old_stance = station.get("current_stance", "idle")
+    old_greeting = station.get("entity_greeting", "")
+
+    # 2. Analyze Interaction with AI using rich context
+    rx = await dream_analyzer.analyze_interaction_text(
+        world_context,
+        station.get("entity_name", "Unknown"), 
+        old_stance,
+        req.user_command
+    )
     
-    rx = await dream_analyzer.analyze_interaction_text(station["entity_name"], station.get("state_end","idle"), req.user_command)
-    
+    # 3. Update Station Data (In Memory only)
     station.update({
         "state_start": rx.new_state_start, 
         "state_end": rx.new_state_end, 
         "entity_greeting": rx.new_greeting,
-        "interaction_options": rx.new_options
+        "interaction_options": rx.new_options,
+        "current_stance": rx.new_stance
     })
     
-    portal_unlocked = rx.unlock_trigger is not None
-    if portal_unlocked:
-        user_ref = db_client.collection("users").document(req.user_id)
-        try:
-            user_ref.update({"unlocked_dreams": firestore.ArrayUnion(["demo-dream-id"])})
-        except:
-             user_ref.set({"unlocked_dreams": ["demo-dream-id"]})
-
-    # Trigger Regen
-    async def regen():
-        painter = get_painter_instance()
-        if not painter: return
-        
-        regen_id = uuid.uuid4().hex[:4]
-        prefix = f"{req.dream_id}/stations/{station['id']}/regen-{regen_id}"
-        frames = 2 if TEST_MODE else 4
-        
-        try:
-            urls = await painter.generate_frames.remote.aio(
-                prompt_a=rx.new_state_start, 
-                prompt_b=rx.new_state_end, 
-                type="sprite", 
-                frames=frames, 
-                path_prefix=prefix
-            )
-            
-            station["sprite_frames"] = [f"{u}?t={regen_id}" for u in urls]
-            
-            curr_data = doc_ref.get().to_dict()
-            curr_data["hex"]["stations"][s_idx] = station
-            doc_ref.set(curr_data)
-        except Exception as e:
-            print(f"❌ REGEN ERROR: {e}")
-
-    bg_tasks.add_task(regen)
+    # 4. Log to 'interaction' collection with specific fields
+    interaction_log = {
+        "dream_id": req.dream_id,
+        "action_text": req.user_command,
+        "target_station_id": req.station_id,
+        "old_stance": old_stance,
+        "new_stance": rx.new_stance,
+        "old_greeting": old_greeting,
+        "new_greeting": rx.new_greeting,
+        "timestamp": firestore.SERVER_TIMESTAMP,
+        "user_id": req.user_id
+    }
     
-    return {"station": station, "unlock": portal_unlocked}
+    # try:
+    #     # db_client.collection("interaction").add(interaction_log)
+    # except Exception as e:
+    #     print(f"⚠️ Failed to log interaction: {e}")
 
+    # 5. Return updated station to client
+    print(f"✅ Interaction processed for Station {req.station_id}")
+    return {
+        "station": station, 
+        "unlock": rx.unlock_trigger is not None
+    }
 
+@app.delete("/dreams/{dream_id}")
+def delete_dream(dream_id: str, req: DreamAction):
+    db_client = get_db()
+    user_ref = db_client.collection("users").document(req.user_id)
+    user_ref.update({"unlocked_dreams": firestore.ArrayRemove([dream_id])})
+    return {"status": "success", "message": f"Dream {dream_id} removed."}
+
+@app.get("/dreams/{dream_id}")
+def get_dream_details(dream_id: str):
+    db_client = get_db()
+    doc = db_client.collection("dreams").document(dream_id).get()
+    if not doc.exists: raise HTTPException(404, "Dream not found")
+    return doc.to_dict()
 
 @app.post("/dreams/reprocess/{dream_id}")
 async def reprocess_dream(dream_id: str, req: DreamAction, bg_tasks: BackgroundTasks):
@@ -276,50 +263,15 @@ async def reprocess_dream(dream_id: str, req: DreamAction, bg_tasks: BackgroundT
         raise HTTPException(404, "Dream not found")
         
     dream_data = doc.to_dict()
-    
-    # 1. Reset status and clear assets
-    # Note: We must ensure we have the necessary data structures for the worker
-    
-    # Reset status
     dream_data["status"] = "ANALYSIS_COMPLETE" 
-    
-    # Clear asset references to trigger reload/placeholder display in app
     dream_data["hex"]["background_frames"] = [] 
     
-    # Clear sprite frames for all stations
     if "stations" in dream_data["hex"]:
         for s in dream_data["hex"]["stations"]:
             s["sprite_frames"] = []
             s["asset_status"] = "PENDING"
         
-    # 2. Save reset state
     doc_ref.set(dream_data)
-    
-    # 3. Re-queue generation
     bg_tasks.add_task(waterfall_generation, dream_data, doc_ref)
     
-    print(f"♻️ Dream {dream_id} reprocessed and generation re-queued.")
     return {"status": "requeued", "message": f"Dream {dream_id} reset and generation started."}
-
-
-
-# --- NEW ENDPOINTS ---
-
-@app.delete("/dreams/{dream_id}")
-def delete_dream(dream_id: str, req: DreamAction):
-    db_client = get_db()
-    
-    # 1. Remove dream ID from user's unlocked_dreams array
-    user_ref = db_client.collection("users").document(req.user_id)
-    user_ref.update({"unlocked_dreams": firestore.ArrayRemove([dream_id])})
-    
-    print(f"🗑️ Dream {dream_id} deleted for user {req.user_id}")
-    return {"status": "success", "message": f"Dream {dream_id} removed from user list."}
-
-@app.get("/dreams/{dream_id}")
-def get_dream_details(dream_id: str):
-    db_client = get_db()
-    doc = db_client.collection("dreams").document(dream_id).get()
-    if not doc.exists:
-        raise HTTPException(404, "Dream not found")
-    return doc.to_dict()
