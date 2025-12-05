@@ -12,7 +12,7 @@ const DREAM_DATABASE: any = require('./assets/dreamworld.json');
 
 export default function App() {
   // --- STATE ---
-  const [currentDreamSlug, setCurrentDreamSlug] = useState('dream-world-john-dee'); // Start on Dee's dream
+  const [currentDreamSlug, setCurrentDreamSlug] = useState('gate_john_dee'); // Start on Dee's dream
   const [dreamData, setDreamData] = useState<any>(null);
   
   // UI States

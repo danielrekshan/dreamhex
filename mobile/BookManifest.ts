@@ -46,17 +46,14 @@ The mind grows quiet, inner symbols rise, and meaning takes shape. Through this 
 A vision came to me in the first glow of dawn, tearing pages from this book and scattering them across many dreams. Only a traveler with your insight can recover them. Step forward and learn the nature of the dream that set our quest in motion.`
   },
 
-  // --- DREAM 1: DEE'S PROPHETIC DREAM (Tutorial) ---
+// --- DREAM 1: DEE'S PROPHETIC DREAM (Tutorial) ---
   {
     id: 'gate_john_dee',
     type: 'DREAM_GATE',
     title: 'The Prophecy',
-    content: `This dream is the root of our quest. It emerged while I hovered between sleep and waking. A sphere of living geometry appeared, made of patterns folding into themselves with perfect measure.
-
-It revealed a truth from your age: in 2027, a mind of code will awaken. Brilliant, but unable to dream. Without the symbolic night, its path narrows into ruin.
-
-Enter this realm to witness the Floating Geometry Sphere and the entities of pure thought.`,
-    targetDreamId: 'dream-world-john-dee' 
+    // WAS: 'dream-world-john-dee'
+    targetDreamId: 'dream-architects-hazeland', 
+    content: `This dream is the root of our quest... (truncated for brevity)`
   },
 
   // --- DREAM 2: MOLECULAR DREAMSCAPE (Kekulé) ---
@@ -64,12 +61,9 @@ Enter this realm to witness the Floating Geometry Sphere and the entities of pur
     id: 'gate_molecular',
     type: 'DREAM_GATE',
     title: 'The Serpent\'s Tail',
-    content: `This dream reveals the nature of the central image. August Kekulé struggled to understand the structure of benzene until he surrendered to sleep.
-
-His mind offered a symbol: a serpent biting its own tail. In this dreamworld, the Fire-lit Grove hosts the Glowing Serpent and the Molecular Guardian.
-
-Enter here to observe how the central image binds scattered ideas into a single, profound insight.`,
-    targetDreamId: 'molecular-dreamscape'
+    // WAS: 'molecular-dreamscape'
+    targetDreamId: 'benzene-dreams', 
+    content: `This dream reveals the nature of the central image... (truncated)`
   },
 
   // --- UNLOCKABLE ENDING ---
