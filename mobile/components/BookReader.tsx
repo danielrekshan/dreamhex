@@ -194,7 +194,7 @@ const markdownStyles = StyleSheet.create({
         fontFamily: 'serif',
     },
     image: {
-        width: '100%', 
+        width: 200, 
         height: 200, 
         resizeMode: 'contain',
     },
