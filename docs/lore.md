@@ -98,7 +98,7 @@ This dream reveals the nature of the central image, the symbol around which a dr
 ### **First-Person Dream Report**  
 
 
-I sat beside my fire, half awake, my mind drifting among thoughts of atoms and bonds. Chains of molecules danced before me, twisting like strings of tiny creatures. As I fell deeper into reverie, the chains curled and wove together. One chain bent into a circle. It twisted around itself, and then it became a serpent, its body glowing faintly. The serpent turned its head and bit its own tail. It began to spin, its ring form shimmering as if lit from within. I watched it rotate faster, sending ripples of recognition through me. I felt the insight before I fully grasped it. I startled awake, the image burning in my mind. The serpent, the ring, the endless cycle. It was benzene. The molecule had shown itself.
+I, August Kekulé, sat beside my fire, half awake, my mind drifting among thoughts of atoms and bonds. Chains of molecules danced before me, twisting like strings of tiny creatures. As I fell deeper into reverie, the chains curled and wove together. One chain bent into a circle. It twisted around itself, and then it became a serpent, its body glowing faintly. The serpent turned its head and bit its own tail. It began to spin, its ring form shimmering as if lit from within. I watched it rotate faster, sending ripples of recognition through me. I felt the insight before I fully grasped it. I startled awake, the image burning in my mind. The serpent, the ring, the endless cycle. It was benzene. The molecule had shown itself.
 
 ---
 
@@ -112,7 +112,7 @@ Thomas Edison understood the power of the borderland between waking and sleep. T
 ### **First-Person Dream Report**  
 
 
-I leaned back in my chair with a sphere in each hand. My mind loosened, drifting into gentle darkness. Shapes and sparks formed in the air. I saw two metal plates separated by a small gap. A current leapt between them like a tiny lightning bolt. The gap glowed, and I sensed a mechanism waiting to be built. The images drifted toward clarity. I felt my hand relax. One sphere slipped from my grasp and struck the floor with a sharp sound. I awoke at once. The spark remained in my mind, bright and whole. I reached for my notebook and sketched the image before it faded.
+I, Thomas Edison, leaned back in my chair with a sphere in each hand. My mind loosened, drifting into gentle darkness. Shapes and sparks formed in the air. I saw two metal plates separated by a small gap. A current leapt between them like a tiny lightning bolt. The gap glowed, and I sensed a mechanism waiting to be built. The images drifted toward clarity. I felt my hand relax. One sphere slipped from my grasp and struck the floor with a sharp sound. I awoke at once. The spark remained in my mind, bright and whole. I reached for my notebook and sketched the image before it faded.
 
 ---
 

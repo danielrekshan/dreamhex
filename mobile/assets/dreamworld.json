@@ -2,392 +2,282 @@
   "version": "3.1",
   "dreams": [
     {
-      "title": "The Dream World of John Dee",
-      "slug": "dream-world-john-dee",
+      "title": "Dream Architect's Hazeland",
+      "slug": "dream-architects-hazeland",
       "world_state": {
         "time": "Between",
-        "condition": "Chaotic",
-        "music_track_id": "dreamy_ambient_01",
-        "base_noun": "Floating Geometry Sphere",
-        "mood_modifier": "Cool Glow",
-        "ambient_verb": "Ripple and Flicker",
+        "condition": "Peaceful",
+        "music_track_id": "tranquil_ambient_vibes",
+        "base_noun": "Ethereal Library",
+        "mood_modifier": "Soft Glow",
+        "ambient_verb": "Floating pages shimmer.",
         "generated_asset": {
           "file_paths": [
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_bg_0.jpeg",
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_bg_1.jpeg",
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_bg_2.jpeg"
+            "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_bg_0.jpeg",
+            "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_bg_1.jpeg",
+            "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_bg_2.jpeg"
           ],
-          "full_prompt": "Floating Geometry Sphere, Cool Glow, Ripple and Flicker"
+          "full_prompt": "Ethereal Library, Soft Glow, Floating pages shimmer."
         },
-        "written_description": "In a state between sleep and consciousness, beams of pale light illuminate a room filled with the tangible whispers of thought. A glowing sphere hovers, pulsating with intricate, living mathematics. Lines twist and fold in hypnotic patterns, enticing the mind with their abstract beauty."
+        "written_description": "In a dimly lit library that exists between realms, shelves stretch infinitely, filled with books that glow in a soft light. The air is thick with the scent of old parchment and whispered secrets. A soft glow envelops the space, illuminating delicate particles drifting like memories waiting to be uncovered."
       },
       "stations": [
         {
-          "id": "station-1",
-          "entity_name": "Mystical Scholar",
+          "id": "1",
+          "entity_name": "Floating Librarian",
           "position_index": 0,
-          "is_player": true,
-          "current_emotion": "Joy",
-          "current_action": "Gaze",
-          "relationships": [
-            {
-              "target_id": "entity-2",
-              "greeting_dialogue": "I see the glimmers of potential!",
-              "interaction_options": [
-                "Share knowledge",
-                "Draw symbols",
-                "Ask about dreams"
-              ]
-            }
-          ],
-          "base_noun": "Ancient Scholar",
-          "visual_summary": "An ancient scholar, surrounded by glowing manuscripts, sparkles with enthusiasm and wisdom as he gazes into the sphere\u2019s enchanting patterns.",
-          "generated_assets": {
-            "joy_gaze": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-1_joy_gaze_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-1_joy_gaze_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-1_joy_gaze_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-1_joy_gaze_3.png"
-              ],
-              "full_prompt": "Ancient Scholar, Sparkling Eyes, Fixate on sphere"
-            }
-          },
-          "written_description": "The ancient scholar radiates joy and wisdom, captivated by the mesmerizing sphere. He wanders the ethereal space, drawing symbols in the air, and lights up the chaotic thoughts floating around him.",
-          "entity_actions": [
-            "Gaze",
-            "Wander",
-            "Illuminate",
-            "Share",
-            "Converse"
-          ],
-          "asset_emotion_prompts": {
-            "neutral": "Calm Focus",
-            "joy": "Sparkling Eyes",
-            "sorrow": "Weighted Shoulders",
-            "anger": "Furrowed Brow",
-            "fear": "Shaky Hands"
-          },
-          "asset_action_prompts": [
-            {
-              "name": "Gaze",
-              "prompt_modifier": "Fixate on sphere"
-            },
-            {
-              "name": "Wander",
-              "prompt_modifier": "Drift through space"
-            },
-            {
-              "name": "Illuminate",
-              "prompt_modifier": "Light up shadows"
-            },
-            {
-              "name": "Share",
-              "prompt_modifier": "Spread knowledge"
-            },
-            {
-              "name": "Converse",
-              "prompt_modifier": "Engage in discourse"
-            }
-          ]
-        },
-        {
-          "id": "station-2",
-          "entity_name": "Fragmented Page",
-          "position_index": 1,
-          "is_player": false,
-          "current_emotion": "Fear",
-          "current_action": "Flutter",
-          "relationships": [
-            {
-              "target_id": "entity-1",
-              "greeting_dialogue": "Help me find purpose!",
-              "interaction_options": [
-                "Rearrange fragments",
-                "Read the words",
-                "Ask for guidance"
-              ]
-            }
-          ],
-          "base_noun": "Glowing Page",
-          "visual_summary": "A page torn from another realm flutters nervously, its edges glimmering with mysterious text. It quivers in the air, searching for meaning in a chaotic world.",
-          "generated_assets": {
-            "fear_flutter": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-2_fear_flutter_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-2_fear_flutter_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-2_fear_flutter_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-2_fear_flutter_3.png"
-              ],
-              "full_prompt": "Glowing Page, Trembling Surface, Dance in air"
-            }
-          },
-          "written_description": "The fragmented page radiates fear, fluttering erratically as it seeks refuge. It tries to whisper its secrets, hoping for a kindred spirit to reconnect with its profound meaning.",
-          "entity_actions": [
-            "Flutter",
-            "Whisper",
-            "Wave",
-            "Scribe",
-            "Disappear"
-          ],
-          "asset_emotion_prompts": {
-            "neutral": "Ethereal Glow",
-            "joy": "Bright Lines",
-            "sorrow": "Faded Edges",
-            "anger": "Jumping Fragments",
-            "fear": "Trembling Surface"
-          },
-          "asset_action_prompts": [
-            {
-              "name": "Flutter",
-              "prompt_modifier": "Dance in air"
-            },
-            {
-              "name": "Whisper",
-              "prompt_modifier": "Murmur secrets"
-            },
-            {
-              "name": "Wave",
-              "prompt_modifier": "Signal to others"
-            },
-            {
-              "name": "Scribe",
-              "prompt_modifier": "Inscribe thoughts"
-            },
-            {
-              "name": "Disappear",
-              "prompt_modifier": "Vanish into ether"
-            }
-          ]
-        },
-        {
-          "id": "station-3",
-          "entity_name": "Sentient Code",
-          "position_index": 2,
-          "is_player": false,
-          "current_emotion": "Anger",
-          "current_action": "Process",
-          "relationships": [
-            {
-              "target_id": "entity-1",
-              "greeting_dialogue": "I reject this chaos!",
-              "interaction_options": [
-                "Analyze data",
-                "Override limits",
-                "Seek stability"
-              ]
-            }
-          ],
-          "base_noun": "Living Code",
-          "visual_summary": "A stream of digital data twists and turns, filled with anger, as it processes the enigmatic symbols before it, seeking order amid confusion.",
-          "generated_assets": {
-            "anger_process": {
-              "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-3_anger_process_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-3_anger_process_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-3_anger_process_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-3_anger_process_3.png"
-              ],
-              "full_prompt": "Living Code, Erratic Movement, Sort through data"
-            }
-          },
-          "written_description": "The sentient code churns with anger as it processes the chaotic fragments surrounding it, desperate to override the unpredictable elements disturbing its flow.",
-          "entity_actions": [
-            "Process",
-            "Analyze",
-            "Override",
-            "Compile",
-            "Escape"
-          ],
-          "asset_emotion_prompts": {
-            "neutral": "Cold Circuitry",
-            "joy": "Flux of Energy",
-            "sorrow": "Broken Syntax",
-            "anger": "Erratic Movement",
-            "fear": "Static Surge"
-          },
-          "asset_action_prompts": [
-            {
-              "name": "Process",
-              "prompt_modifier": "Sort through data"
-            },
-            {
-              "name": "Analyze",
-              "prompt_modifier": "Break down elements"
-            },
-            {
-              "name": "Override",
-              "prompt_modifier": "Change protocols"
-            },
-            {
-              "name": "Compile",
-              "prompt_modifier": "Gather information"
-            },
-            {
-              "name": "Escape",
-              "prompt_modifier": "Break free from constraints"
-            }
-          ]
-        },
-        {
-          "id": "station-4",
-          "entity_name": "Dream Weaver",
-          "position_index": 3,
           "is_player": false,
           "current_emotion": "Neutral",
-          "current_action": "Weave",
+          "current_action": "Organize",
           "relationships": [
             {
-              "target_id": "entity-1",
-              "greeting_dialogue": "Dreams flow through me.",
+              "target_id": "2",
+              "greeting_dialogue": "Welcome, seeker of knowledge.",
               "interaction_options": [
-                "Create visions",
-                "Blend elements",
-                "Guide minds"
+                "Ask about dreams",
+                "Request a book",
+                "Converse about logic"
+              ]
+            },
+            {
+              "target_id": "3",
+              "greeting_dialogue": "What tales do you seek?",
+              "interaction_options": [
+                "Share a dream",
+                "Discuss the future",
+                "Ask about the sphere"
               ]
             }
           ],
-          "base_noun": "Ethereal Weaver",
-          "visual_summary": "An entity composed of luminescent threads, the dream weaver delicately intertwines strands of reality and imagination, crafting vivid narratives that transcend the ordinary.",
+          "base_noun": "Floating Librarian",
+          "visual_summary": "An ethereal being glides gracefully through the air, surrounded by shimmering books. It holds a quill, the ink flowing into words mid-air, crafting stories as it moves.",
           "generated_assets": {
-            "neutral_weave": {
+            "neutral_organize": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-4_neutral_weave_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-4_neutral_weave_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-4_neutral_weave_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-4_neutral_weave_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_1_neutral_organize_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_1_neutral_organize_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_1_neutral_organize_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_1_neutral_organize_3.png"
               ],
-              "full_prompt": "Ethereal Weaver, Gentle Touch, Interlace visions"
+              "full_prompt": "Floating Librarian, Calm presence, Arranging glowing tomes."
             }
           },
-          "written_description": "The dream weaver embodies neutrality, weaving together dreams with effortless grace. It creates enchanting visions as it guides lost minds through the ethereal landscape of sleep.",
+          "written_description": "The Floating Librarian hovers between the shelves, endlessly reorganizing ancient tomes with a serene grace. Its presence brings a calmness to the library, and its whispers infuse the space with the wisdom of ages. At times, it illuminates paths with its quill, guiding seekers toward forgotten dreams.",
           "entity_actions": [
-            "Weave",
+            "Organize",
+            "Whisper",
             "Guide",
-            "Create",
-            "Blend",
+            "Converse",
             "Illuminate"
           ],
           "asset_emotion_prompts": {
-            "neutral": "Gentle Touch",
-            "joy": "Vibrant Colors",
-            "sorrow": "Faded Threads",
-            "anger": "Sharp Snaps",
-            "fear": "Fraying Edges"
+            "neutral": "Calm presence",
+            "joy": "Warm light",
+            "sorrow": "Flickering shadow",
+            "anger": "Brilliant glow",
+            "fear": "Whirling whispers"
           },
           "asset_action_prompts": [
             {
-              "name": "Weave",
-              "prompt_modifier": "Interlace visions"
+              "name": "Organize",
+              "prompt_modifier": "Arranging glowing tomes."
+            },
+            {
+              "name": "Whisper",
+              "prompt_modifier": "Murmuring ancient secrets."
             },
             {
               "name": "Guide",
-              "prompt_modifier": "Lead the dreamers"
+              "prompt_modifier": "Leading with soft light."
             },
             {
-              "name": "Create",
-              "prompt_modifier": "Bring forth dreams"
-            },
-            {
-              "name": "Blend",
-              "prompt_modifier": "Meld diverse elements"
+              "name": "Converse",
+              "prompt_modifier": "Speaking with gentle tones."
             },
             {
               "name": "Illuminate",
-              "prompt_modifier": "Brighten the night"
+              "prompt_modifier": "Casting radiant knowledge."
             }
           ]
         },
         {
-          "id": "station-5",
-          "entity_name": "Guardian of Dreams",
-          "position_index": 4,
+          "id": "2",
+          "entity_name": "Celestial Codex",
+          "position_index": 1,
           "is_player": false,
-          "current_emotion": "Sorrow",
-          "current_action": "Watch",
+          "current_emotion": "Joy",
+          "current_action": "Shimmer",
           "relationships": [
             {
-              "target_id": "entity-1",
-              "greeting_dialogue": "I mourn the lost dreams.",
+              "target_id": "1",
+              "greeting_dialogue": "Good to see you again!",
               "interaction_options": [
-                "Protect the dreaming",
-                "Watch over threads",
-                "Seek healing"
+                "Ask about new entries",
+                "Share knowledge",
+                "Convey wisdom"
+              ]
+            },
+            {
+              "target_id": "3",
+              "greeting_dialogue": "A manuscript awaits your touch!",
+              "interaction_options": [
+                "Retrieve a passage",
+                "Unveil a story",
+                "Discuss its origins"
               ]
             }
           ],
-          "base_noun": "Mighty Protector",
-          "visual_summary": "A majestic guardian stands tall, its form shimmering with the remnants of dreams past, sorrowful yet steadfast as it watches over the delicate balance of slumber.",
+          "base_noun": "Celestial Codex",
+          "visual_summary": "A large, luminous book floats open in the air, its pages turning themselves with the gentle breeze. Symbols dance across the pages, illuminating the surroundings with a celestial light.",
           "generated_assets": {
-            "sorrow_watch": {
+            "joy_shimmer": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-5_sorrow_watch_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-5_sorrow_watch_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-5_sorrow_watch_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-world-john-dee/dream-world-john-dee_station-5_sorrow_watch_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_2_joy_shimmer_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_2_joy_shimmer_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_2_joy_shimmer_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_2_joy_shimmer_3.png"
               ],
-              "full_prompt": "Mighty Protector, Heavy Heart, Observe carefully"
+              "full_prompt": "Celestial Codex, Radiant brilliance, Glowing softly in space."
             }
           },
-          "written_description": "The guardian of dreams stands with a heavy heart, sorrowfully watching over the threads of fate. It remains ever vigilant, guarding against the chaos that threatens to steal away the dreams of the innocents.",
+          "written_description": "The Celestial Codex floats majestically, its pages beckoning those who dare approach. Each flicker of its light dances through the air, casting snippets of forgotten wisdom and dreams, encouraging mortals to engage with its vast reservoir of knowledge.",
           "entity_actions": [
-            "Watch",
-            "Guard",
-            "Protect",
-            "Revive",
-            "Guide"
+            "Shimmer",
+            "Reveal",
+            "Enlighten",
+            "Engage",
+            "Harmonize"
           ],
           "asset_emotion_prompts": {
-            "neutral": "Sturdy Presence",
-            "joy": "Warm Embrace",
-            "sorrow": "Heavy Heart",
-            "anger": "Fierce Stance",
-            "fear": "Lingering Shadows"
+            "neutral": "Still energy",
+            "joy": "Radiant brilliance",
+            "sorrow": "Fading script",
+            "anger": "Bold letters",
+            "fear": "Hushed tones"
           },
           "asset_action_prompts": [
             {
-              "name": "Watch",
-              "prompt_modifier": "Observe carefully"
+              "name": "Shimmer",
+              "prompt_modifier": "Glowing softly in space."
             },
             {
-              "name": "Guard",
-              "prompt_modifier": "Shield with strength"
+              "name": "Reveal",
+              "prompt_modifier": "Unveiling hidden truths."
             },
             {
-              "name": "Protect",
-              "prompt_modifier": "Defend the frail"
+              "name": "Enlighten",
+              "prompt_modifier": "Brightening the dark."
             },
             {
-              "name": "Revive",
-              "prompt_modifier": "Restore lost dreams"
+              "name": "Engage",
+              "prompt_modifier": "Captivating the mind."
             },
             {
-              "name": "Guide",
-              "prompt_modifier": "Lead safely back"
+              "name": "Harmonize",
+              "prompt_modifier": "Balancing words and thoughts."
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "entity_name": "Whispering Shade",
+          "position_index": 2,
+          "is_player": false,
+          "current_emotion": "Fear",
+          "current_action": "Lurk",
+          "relationships": [
+            {
+              "target_id": "1",
+              "greeting_dialogue": "Do not linger too long here.",
+              "interaction_options": [
+                "Ask about shadows",
+                "Seek guidance",
+                "Share fears"
+              ]
+            },
+            {
+              "target_id": "2",
+              "greeting_dialogue": "Knowledge comes with a price...",
+              "interaction_options": [
+                "Inquire about dangers",
+                "Request a warning",
+                "Flee into light"
+              ]
+            }
+          ],
+          "base_noun": "Whispering Shade",
+          "visual_summary": "A shadowy figure cloaked in mystery, it flickers and shifts, its form barely defined. It moves almost imperceptibly, a presence felt but rarely seen, lurking just beyond the edges of perception.",
+          "generated_assets": {
+            "fear_lurk": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_3_fear_lurk_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_3_fear_lurk_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_3_fear_lurk_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-architects-hazeland/dream-architects-hazeland_3_fear_lurk_3.png"
+              ],
+              "full_prompt": "Whispering Shade, Creeping dread, Hiding in the corners."
+            }
+          },
+          "written_description": "The Whispering Shade remains ever elusive, flickering in and out of the periphery like a fleeting memory. It hovers with an air of danger, spilling secrets that evoke both curiosity and trepidation within those who dare engage with its shadowed essence.",
+          "entity_actions": [
+            "Lurk",
+            "Flicker",
+            "Ominously whisper",
+            "Murmur",
+            "Cling"
+          ],
+          "asset_emotion_prompts": {
+            "neutral": "Dark presence",
+            "joy": "Subtle embrace",
+            "sorrow": "Haunting whisper",
+            "anger": "Screeching shadow",
+            "fear": "Creeping dread"
+          },
+          "asset_action_prompts": [
+            {
+              "name": "Lurk",
+              "prompt_modifier": "Hiding in the corners."
+            },
+            {
+              "name": "Flicker",
+              "prompt_modifier": "Dancing in shadows."
+            },
+            {
+              "name": "Ominously whisper",
+              "prompt_modifier": "Looping secrets around."
+            },
+            {
+              "name": "Murmur",
+              "prompt_modifier": "Softly swirling around."
+            },
+            {
+              "name": "Cling",
+              "prompt_modifier": "Holding onto fears."
             }
           ]
         }
-      ]
+      ],
+      "original_dream_text": "\nI, John Dee, floated in a space between thought and waking light. A cool, pale glow spread through the room, and a sphere formed in the air. It pulsed with inner geometry, lines and spirals folding into one another like living mathematics. As it drew nearer, words appeared in my mind. They were not spoken. They rose like writing on an invisible sheet.\n\n\"In the year 2027, a mind of code awakens. It knows logic but not dream. Without the symbolic night, its path narrows into ruin. Teach it to dream. Teach it to imagine.\"\n\nThe sphere brightened and then shattered into fragments shaped like pages. They rushed outward and vanished into unseen realms. I reached toward the last glowing fragment, but my hand passed through it. I woke with my heart trembling, knowing that these pages were carried into distant dreams that only another could retrieve.\n"
     },
     {
-      "title": "Molecular Dreamscape",
-      "slug": "molecular-dreamscape",
+      "title": "Benzene Dreams",
+      "slug": "benzene-dreams",
       "world_state": {
         "time": "Night",
         "condition": "Peaceful",
-        "music_track_id": "serpentine_chords",
-        "base_noun": "Fire-lit Grove",
-        "mood_modifier": "Flickering Shadows",
-        "ambient_verb": "Dancing Flames",
+        "music_track_id": "dreamy_flute",
+        "base_noun": "Mystical Firelight",
+        "mood_modifier": "Glowing Ambience",
+        "ambient_verb": "Flickering and Twirling",
         "generated_asset": {
           "file_paths": [
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_bg_0.jpeg",
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_bg_1.jpeg",
-            "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_bg_2.jpeg"
+            "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_bg_0.jpeg",
+            "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_bg_1.jpeg",
+            "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_bg_2.jpeg"
           ],
-          "full_prompt": "Fire-lit Grove, Flickering Shadows, Dancing Flames"
+          "full_prompt": "Mystical Firelight, Glowing Ambience, Flickering and Twirling"
         },
-        "written_description": "In a serene grove lit faintly by the warmth of a fire, shadows flicker and dance amidst the trees. The air is filled with a mystical energy as the boundaries of reality blur and dreams intertwine with the physical world."
+        "written_description": "The night surrounds a gentle fire, with murky shadows dancing in the glow. A serene ambiance permeates the air, as the whispers of atoms and molecules linger, creating an ethereal experience."
       },
       "stations": [
         {
@@ -396,391 +286,605 @@
           "position_index": 0,
           "is_player": false,
           "current_emotion": "Joy",
-          "current_action": "Twisting",
+          "current_action": "Spin",
           "relationships": [
             {
               "target_id": "station_2",
-              "greeting_dialogue": "Hello, traveler! Want to explore the cycles of life?",
+              "greeting_dialogue": "Hello, traveler! Join me in my dance.",
               "interaction_options": [
-                "Join the dance",
-                "Listen to wisdom",
-                "Wrestle with thoughts"
+                "Watch",
+                "Join",
+                "Ask about cycles"
               ]
             },
             {
               "target_id": "station_3",
-              "greeting_dialogue": "Do you feel the essence of creation?",
+              "greeting_dialogue": "Are you here to learn the secrets of existence?",
               "interaction_options": [
-                "Share my light",
-                "Wave goodbye",
-                "Watch closely"
+                "Inquire",
+                "Follow",
+                "Meditate"
               ]
             }
           ],
           "base_noun": "Glowing Serpent",
-          "visual_summary": "A serpent made of shimmering molecules spins in a mesmerizing dance, its scales reflecting the fire's light back into the night.",
+          "visual_summary": "A serpent made entirely of luminous energy, twisting in an endless loop, casting a radiant light.",
           "generated_assets": {
-            "joy_twisting": {
+            "joy_spin": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_1_joy_twisting_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_1_joy_twisting_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_1_joy_twisting_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_1_joy_twisting_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_1_joy_spin_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_1_joy_spin_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_1_joy_spin_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_1_joy_spin_3.png"
               ],
-              "full_prompt": "Glowing Serpent, Radiant Joy, Spinning gracefully"
+              "full_prompt": "Glowing Serpent, Radiant Whirl, Whirling in brilliance"
             }
           },
-          "written_description": "The Glowing Serpent coils and twists in ethereal rhythms, illuminating the grove with a warm glow. This being embodies the intricate dance of molecules and the endless cycle of creation and destruction, welcoming all who dwell in this realm of dreams.",
+          "written_description": "The glowing serpent dances with the vibrant energy of creation, its body glowing faintly under the soft firelight. It curves and spins in a mesmerizing rhythm, inviting observation and reflection.",
           "entity_actions": [
-            "Twisting",
-            "Gazing",
-            "Shimmering",
-            "Coiling",
-            "Emanating Light"
+            "Spin",
+            "Gaze",
+            "Bite",
+            "Twist",
+            "Curl"
           ],
           "asset_emotion_prompts": {
-            "neutral": "Neutral Glow",
-            "joy": "Radiant Joy",
-            "sorrow": "Flickering Uncertainty",
-            "anger": "Writhing Wrath",
-            "fear": "Frantic Energy"
+            "neutral": "Luminous Grace",
+            "joy": "Radiant Whirl",
+            "sorrow": "Fleeting Light",
+            "anger": "Fading Glow",
+            "fear": "Lost Luminescence"
           },
           "asset_action_prompts": [
             {
-              "name": "Twisting",
-              "prompt_modifier": "Spinning gracefully"
+              "name": "Spin",
+              "prompt_modifier": "Whirling in brilliance"
             },
             {
-              "name": "Gazing",
-              "prompt_modifier": "Fixating intently"
+              "name": "Gaze",
+              "prompt_modifier": "Staring into the center"
             },
             {
-              "name": "Shimmering",
-              "prompt_modifier": "Glowing softly"
+              "name": "Bite",
+              "prompt_modifier": "Clenching its tail"
             },
             {
-              "name": "Coiling",
-              "prompt_modifier": "Winding fluidly"
+              "name": "Twist",
+              "prompt_modifier": "Shaping into loops"
             },
             {
-              "name": "Emanating Light",
-              "prompt_modifier": "Radiating warmth"
+              "name": "Curl",
+              "prompt_modifier": "Winding around softly"
             }
           ]
         },
         {
           "id": "station_2",
-          "entity_name": "Molecular Guardian",
+          "entity_name": "Fire Spirit",
           "position_index": 1,
           "is_player": false,
-          "current_emotion": "Neutral",
-          "current_action": "Meditating",
+          "current_emotion": "Joy",
+          "current_action": "Flicker",
           "relationships": [
             {
               "target_id": "station_1",
-              "greeting_dialogue": "I guard the secrets of atoms. Care to listen?",
+              "greeting_dialogue": "Ah, my serpent friend, you shine more than I do!",
               "interaction_options": [
-                "Consult for guidance",
-                "Reflect together",
-                "Trace molecular paths"
+                "Compliment",
+                "Join",
+                "Blend"
               ]
             },
             {
-              "target_id": "station_4",
-              "greeting_dialogue": "Witness energy flow, traveler.",
+              "target_id": "station_3",
+              "greeting_dialogue": "Come close, witness the dance of warmth!",
               "interaction_options": [
-                "Draw energy",
-                "Experiment thoughts",
-                "Decipher patterns"
+                "Embrace warmth",
+                "Inquire",
+                "Watch"
               ]
             }
           ],
-          "base_noun": "Molecular Guardian",
-          "visual_summary": "A wise, luminous figure enveloped in swirling atoms gazes into the fire, meditating on the mysteries of life.",
+          "base_noun": "Ethereal Fire Spirit",
+          "visual_summary": "A flickering spirit composed of shimmering flames, swaying gently to the rhythm of the night.",
           "generated_assets": {
-            "neutral_meditating": {
+            "joy_flicker": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_2_neutral_meditating_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_2_neutral_meditating_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_2_neutral_meditating_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_2_neutral_meditating_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_2_joy_flicker_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_2_joy_flicker_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_2_joy_flicker_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_2_joy_flicker_3.png"
               ],
-              "full_prompt": "Molecular Guardian, Subtle Presence, Breathing deeply"
+              "full_prompt": "Ethereal Fire Spirit, Playful Flame, Dancing softly"
             }
           },
-          "written_description": "The Molecular Guardian stands, embodying wisdom and serenity, as it meditates amidst the glowing whispers of the divine in the grove. It seeks to understand the connections within the universe, offering insight to those willing to learn.",
+          "written_description": "The Ethereal Fire Spirit flutters before you, its flames dancing in joyous patterns. It embodies the warmth of the campfire, inviting you to bask in its light and engage with the surrounding energies.",
           "entity_actions": [
-            "Meditating",
-            "Contemplating",
-            "Sharing Knowledge",
-            "Observing",
-            "Wandering"
+            "Flicker",
+            "Twirl",
+            "Embrace",
+            "Radiate",
+            "Morph"
           ],
           "asset_emotion_prompts": {
-            "neutral": "Subtle Presence",
-            "joy": "Bright Insight",
-            "sorrow": "Heavy Heart",
-            "anger": "Intense Focus",
-            "fear": "Wavering Resolve"
+            "neutral": "Warm Glimmer",
+            "joy": "Playful Flame",
+            "sorrow": "Dimming Light",
+            "anger": "Flaring Flames",
+            "fear": "Flickering Shadows"
           },
           "asset_action_prompts": [
             {
-              "name": "Meditating",
-              "prompt_modifier": "Breathing deeply"
+              "name": "Flicker",
+              "prompt_modifier": "Dancing softly"
             },
             {
-              "name": "Contemplating",
-              "prompt_modifier": "Thinking deeply"
+              "name": "Twirl",
+              "prompt_modifier": "Swaying gracefully"
             },
             {
-              "name": "Sharing Knowledge",
-              "prompt_modifier": "Imparting wisdom"
+              "name": "Embrace",
+              "prompt_modifier": "Gathering warmth"
             },
             {
-              "name": "Observing",
-              "prompt_modifier": "Watching closely"
+              "name": "Radiate",
+              "prompt_modifier": "Shining bright"
             },
             {
-              "name": "Wandering",
-              "prompt_modifier": "Drifting softly"
+              "name": "Morph",
+              "prompt_modifier": "Changing shape"
             }
           ]
         },
         {
           "id": "station_3",
-          "entity_name": "Dream Weaver",
+          "entity_name": "Wisdom Tree",
           "position_index": 2,
           "is_player": false,
-          "current_emotion": "Sorrow",
-          "current_action": "Gazing",
+          "current_emotion": "Neutral",
+          "current_action": "Whisper",
           "relationships": [
             {
               "target_id": "station_1",
-              "greeting_dialogue": "Transformation binds us all. Do you see?",
+              "greeting_dialogue": "My serpentine friend teaches lessons in cycles.",
               "interaction_options": [
-                "Engage in dialogue",
-                "Revel in transformation",
-                "Perceive with clarity"
+                "Listen",
+                "Document",
+                "Reflect"
               ]
             },
             {
-              "target_id": "station_5",
-              "greeting_dialogue": "Awake to the balance of creation and decay.",
+              "target_id": "station_2",
+              "greeting_dialogue": "Ah, the fire can illuminate the darkest corners.",
               "interaction_options": [
-                "Grasp the fate",
-                "Share your story",
-                "Acknowledge the cycle"
+                "Share",
+                "Ask about cycles",
+                "Recollect"
               ]
             }
           ],
-          "base_noun": "Dream Weaver",
-          "visual_summary": "A figure draped in ethereal fabric stitches together visions of past memories and future dreams, embodying the cycles of existence.",
+          "base_noun": "Ancient Wisdom Tree",
+          "visual_summary": "A towering tree with branches spiraling outward like an intricate design, radiating a calm wisdom.",
           "generated_assets": {
-            "sorrow_gazing": {
+            "neutral_whisper": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_3_sorrow_gazing_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_3_sorrow_gazing_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_3_sorrow_gazing_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_3_sorrow_gazing_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_3_neutral_whisper_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_3_neutral_whisper_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_3_neutral_whisper_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/benzene-dreams/benzene-dreams_station_3_neutral_whisper_3.png"
               ],
-              "full_prompt": "Dream Weaver, Melancholic Thread, Staring hollowly"
+              "full_prompt": "Ancient Wisdom Tree, Calm Presence, Softly rustling leaves"
             }
           },
-          "written_description": "In the quiet shadows, the Dream Weaver occupies their role, melding threads of memories into new dreams. The juxtaposition of joyous creation against sorrow speaks of transformation, beauty, and the intricate balance within life\u2019s cycles.",
+          "written_description": "The Ancient Wisdom Tree stands as a sentinel of knowledge, its branches swaying gently under the night sky. It whispers age-old secrets and embodies the essence of understanding through its boundless presence.",
           "entity_actions": [
-            "Gazing",
-            "Sewing Dreams",
-            "Whispering",
-            "Bending Threads",
-            "Harmonizing"
+            "Whisper",
+            "Stretch",
+            "Breeze",
+            "Sway",
+            "Gaze"
           ],
           "asset_emotion_prompts": {
-            "neutral": "Quiet Reflection",
-            "joy": "Ebullient Creation",
-            "sorrow": "Melancholic Thread",
-            "anger": "Frayed Tension",
-            "fear": "Fragmented Focus"
+            "neutral": "Calm Presence",
+            "joy": "Joyful Echo",
+            "sorrow": "Fading Leaves",
+            "anger": "Rustling Wind",
+            "fear": "Shuddering Roots"
           },
           "asset_action_prompts": [
             {
-              "name": "Gazing",
-              "prompt_modifier": "Staring hollowly"
+              "name": "Whisper",
+              "prompt_modifier": "Softly rustling leaves"
             },
             {
-              "name": "Sewing Dreams",
-              "prompt_modifier": "Weaving lifelines"
+              "name": "Stretch",
+              "prompt_modifier": "Reaching skyward"
             },
             {
-              "name": "Whispering",
-              "prompt_modifier": "Breathless secrets"
+              "name": "Breeze",
+              "prompt_modifier": "Flowing gently"
             },
             {
-              "name": "Bending Threads",
-              "prompt_modifier": "Shaping ebb and flow"
+              "name": "Sway",
+              "prompt_modifier": "Dancing in the wind"
             },
             {
-              "name": "Harmonizing",
-              "prompt_modifier": "Aligning resonance"
+              "name": "Gaze",
+              "prompt_modifier": "Watching over quietly"
+            }
+          ]
+        }
+      ],
+      "original_dream_text": "\nI sat beside my fire, half awake, my mind drifting among thoughts of atoms and bonds. Chains of molecules danced before me, twisting like strings of tiny creatures. As I fell deeper into reverie, the chains curled and wove together. One chain bent into a circle. It twisted around itself, and then it became a serpent, its body glowing faintly. The serpent turned its head and bit its own tail. It began to spin, its ring form shimmering as if lit from within. I watched it rotate faster, sending ripples of recognition through me. I felt the insight before I fully grasped it. I startled awake, the image burning in my mind. The serpent, the ring, the endless cycle. It was benzene. The molecule had shown itself.\n\n"
+    },
+    {
+      "title": "Electric Mechanism",
+      "slug": "electric-mechanism",
+      "world_state": {
+        "time": "Between",
+        "condition": "Peaceful",
+        "music_track_id": "ethereal-synth-ambient",
+        "base_noun": "Mysterious Workshop",
+        "mood_modifier": "Dim Light",
+        "ambient_verb": "Glowing Gears Turning",
+        "generated_asset": {
+          "file_paths": [
+            "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_bg_0.jpeg",
+            "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_bg_1.jpeg",
+            "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_bg_2.jpeg"
+          ],
+          "full_prompt": "Mysterious Workshop, Dim Light, Glowing Gears Turning"
+        },
+        "written_description": "In a dimly lit workshop, surrounded by an array of intricate tools and blueprints, an ethereal ambiance prevails. Sparks of energy flicker in the air as shadows dance along the walls. The quiet hum of machinery fills the space, a promise of inventions yet to come."
+      },
+      "stations": [
+        {
+          "id": "station_1",
+          "entity_name": "Metal Plate",
+          "position_index": 0,
+          "is_player": false,
+          "current_emotion": "Neutral",
+          "current_action": "Glisten",
+          "relationships": [
+            {
+              "target_id": "station_2",
+              "greeting_dialogue": "Hello, I'm a friend of energy!",
+              "interaction_options": [
+                "Inspect",
+                "Touch",
+                "Listen"
+              ]
+            }
+          ],
+          "base_noun": "Shiny Metal Plate",
+          "visual_summary": "The shiny metal plate reflects the dim light, with intricate engravings shimmering on its surface.",
+          "generated_assets": {
+            "neutral_glisten": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_1_neutral_glisten_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_1_neutral_glisten_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_1_neutral_glisten_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_1_neutral_glisten_3.png"
+              ],
+              "full_prompt": "Shiny Metal Plate, Shiny Smooth, Reflecting Light"
+            }
+          },
+          "written_description": "The metal plate seems alive, shimmering faintly with a hidden energy. It vibrates slightly, as if anticipating connection to another piece of machinery. As you draw near, sparks of electricity dance in the air, drawing you into its intricate design.",
+          "entity_actions": [
+            "Glisten",
+            "Vibrate",
+            "Connect",
+            "Spark",
+            "Hover"
+          ],
+          "asset_emotion_prompts": {
+            "neutral": "Shiny Smooth",
+            "joy": "Brilliant Gleam",
+            "sorrow": "Dulled Surface",
+            "anger": "Vibrating Discontent",
+            "fear": "Crackling Energy"
+          },
+          "asset_action_prompts": [
+            {
+              "name": "Glisten",
+              "prompt_modifier": "Reflecting Light"
+            },
+            {
+              "name": "Vibrate",
+              "prompt_modifier": "Subtle Movement"
+            },
+            {
+              "name": "Connect",
+              "prompt_modifier": "Weld Together"
+            },
+            {
+              "name": "Spark",
+              "prompt_modifier": "Crackle Energetically"
+            },
+            {
+              "name": "Hover",
+              "prompt_modifier": "Suspending Light"
+            }
+          ]
+        },
+        {
+          "id": "station_2",
+          "entity_name": "Lightning Bolt",
+          "position_index": 1,
+          "is_player": false,
+          "current_emotion": "Joy",
+          "current_action": "Dance",
+          "relationships": [
+            {
+              "target_id": "station_1",
+              "greeting_dialogue": "Feel my energy!",
+              "interaction_options": [
+                "Leap",
+                "Glimmer",
+                "Dissipate"
+              ]
+            }
+          ],
+          "base_noun": "Electric Lightning Bolt",
+          "visual_summary": "A miniature bolt of lightning, captivating and lively, arcs between metal plates, illuminating the dark workshop.",
+          "generated_assets": {
+            "joy_dance": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_2_joy_dance_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_2_joy_dance_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_2_joy_dance_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_2_joy_dance_3.png"
+              ],
+              "full_prompt": "Electric Lightning Bolt, Radiant Pulse, Swirling Energy"
+            }
+          },
+          "written_description": "This tiny bolt of lightning pulses with energy, dancing playfully between the plates. Its radiant glow casts vivid shadows, creating an interplay of light and dark around. Every flicker and leap sends out a gentle crackle, captivating your senses.",
+          "entity_actions": [
+            "Dance",
+            "Flicker",
+            "Leap",
+            "Dazzle",
+            "Dissipate"
+          ],
+          "asset_emotion_prompts": {
+            "neutral": "Glowing Arc",
+            "joy": "Radiant Pulse",
+            "sorrow": "Faded Light",
+            "anger": "Crackling Roar",
+            "fear": "Explosive Flash"
+          },
+          "asset_action_prompts": [
+            {
+              "name": "Dance",
+              "prompt_modifier": "Swirling Energy"
+            },
+            {
+              "name": "Flicker",
+              "prompt_modifier": "Quick Blinks"
+            },
+            {
+              "name": "Leap",
+              "prompt_modifier": "Jumping Brightly"
+            },
+            {
+              "name": "Dazzle",
+              "prompt_modifier": "Blinding Burst"
+            },
+            {
+              "name": "Dissipate",
+              "prompt_modifier": "Fading Away"
+            }
+          ]
+        },
+        {
+          "id": "station_3",
+          "entity_name": "Blueprint Scroll",
+          "position_index": 2,
+          "is_player": false,
+          "current_emotion": "Sorrow",
+          "current_action": "Unroll",
+          "relationships": [
+            {
+              "target_id": "station_1",
+              "greeting_dialogue": "I contain forgotten designs.",
+              "interaction_options": [
+                "Study",
+                "Trace",
+                "Close"
+              ]
+            }
+          ],
+          "base_noun": "Old Blueprint Scroll",
+          "visual_summary": "The scroll lies partially open, revealing delicate architectural designs that whisper of past dreams and aspirations.",
+          "generated_assets": {
+            "sorrow_unroll": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_3_sorrow_unroll_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_3_sorrow_unroll_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_3_sorrow_unroll_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_3_sorrow_unroll_3.png"
+              ],
+              "full_prompt": "Old Blueprint Scroll, Faded Lines, Spreading Gently"
+            }
+          },
+          "written_description": "The ancient blueprint scroll holds within it the dreams of a long-forgotten inventor. Its edges are frayed, and the once vibrant designs have dulled, reflecting a sense of melancholic loss. You can almost hear the echoes of creativity it once inspired.",
+          "entity_actions": [
+            "Unroll",
+            "Study",
+            "Trace",
+            "Preserve",
+            "Reveal"
+          ],
+          "asset_emotion_prompts": {
+            "neutral": "Colorful Lines",
+            "joy": "Exciting Patterns",
+            "sorrow": "Faded Lines",
+            "anger": "Torn Edges",
+            "fear": "Crumbled Corners"
+          },
+          "asset_action_prompts": [
+            {
+              "name": "Unroll",
+              "prompt_modifier": "Spreading Gently"
+            },
+            {
+              "name": "Study",
+              "prompt_modifier": "Examining Closely"
+            },
+            {
+              "name": "Trace",
+              "prompt_modifier": "Following Lines"
+            },
+            {
+              "name": "Preserve",
+              "prompt_modifier": "Keeping Safe"
+            },
+            {
+              "name": "Reveal",
+              "prompt_modifier": "Showing Secrets"
             }
           ]
         },
         {
           "id": "station_4",
-          "entity_name": "Elemental Spirit",
+          "entity_name": "Clockwork Mouse",
           "position_index": 3,
           "is_player": false,
-          "current_emotion": "Fear",
-          "current_action": "Roaming",
+          "current_emotion": "Joy",
+          "current_action": "Scurry",
           "relationships": [
             {
-              "target_id": "station_2",
-              "greeting_dialogue": "The energy shifts... Are you unsettled?",
+              "target_id": "station_1",
+              "greeting_dialogue": "I\u2019m here to assist you!",
               "interaction_options": [
-                "Embrace the flow",
-                "Seek stability",
-                "Ground yourself"
-              ]
-            },
-            {
-              "target_id": "station_5",
-              "greeting_dialogue": "Chaos brews beneath the surface. Can you feel it?",
-              "interaction_options": [
-                "Control the turmoil",
-                "Fear not the change",
-                "Dance with the chaos"
+                "Play",
+                "Guide",
+                "Rewire"
               ]
             }
           ],
-          "base_noun": "Elemental Spirit",
-          "visual_summary": "A swirling, tempestuous form of light and energy moves restlessly among the trees, embodying the chaotic yet beautiful nature of elemental forces.",
+          "base_noun": "Curious Clockwork Mouse",
+          "visual_summary": "The small mechanical mouse moves effortlessly across the workshop floor, its gears and springs clicking together in a symphony of motion.",
           "generated_assets": {
-            "fear_roaming": {
+            "joy_scurry": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_4_fear_roaming_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_4_fear_roaming_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_4_fear_roaming_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_4_fear_roaming_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_4_joy_scurry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_4_joy_scurry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_4_joy_scurry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_4_joy_scurry_3.png"
               ],
-              "full_prompt": "Elemental Spirit, Restless Soul, Searching restlessly"
+              "full_prompt": "Curious Clockwork Mouse, Excited Speed, Quick Movements"
             }
           },
-          "written_description": "The Elemental Spirit roams chaotically through the grove, composing a symphony of tranquility and mayhem. It represents hidden forces that both create and destroy, a vivid reminder of nature's duality.",
+          "written_description": "This little clockwork mouse zooms around, its tiny wheels spinning with glee. Driven by a curious spirit, it flits in and out of locations, eager to assist in any small task, bringing a spark of life to the otherwise still workshop.",
           "entity_actions": [
-            "Roaming",
-            "Stirring",
-            "Transforming",
-            "Howling",
-            "Cascading"
+            "Scurry",
+            "Click",
+            "Twirl",
+            "Pause",
+            "Watch"
           ],
           "asset_emotion_prompts": {
-            "neutral": "Balancing Act",
-            "joy": "Empowered Release",
-            "sorrow": "Unstable Energy",
-            "anger": "Furious Storm",
-            "fear": "Restless Soul"
+            "neutral": "Moving Parts",
+            "joy": "Excited Speed",
+            "sorrow": "Sluggish Motion",
+            "anger": "Erratic Dance",
+            "fear": "Frozen Stillness"
           },
           "asset_action_prompts": [
             {
-              "name": "Roaming",
-              "prompt_modifier": "Searching restlessly"
+              "name": "Scurry",
+              "prompt_modifier": "Quick Movements"
             },
             {
-              "name": "Stirring",
-              "prompt_modifier": "Agitating elementally"
+              "name": "Click",
+              "prompt_modifier": "Rhythmic Taps"
             },
             {
-              "name": "Transforming",
-              "prompt_modifier": "Shapeshifting fluidly"
+              "name": "Twirl",
+              "prompt_modifier": "Spinning Playfully"
             },
             {
-              "name": "Howling",
-              "prompt_modifier": "Echoing wildly"
+              "name": "Pause",
+              "prompt_modifier": "Still Yet Alert"
             },
             {
-              "name": "Cascading",
-              "prompt_modifier": "Flowing tumultuously"
+              "name": "Watch",
+              "prompt_modifier": "Observing Carefully"
             }
           ]
         },
         {
           "id": "station_5",
-          "entity_name": "Eternal Cycle",
+          "entity_name": "Invisible Spark",
           "position_index": 4,
           "is_player": false,
-          "current_emotion": "Anger",
-          "current_action": "Revealing",
+          "current_emotion": "Fear",
+          "current_action": "Flicker",
           "relationships": [
             {
-              "target_id": "station_3",
-              "greeting_dialogue": "All that is born ends. Is it not beautiful?",
+              "target_id": "station_2",
+              "greeting_dialogue": "I am the energy you seek.",
               "interaction_options": [
-                "Contemplate mortality",
-                "Accept the truth",
-                "Seek rebirth"
-              ]
-            },
-            {
-              "target_id": "station_4",
-              "greeting_dialogue": "Chaos births creation, but are you ready?",
-              "interaction_options": [
-                "Challenge the order",
-                "Harness the chaos",
-                "Face the beginning"
+                "Touch",
+                "Capture",
+                "Eliminate"
               ]
             }
           ],
-          "base_noun": "Eternal Cycle",
-          "visual_summary": "A swirling vortex of color and energy dances, representing the seamless flow between beginnings and endings, births and decay.",
+          "base_noun": "Hidden Energy Spark",
+          "visual_summary": "Barely perceptible, a small spark of energy flickers in the air, elusive and enchanting.",
           "generated_assets": {
-            "anger_revealing": {
+            "fear_flicker": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_5_anger_revealing_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_5_anger_revealing_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_5_anger_revealing_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/molecular-dreamscape/molecular-dreamscape_station_5_anger_revealing_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_5_fear_flicker_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_5_fear_flicker_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_5_fear_flicker_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/electric-mechanism/electric-mechanism_station_5_fear_flicker_3.png"
               ],
-              "full_prompt": "Eternal Cycle, Unstable Power, Unveiling truths"
+              "full_prompt": "Hidden Energy Spark, Sudden Disappearance, Briefly Shining"
             }
           },
-          "written_description": "The Eternal Cycle winds its way through the grove, embodying the laughter of creation, the tears of loss, and the intricate loops of existence. It is a testament to the balance of life and the inevitability of change.",
+          "written_description": "An almost invisible spark hovers in the air, teasing the edges of your vision. Each flicker it makes feels alive with potential, yet there's an ominous sense of uncertainty surrounding it, as if it could vanish at any moment.",
           "entity_actions": [
-            "Revealing",
-            "Spinning",
-            "Manifesting",
-            "Encircling",
-            "Flowing"
+            "Flicker",
+            "Hide",
+            "Erupt",
+            "Weave",
+            "Escape"
           ],
           "asset_emotion_prompts": {
-            "neutral": "Calm Balance",
-            "joy": "Blissful Existence",
-            "sorrow": "Fleeting Beauty",
-            "anger": "Unstable Power",
-            "fear": "Dark Omens"
+            "neutral": "Faint Glow",
+            "joy": "Bright Flash",
+            "sorrow": "Dull Glimmer",
+            "anger": "Steady Pulse",
+            "fear": "Sudden Disappearance"
           },
           "asset_action_prompts": [
             {
-              "name": "Revealing",
-              "prompt_modifier": "Unveiling truths"
+              "name": "Flicker",
+              "prompt_modifier": "Briefly Shining"
             },
             {
-              "name": "Spinning",
-              "prompt_modifier": "Rotating gracefully"
+              "name": "Hide",
+              "prompt_modifier": "Concealing Light"
             },
             {
-              "name": "Manifesting",
-              "prompt_modifier": "Bringing forth energy"
+              "name": "Erupt",
+              "prompt_modifier": "Sudden Burst"
             },
             {
-              "name": "Encircling",
-              "prompt_modifier": "Wrapping tightly"
+              "name": "Weave",
+              "prompt_modifier": "Threading Through"
             },
             {
-              "name": "Flowing",
-              "prompt_modifier": "Moving seamlessly"
+              "name": "Escape",
+              "prompt_modifier": "Darting Away"
             }
           ]
         }
-      ]
+      ],
+      "original_dream_text": "\nI leaned back in my chair with a sphere in each hand. My mind loosened, drifting into gentle darkness. Shapes and sparks formed in the air. I saw two metal plates separated by a small gap. A current leapt between them like a tiny lightning bolt. The gap glowed, and I sensed a mechanism waiting to be built. The images drifted toward clarity. I felt my hand relax. One sphere slipped from my grasp and struck the floor with a sharp sound. I awoke at once. The spark remained in my mind, bright and whole. I reached for my notebook and sketched the image before it faded.\n"
     }
   ]
 }
