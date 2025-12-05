@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { 
     View, Text, StyleSheet, TouchableOpacity, Modal, 
     ScrollView, Image, TextInput, ActivityIndicator, 
-    KeyboardAvoidingView, Platform 
+    KeyboardAvoidingView, Platform, useWindowDimensions 
 } from 'react-native';
-import { BookPage } from '../BookManifest'; // Import type
+import { BookPage } from '../BookManifest';
 
 export interface EntityInteractionProps {
   visible: boolean;
@@ -17,22 +17,17 @@ export interface EntityInteractionProps {
   isLoading: boolean;
   onSelectOption: (option: string) => void;
   onClose: () => void;
-  
-  // New Prop for Page Discovery
   foundPage?: BookPage | null;
 }
-
-// Module-level cache to track seen content across re-renders/unmounts (Keeping for original logic)
-const viewedContentCache = new Set<string>();
 
 // Helper to clean markdown for text-only previews
 const cleanMarkdownPreview = (text: string) => {
     if (!text) return "";
     return text
-        .replace(/!\[.*?\]\(.*?\)/g, '')      // Remove Images completely
-        .replace(/\[(.*?)\]\(.*?\)/g, '$1')   // Remove Links but keep text
-        .replace(/[*#_~`>]/g, '')             // Remove formatting chars (bold, italic, headers, blockquotes)
-        .replace(/\n+/g, ' ')                 // Collapse newlines into spaces for a smooth preview
+        .replace(/!\[.*?\]\(.*?\)/g, '')
+        .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+        .replace(/[*#_~`>]/g, '')
+        .replace(/\n+/g, ' ')
         .trim();
 };
 
@@ -61,11 +56,10 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
   visible, entityName, description, greeting, monologue, options, frames, isLoading, onSelectOption, onClose, foundPage
 }) => {
   const [customInput, setCustomInput] = useState('');
-  const [typingPhase, setTypingPhase] = useState<'idle' | 'greeting' | 'monologue' | 'options' | 'done'>('done'); 
-  const [visibleOptionsCount, setVisibleOptionsCount] = useState(options.length);
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
 
   const contentOpacity = isLoading ? 0.4 : 1;
-  const isSequencing = typingPhase !== 'done' && !isLoading;
 
   const handleCustomSubmit = () => {
       if (customInput.trim().length > 0) {
@@ -74,14 +68,85 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
       }
   };
 
+  const renderNarrativeContent = () => (
+      <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 20 }}>
+          <EntityAvatar frames={frames} />
+          {description ? <Text style={styles.descriptionText}>{description}</Text> : null}
+          <Text style={[styles.greetingText, { opacity: contentOpacity }]}>"{greeting}"</Text>
+          
+          {monologue ? (
+              <View style={[styles.monologueContainer, { opacity: contentOpacity }]}>
+                   <Text style={styles.monologueText}>{monologue}</Text>
+              </View>
+          ) : null}
+
+          {foundPage && (
+              <View style={styles.foundPageContainer}>
+                  <Text style={styles.foundPageHeader}>✦ NEW PAGE DISCOVERED ✦</Text>
+                  <View style={styles.foundPageContent}>
+                      <Text style={styles.foundPageTitle}>{foundPage.title}</Text>
+                      <Text numberOfLines={3} style={styles.foundPagePreview}>
+                          {cleanMarkdownPreview(foundPage.content)}
+                      </Text>
+                  </View>
+                  <Text style={styles.foundPageFooter}>Open your Magic Book to view it.</Text>
+              </View>
+          )}
+      </ScrollView>
+  );
+
+  const renderInteractionContent = () => (
+      <View style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <ScrollView style={{ flex: 1, opacity: contentOpacity }} contentContainerStyle={{paddingVertical: 10}}>
+              {options.map((opt, index) => (
+                  <TouchableOpacity 
+                      key={index} 
+                      style={styles.optionBtn} 
+                      onPress={() => !isLoading && onSelectOption(opt)}
+                      disabled={isLoading}
+                  >
+                      <Text style={styles.optionText}>✦ {opt}</Text>
+                  </TouchableOpacity>
+              ))}
+          </ScrollView>
+
+          <View style={[styles.inputContainer, { opacity: contentOpacity }]}>
+              <TextInput
+                  style={styles.textInput}
+                  placeholder="Speak your mind..."
+                  placeholderTextColor="#a1887f"
+                  value={customInput}
+                  onChangeText={setCustomInput}
+                  editable={!isLoading} 
+              />
+              <TouchableOpacity 
+                  style={[styles.sendBtn, isLoading && {backgroundColor: '#a1887f'}]} 
+                  onPress={handleCustomSubmit}
+                  disabled={isLoading} 
+              >
+                  <Text style={styles.sendBtnText}>SEND</Text>
+              </TouchableOpacity>
+          </View>
+      </View>
+  );
+
   return (
     <Modal visible={visible} animationType="fade" transparent={true} onRequestClose={onClose}>
       <KeyboardAvoidingView 
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
         style={styles.overlay}
       >
-        <View style={styles.dialogContainer}>
+        <View style={[
+            styles.dialogContainer, 
+            { 
+                width: isLandscape ? '90%' : '100%',
+                maxWidth: isLandscape ? 800 : 600,
+                // Fixed height is crucial for Android flex calculation
+                height: isLandscape ? '90%' : '80%', 
+            }
+        ]}>
             
+            {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.entityName}>{entityName}</Text>
                 {!isLoading && (
@@ -91,81 +156,35 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
                 )}
             </View>
 
-            <ScrollView style={styles.contentBody} contentContainerStyle={{alignItems: 'center', paddingBottom: 40}}>
+            {/* Split Content */}
+            <View style={{ flex: 1, flexDirection: isLandscape ? 'row' : 'column', overflow: 'hidden' }}>
                 
-                <EntityAvatar frames={frames} />
-
-                {description ? <Text style={styles.descriptionText}>{description}</Text> : null}
-                <Text style={[styles.greetingText, { opacity: contentOpacity }]}>"{greeting}"</Text>
-
-                {monologue ? (
-                    <View style={[styles.monologueContainer, { opacity: contentOpacity }]}>
-                         <Text style={styles.monologueText}>{monologue}</Text>
-                    </View>
-                ) : null}
-                
-                <View style={styles.separator} />
-                
-                {/* --- NEW PAGE DISCOVERY BOX --- */}
-                {foundPage && (
-                    <View style={styles.foundPageContainer}>
-                        <Text style={styles.foundPageHeader}>✦ NEW PAGE DISCOVERED ✦</Text>
-                        <View style={styles.foundPageContent}>
-                            <Text style={styles.foundPageTitle}>{foundPage.title}</Text>
-                            <Text numberOfLines={3} style={styles.foundPagePreview}>
-                                {cleanMarkdownPreview(foundPage.content)}
-                            </Text>
-                        </View>
-                        <Text style={styles.foundPageFooter}>Open your Magic Book to view it.</Text>
-                    </View>
-                )}
-                
-                {/* Options */}
-                <View style={{width: '100%', marginBottom: 15, opacity: contentOpacity}}>
-                    {options.map((opt, index) => {
-                        const isVisible = index < visibleOptionsCount;
-                        if (!isVisible) return null;
-
-                        return (
-                            <TouchableOpacity 
-                                key={index} 
-                                style={styles.optionBtn} 
-                                onPress={() => !isLoading && !isSequencing && onSelectOption(opt)}
-                                disabled={isLoading || isSequencing}
-                                activeOpacity={isLoading || isSequencing ? 1 : 0.7}
-                            >
-                                <Text style={styles.optionText}>✦ {opt}</Text>
-                            </TouchableOpacity>
-                        );
-                    })}
+                {/* Left/Top Pane (Narrative) */}
+                <View style={[
+                    styles.pane, 
+                    isLandscape ? styles.landscapeLeftPane : styles.portraitContent
+                ]}>
+                    {renderNarrativeContent()}
                 </View>
 
-                {/* Write-in */}
-                <View style={[styles.inputContainer, { opacity: contentOpacity }]}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Speak your mind..."
-                        placeholderTextColor="#a1887f"
-                        value={customInput}
-                        onChangeText={setCustomInput}
-                        editable={!isLoading && !isSequencing} 
-                    />
-                    <TouchableOpacity 
-                        style={[styles.sendBtn, (isLoading || isSequencing) && {backgroundColor: '#a1887f'}]} 
-                        onPress={handleCustomSubmit}
-                        disabled={isLoading || isSequencing} 
-                    >
-                        <Text style={styles.sendBtnText}>SEND</Text>
-                    </TouchableOpacity>
+                {/* Separator */}
+                <View style={isLandscape ? styles.vertSeparator : styles.horizSeparator} />
+
+                {/* Right/Bottom Pane (Interaction) */}
+                <View style={[
+                    styles.pane, 
+                    isLandscape ? styles.landscapeRightPane : styles.portraitContent,
+                    isLandscape && { paddingBottom: 10 }
+                ]}>
+                    {renderInteractionContent()}
                 </View>
+            </View>
 
-                {isLoading && (
-                    <View style={styles.loadingOverlay}>
-                        <ActivityIndicator size="large" color="#3e2723" />
-                    </View>
-                )}
-
-            </ScrollView>
+            {isLoading && (
+                <View style={styles.loadingOverlay}>
+                    <ActivityIndicator size="large" color="#3e2723" />
+                </View>
+            )}
 
         </View>
       </KeyboardAvoidingView>
@@ -179,12 +198,9 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(0,0,0,0.7)', 
       justifyContent: 'center', 
       alignItems: 'center',
-      padding: 20
+      padding: 10
   },
   dialogContainer: { 
-    width: '100%',
-    maxWidth: 600,    
-    maxHeight: '90%',    
     backgroundColor: '#fcfbf7', 
     borderRadius: 8, 
     shadowColor: "#000",
@@ -192,68 +208,78 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 10,
     elevation: 10,
-    overflow: 'hidden'
+    display: 'flex',
+    flexDirection: 'column'
   },
   header: { 
     flexDirection: 'row', 
     justifyContent: 'space-between', 
-    padding: 20, 
+    padding: 15, 
     borderBottomWidth: 1,
-    borderBottomColor: '#ebe5da'
+    borderBottomColor: '#ebe5da',
+    backgroundColor: '#fcfbf7',
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
   },
-  entityName: { color: '#3e2723', fontSize: 20, fontFamily: 'serif', fontWeight: 'bold' },
+  entityName: { color: '#3e2723', fontSize: 18, fontFamily: 'serif', fontWeight: 'bold' },
   closeText: { color: '#5d4037', fontSize: 24, fontWeight: 'bold' },
   
-  contentBody: { flex: 1, padding: 25 },
+  pane: { flex: 1, padding: 15 },
   
+  // Landscape Styles
+  landscapeLeftPane: { flex: 1.2 }, 
+  landscapeRightPane: { flex: 1 },
+  vertSeparator: { width: 1, backgroundColor: '#ebe5da', height: '100%' },
+  
+  // Portrait Styles
+  portraitContent: { flex: 1 },
+  horizSeparator: { height: 1, backgroundColor: '#ebe5da', width: '100%' },
+
+  // Avatar
   avatarContainer: {
-      width: 120,
-      height: 120,
-      marginBottom: 15,
+      width: 100,
+      height: 100,
+      marginBottom: 10,
       justifyContent: 'center',
       alignItems: 'center',
   },
   avatarImage: { width: '100%', height: '100%' },
-  placeholderAvatar: { width: 120, height: 120, backgroundColor: '#ccc', borderRadius: 60, marginBottom: 20 },
+  placeholderAvatar: { width: 100, height: 100, backgroundColor: '#ccc', borderRadius: 50, marginBottom: 15 },
 
-  descriptionText: { fontSize: 14, color: '#8d6e63', textAlign: 'center', marginBottom: 15, fontStyle: 'italic' },
-  greetingText: { fontSize: 18, fontFamily: 'serif', color: '#2d1b15', fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+  // Text Styles
+  descriptionText: { fontSize: 13, color: '#8d6e63', textAlign: 'center', marginBottom: 10, fontStyle: 'italic' },
+  greetingText: { fontSize: 16, fontFamily: 'serif', color: '#2d1b15', fontWeight: 'bold', marginBottom: 15, textAlign: 'center' },
   
   monologueContainer: {
       backgroundColor: 'rgba(62, 39, 35, 0.05)',
-      padding: 15,
+      padding: 12,
       borderRadius: 4,
-      marginBottom: 20,
+      marginBottom: 15,
       width: '100%'
   },
-  monologueText: {
-      fontSize: 16,
-      color: '#3e2723',
-      lineHeight: 26,
-      fontFamily: 'serif'
-  },
+  monologueText: { fontSize: 15, color: '#3e2723', lineHeight: 24, fontFamily: 'serif' },
 
-  separator: { height: 1, backgroundColor: '#ebe5da', width: '100%', marginBottom: 20 },
-  
+  // Interaction Styles
   optionBtn: { 
       paddingVertical: 12, 
       paddingHorizontal: 15,
-      marginBottom: 10,
+      marginBottom: 8,
       backgroundColor: '#fff', 
       borderRadius: 4,
       borderWidth: 1,
       borderColor: '#d7ccc8',
-      alignItems: 'center'
+      alignItems: 'center',
+      width: '100%'
   },
-  optionText: { fontSize: 16, color: '#3e2723', fontFamily: 'serif' },
+  optionText: { fontSize: 14, color: '#3e2723', fontFamily: 'serif' },
 
   inputContainer: {
       flexDirection: 'row',
       width: '100%',
-      marginTop: 10,
+      marginTop: 5,
+      paddingTop: 10,
       borderTopWidth: 1,
       borderTopColor: '#ebe5da',
-      paddingTop: 15
   },
   textInput: {
       flex: 1,
@@ -261,44 +287,42 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: '#d7ccc8',
       borderRadius: 4,
-      padding: 10,
-      fontSize: 16,
+      padding: 8,
+      fontSize: 14,
       color: '#3e2723',
-      fontFamily: 'serif'
+      fontFamily: 'serif',
+      height: 45
   },
   sendBtn: {
-      marginLeft: 10,
+      marginLeft: 8,
       backgroundColor: '#3e2723',
       justifyContent: 'center',
-      paddingHorizontal: 20,
-      borderRadius: 4
+      paddingHorizontal: 15,
+      borderRadius: 4,
+      height: 45
   },
-  sendBtnText: {
-      color: '#fcfbf7',
-      fontWeight: 'bold',
-      fontSize: 14,
-      fontFamily: 'serif'
-  },
+  sendBtnText: { color: '#fcfbf7', fontWeight: 'bold', fontSize: 12, fontFamily: 'serif' },
   
   loadingOverlay: {
       position: 'absolute',
       bottom: 20,
       alignSelf: 'center'
   },
-  // New Page Styles
+
+  // Found Page Styles
   foundPageContainer: {
       width: '100%',
       backgroundColor: '#fff8e1',
       borderWidth: 2,
       borderColor: '#ffecb3',
       borderRadius: 8,
-      padding: 15,
-      marginBottom: 20,
+      padding: 10,
+      marginBottom: 10,
       alignItems: 'center'
   },
-  foundPageHeader: { fontSize: 14, fontWeight: 'bold', color: '#f57f17', marginBottom: 10, letterSpacing: 1 },
+  foundPageHeader: { fontSize: 12, fontWeight: 'bold', color: '#f57f17', marginBottom: 5, letterSpacing: 1 },
   foundPageContent: { alignItems: 'center', marginBottom: 5 },
-  foundPageTitle: { fontSize: 18, fontFamily: 'serif', fontWeight: 'bold', color: '#3e2723', marginBottom: 5 },
-  foundPagePreview: { fontSize: 14, color: '#6d4c41', textAlign: 'center', fontStyle: 'italic' },
-  foundPageFooter: { fontSize: 12, color: '#a1887f', marginTop: 10 },
+  foundPageTitle: { fontSize: 16, fontFamily: 'serif', fontWeight: 'bold', color: '#3e2723', marginBottom: 2 },
+  foundPagePreview: { fontSize: 12, color: '#6d4c41', textAlign: 'center', fontStyle: 'italic' },
+  foundPageFooter: { fontSize: 10, color: '#a1887f', marginTop: 5 },
 });
