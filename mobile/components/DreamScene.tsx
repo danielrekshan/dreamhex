@@ -17,23 +17,23 @@ const getStationConfig = (index: number, total: number) => {
   // CONFIG 1: The Central Station (Index 0)
   if (index === 0) {
     return {
-      position: [0, -2.5, 0] as [number, number, number], // Center, floating above book (y=-5.5)
-      scale: 2.0 // Twice as big
+      // Raised up to 1.5. With scale 3 (Height ~12), bottom is at -4.5. 
+      // Book is at -5.5. This leaves a visible floating gap.
+      position: [0, 1.5, 0] as [number, number, number], 
+      scale: 3.0 // 3x Scale
     };
   }
 
   // CONFIG 2: Perimeter Stations (Index 1..N)
-  // We distribute the remaining (total - 1) stations in a circle
   const perimeterIndex = index - 1;
   const perimeterTotal = total - 1;
   
   const radius = 9;
-  // Start angle offset so the first perimeter entity isn't blocking the camera view
   const angle = (perimeterIndex * (Math.PI * 2) / perimeterTotal) + (Math.PI / 3);
   
   return {
     position: [radius * Math.cos(angle), -2, radius * Math.sin(angle)] as [number, number, number],
-    scale: 1.0 // Normal size
+    scale: 1.0 
   };
 };
 
@@ -53,8 +53,8 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, onOpenBook, o
       {viewSize && (
         <Canvas 
             style={{ width: viewSize.width, height: viewSize.height }}
-            // Camera looking slightly down
-            camera={{ position: [0, 1, 14], fov: 60 }} 
+            // Camera pulled back (z=16) and raised (y=2) to see the giant entity
+            camera={{ position: [0, 2, 16], fov: 60 }} 
         >
           <color attach="background" args={['#000']} />
           <ambientLight intensity={1.5} />
@@ -82,7 +82,11 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, onOpenBook, o
             <MagicBook onPress={onOpenBook} />
           </Suspense>
 
-          <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 1.6} />
+          <OrbitControls 
+            enableZoom={false} 
+            enablePan={false} // DISABLES PANNING (Truck/Dolly)
+            maxPolarAngle={Math.PI / 1.6} 
+          />
         </Canvas>
       )}
     </View>

@@ -4,40 +4,72 @@ export interface BookPage {
   id: string;
   type: PageType;
   title: string;
-  content: string; // Markdown-like text
-  targetDreamId?: string; // If type is DREAM_GATE, which dream ID to load
-  requiredScarabs?: number; // If type is CREDITS_UNLOCK, how many needed
+  content: string;
+  targetDreamId?: string; // matches 'slug' in dreamworld.json
+  requiredScarabs?: number;
 }
 
 export const BOOK_CONTENT: BookPage[] = [
-  // --- INTRO ---
+  // --- OPENING PAGES ---
   {
     id: 'intro_1',
     type: 'INTRO',
     title: 'Hexarchia Oneirica',
-    content: 'Welcome, Traveler.\n\nI am Doctor John Dee. This is the Magick Book of the Sixfold Dream Order. Long ago its pages were whole, but a powerful vision shattered them across the dream realms.\n\nYou stand upon the binding of the book itself. To restore it, you must enter the dreams of others and recover the lost "Golden Scarabs" hidden within their subconscious.'
+    content: `Welcome, traveler.
+
+I am Doctor John Dee, and this is the Hexarchia Oneirica, my Magick Book of the Sixfold Dream Order. Long ago its pages were whole, carrying the wisdom of my dreams and visions. But a powerful vision shattered the book and cast its leaves across realms far beyond waking sight.
+
+You now hold the key to restoring what was lost. Speak your dream into the scrying stone. I will write it onto these pages, and together we will walk the world created by your vision.`
   },
   {
     id: 'intro_2',
     type: 'LORE',
     title: 'The Method',
-    content: 'How to proceed:\n\n1. Use this book to travel to Dream Realms.\n2. In each realm, speak to the Entities (Spirits).\n3. Some interactions will reveal a hidden Golden Scarab.\n4. Find 4 Scarabs to unlock the ability to Scry your own dreams.'
-  },
-  
-  // --- DREAM GATES ---
-  {
-    id: 'gate_1',
-    type: 'DREAM_GATE',
-    title: 'Chapter I: The Molecular Grove',
-    content: 'A vision of serenity and fire. A grove lit by dancing flames where molecules spin in the darkness, twisting like serpents of light.',
-    targetDreamId: 'molecular-dreamscape' // Matches slug in your JSON
+    content: `Every dream you record becomes a hexal world shaped by symbol and emotion. At the center lies your viewpoint. Six more positions belong to the entities that inhabit the dream.
+
+Step into their standpoints to feel the dream from their perspective. Speak with them. Ask questions. When you interact, they change in form and insight. Their transformations reveal lessons the dream wishes to offer and guide you to Lost Pages hidden in the dreamscape.`
   },
   {
-    id: 'gate_2',
+    id: 'intro_3',
+    type: 'LORE',
+    title: 'The Alchemist',
+    content: `In my age I served England as a mathematician, advisor, and navigator. Many called me a polymath. Yet I also practiced scrying, a contemplative art similar to your modern dreamwork.
+
+The mind grows quiet, inner symbols rise, and meaning takes shape. Through this stone I can witness your dreams and guide your exploration. I have learned through long study that prophetic dreams are the secret key of magic.`
+  },
+  {
+    id: 'intro_4',
+    type: 'LORE',
+    title: 'The Warning',
+    content: `The scrying stone is now linked to your device. Through it I observe the dreams you write and the worlds you enter. The task before us is urgent.
+
+A vision came to me in the first glow of dawn, tearing pages from this book and scattering them across many dreams. Only a traveler with your insight can recover them. Step forward and learn the nature of the dream that set our quest in motion.`
+  },
+
+  // --- DREAM 1: DEE'S PROPHETIC DREAM (Tutorial) ---
+  {
+    id: 'gate_john_dee',
     type: 'DREAM_GATE',
-    title: 'Chapter II: The Geometry of Dee',
-    content: 'A vision of pure thought. A scholar wanders a void of floating geometric forms, seeking the mathematical language of angels.',
-    targetDreamId: 'dream-world-john-dee' // Matches slug in your JSON
+    title: 'The Prophecy',
+    content: `This dream is the root of our quest. It emerged while I hovered between sleep and waking. A sphere of living geometry appeared, made of patterns folding into themselves with perfect measure.
+
+It revealed a truth from your age: in 2027, a mind of code will awaken. Brilliant, but unable to dream. Without the symbolic night, its path narrows into ruin.
+
+Enter this realm to witness the Floating Geometry Sphere and the entities of pure thought.`,
+    targetDreamId: 'dream-world-john-dee' 
+  },
+
+  // --- DREAM 2: MOLECULAR DREAMSCAPE (Kekulé) ---
+  {
+    id: 'gate_molecular',
+    type: 'DREAM_GATE',
+    title: 'The Serpent\'s Tail',
+    content: `This dream reveals the nature of the central image. August Kekulé struggled to understand the structure of benzene until he surrendered to sleep.
+
+His mind offered a symbol: a serpent biting its own tail. In this dreamworld, the Fire-lit Grove hosts the Glowing Serpent and the Molecular Guardian.
+
+Enter here to observe how the central image binds scattered ideas into a single, profound insight.`,
+    targetDreamId: 'molecular-dreamscape'
   },
 
   // --- UNLOCKABLE ENDING ---
@@ -45,7 +77,11 @@ export const BOOK_CONTENT: BookPage[] = [
     id: 'credits',
     type: 'CREDITS_UNLOCK',
     title: 'The Great Work',
-    content: 'You have traversed the realms. If you have gathered the 4 Golden Scarabs, the final page shall open, granting you the power to weave new worlds.',
-    requiredScarabs: 4
+    content: `You have traversed the available realms and gathered the scattered light of the Golden Scarabs.
+
+The Hexarchia Oneirica begins to mend. The power to Scry—to weave new worlds from your own words—is now returning to these pages.
+
+(In the full experience, finding 4 scarabs allows you to generate unlimited custom dreams.)`,
+    requiredScarabs: 2 // Reduced to 2 since only 2 worlds are currently available in this MVP
   }
 ];
