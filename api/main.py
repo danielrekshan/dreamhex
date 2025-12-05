@@ -58,8 +58,8 @@ class InteractionRequest(BaseModel):
     dream_id: str
     station_id: str
     user_command: str
-    station_data: dict # Current state of the entity
-    world_context: dict # NEW: Summary of the dream world
+    station_data: dict 
+    world_context: dict 
 
 class WarmupRequest(BaseModel):
     user_id: Optional[str] = None 
@@ -187,34 +187,35 @@ def list_dreams(user_id: str):
 
 @app.post("/dreams/interact")
 async def interact(req: InteractionRequest, bg_tasks: BackgroundTasks):
-    print(f"🎭 Interaction requested by {req.user_id} on Dream {req.dream_id}, Station {req.station_id}")
-    db_client = get_db()
+    print(f"🎭 Interaction requested by {req.user_id} on dream {req.dream_id}, station {req.station_id}" )
+    # db_client = get_db()
     
-    # 1. Use data provided by the client (stateless processing)
     station = req.station_data
     world_context = req.world_context
     
     old_stance = station.get("current_stance", "idle")
     old_greeting = station.get("entity_greeting", "")
 
-    # 2. Analyze Interaction with AI using rich context
+    # Analyze Interaction with rich context
     rx = await dream_analyzer.analyze_interaction_text(
         world_context,
         station.get("entity_name", "Unknown"), 
         old_stance,
         req.user_command
     )
+    print(f"    -> New Stance: {rx.new_stance}, Unlock Trigger: {rx.unlock_trigger}")
     
-    # 3. Update Station Data (In Memory only)
+    # Update Station Data
     station.update({
         "state_start": rx.new_state_start, 
         "state_end": rx.new_state_end, 
         "entity_greeting": rx.new_greeting,
+        "entity_monologue": rx.entity_monologue, # NEW
         "interaction_options": rx.new_options,
         "current_stance": rx.new_stance
     })
     
-    # 4. Log to 'interaction' collection with specific fields
+    # Log to 'interaction' collection
     interaction_log = {
         "dream_id": req.dream_id,
         "action_text": req.user_command,
@@ -223,17 +224,16 @@ async def interact(req: InteractionRequest, bg_tasks: BackgroundTasks):
         "new_stance": rx.new_stance,
         "old_greeting": old_greeting,
         "new_greeting": rx.new_greeting,
+        "monologue": rx.entity_monologue,
         "timestamp": firestore.SERVER_TIMESTAMP,
         "user_id": req.user_id
     }
     
     # try:
-    #     # db_client.collection("interaction").add(interaction_log)
+    #     db_client.collection("interaction").add(interaction_log)
     # except Exception as e:
     #     print(f"⚠️ Failed to log interaction: {e}")
 
-    # 5. Return updated station to client
-    print(f"✅ Interaction processed for Station {req.station_id}")
     return {
         "station": station, 
         "unlock": rx.unlock_trigger is not None

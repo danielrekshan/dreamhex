@@ -8,11 +8,12 @@ import {
 export interface EntityInteractionProps {
   visible: boolean;
   entityName: string;
-  description: string; // NEW: Added description
+  description: string;
   greeting: string;
+  monologue?: string; // NEW: The deep response from the entity
   options: string[];
   frames: string[]; 
-  isLoading: boolean; // NEW: Loading state
+  isLoading: boolean;
   onSelectOption: (option: string) => void;
   onClose: () => void;
 }
@@ -44,7 +45,7 @@ const EntityAvatar: React.FC<{ frames: string[] }> = ({ frames }) => {
 };
 
 export const EntityDialog: React.FC<EntityInteractionProps> = ({ 
-  visible, entityName, description, greeting, options, frames, isLoading, onSelectOption, onClose 
+  visible, entityName, description, greeting, monologue, options, frames, isLoading, onSelectOption, onClose 
 }) => {
   const [customInput, setCustomInput] = useState('');
 
@@ -66,7 +67,6 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
             {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.entityName}>{entityName}</Text>
-                {/* Hide close button while loading to prevent state mismatch */}
                 {!isLoading && (
                     <TouchableOpacity onPress={onClose} hitSlop={{top:10, bottom:10, left:10, right:10}}>
                         <Text style={styles.closeText}>✕</Text>
@@ -76,23 +76,31 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
 
             <ScrollView style={styles.contentBody} contentContainerStyle={{alignItems: 'center', paddingBottom: 20}}>
                 
-                {/* Avatar (Always Visible) */}
                 <EntityAvatar frames={frames} />
 
                 {isLoading ? (
                     <View style={styles.loadingContainer}>
                         <ActivityIndicator size="large" color="#3e2723" />
-                        <Text style={styles.loadingText}>Scrying response...</Text>
+                        <Text style={styles.loadingText}>The entity is contemplating...</Text>
                     </View>
                 ) : (
                     <>
-                        {/* Description & Greeting */}
+                        {/* Static Description */}
                         {description ? <Text style={styles.descriptionText}>{description}</Text> : null}
+                        
+                        {/* Short Punchy Greeting */}
                         <Text style={styles.greetingText}>"{greeting}"</Text>
+
+                        {/* NEW: Deep Monologue */}
+                        {monologue ? (
+                            <View style={styles.monologueContainer}>
+                                <Text style={styles.monologueText}>{monologue}</Text>
+                            </View>
+                        ) : null}
                         
                         <View style={styles.separator} />
                         
-                        {/* Options List */}
+                        {/* Options */}
                         <View style={{width: '100%', marginBottom: 15}}>
                             {options.map((opt, index) => (
                                 <TouchableOpacity 
@@ -105,11 +113,11 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
                             ))}
                         </View>
 
-                        {/* Write-in Option */}
+                        {/* Write-in */}
                         <View style={styles.inputContainer}>
                             <TextInput
                                 style={styles.textInput}
-                                placeholder="Say something else..."
+                                placeholder="Speak your mind..."
                                 placeholderTextColor="#8d6e63"
                                 value={customInput}
                                 onChangeText={setCustomInput}
@@ -138,7 +146,7 @@ const styles = StyleSheet.create({
   },
   dialogContainer: { 
     width: '90%',     
-    height: '85%',    
+    height: '90%',    
     backgroundColor: '#f5f5dc', 
     borderRadius: 12, 
     borderWidth: 4, 
@@ -158,30 +166,46 @@ const styles = StyleSheet.create({
   contentBody: { flex: 1, padding: 20 },
   
   avatarContainer: {
-      width: 180,
-      height: 180,
-      marginBottom: 15,
+      width: 140,
+      height: 140,
+      marginBottom: 10,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'rgba(62, 39, 35, 0.1)',
-      borderRadius: 90
+      borderRadius: 70
   },
   avatarImage: { width: '100%', height: '100%' },
-  placeholderAvatar: { width: 150, height: 150, backgroundColor: '#ccc', borderRadius: 75, marginBottom: 20 },
+  placeholderAvatar: { width: 120, height: 120, backgroundColor: '#ccc', borderRadius: 60, marginBottom: 20 },
 
-  descriptionText: { fontSize: 16, color: '#5d4037', textAlign: 'center', marginBottom: 10, fontStyle: 'italic', paddingHorizontal: 10 },
-  greetingText: { fontSize: 20, fontFamily: 'serif', color: '#3e2723', fontWeight: 'bold', marginBottom: 10, textAlign: 'center' },
+  descriptionText: { fontSize: 14, color: '#5d4037', textAlign: 'center', marginBottom: 10, fontStyle: 'italic', opacity: 0.8 },
+  greetingText: { fontSize: 20, fontFamily: 'serif', color: '#3e2723', fontWeight: 'bold', marginBottom: 15, textAlign: 'center' },
   
-  separator: { height: 2, backgroundColor: '#d7ccc8', width: '100%', marginVertical: 15 },
+  monologueContainer: {
+      backgroundColor: '#efebe9',
+      padding: 15,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: '#d7ccc8',
+      marginBottom: 15,
+      width: '100%'
+  },
+  monologueText: {
+      fontSize: 16,
+      color: '#3e2723',
+      lineHeight: 24,
+      fontFamily: 'serif'
+  },
+
+  separator: { height: 2, backgroundColor: '#d7ccc8', width: '100%', marginBottom: 15 },
   
   optionBtn: { 
       paddingVertical: 12, 
       paddingHorizontal: 10,
       marginBottom: 8,
-      backgroundColor: '#efebe9', 
+      backgroundColor: '#fff', 
       borderRadius: 8,
       borderWidth: 1,
-      borderColor: '#d7ccc8'
+      borderColor: '#a1887f'
   },
   optionText: { fontSize: 16, color: '#3e2723', fontFamily: 'serif', textAlign: 'center' },
 
@@ -216,14 +240,6 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       fontSize: 14
   },
-  loadingContainer: {
-      marginTop: 30,
-      alignItems: 'center'
-  },
-  loadingText: {
-      marginTop: 10,
-      color: '#5d4037',
-      fontSize: 16,
-      fontStyle: 'italic'
-  }
+  loadingContainer: { marginTop: 30, alignItems: 'center' },
+  loadingText: { marginTop: 10, color: '#5d4037', fontSize: 16, fontStyle: 'italic' }
 });

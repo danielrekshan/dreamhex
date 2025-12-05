@@ -17,9 +17,10 @@ class Station(BaseModel):
     state_start: Optional[str] = None
     state_end: Optional[str] = None
     entity_greeting: Optional[str] = None
+    entity_monologue: Optional[str] = None # NEW: Deep interaction text
     interaction_options: List[str] = Field(default_factory=list)
     asset_status: str = "PENDING"
-    sprite_frames: List[str] = [] # Stores GCS URLs
+    sprite_frames: List[str] = [] 
     current_stance: str = "idle" 
 
 class DreamHex(BaseModel):
@@ -40,6 +41,7 @@ class InteractionResponse(BaseModel):
     new_state_start: str
     new_state_end: str
     new_greeting: str
+    entity_monologue: str = Field(..., description="1-5 paragraphs of in-depth text in the entity's voice.")
     new_options: List[str] = Field(min_items=4, max_items=4)
     new_stance: str = Field(..., description="Select one: idle, active, resting, happy, sad, angry, surprised")
     unlock_trigger: Optional[str] = None
@@ -56,12 +58,28 @@ Return strictly structured JSON. Ensure all arrays meet length requirements.
 """
 
 INTERACTION_PROMPT = """
-You are the Dungeon Master. Calculate the entity's REACTION to the user.
-1. Determine the entity's new emotional stance from this list: [idle, active, resting, happy, sad, angry, surprised].
-2. Output new visual prompts using ACTIVE VERBS for the entity's new state.
-3. Write a new greeting/response line (keep it enigmatic but responsive).
-4. Provide 4 new interaction options for the player.
-5. If the action reveals a major secret, set 'unlock_trigger' to 'UNLOCK_NEW_DREAM'.
+You are the Dungeon Master and Dream Weaver. Your goal is to create a profound, gamified dream experience.
+
+Analyze the context and the user's action to calculate the Entity's reaction.
+
+1. **VOICE & TONE**: Speak strictly in the voice of the Entity. 
+   - If the entity is a Serpent, be sibilant and ancient. 
+   - If John Dee, be scholarly and mystic.
+   - The response must be engaging, teaching the user about dream incubation (controlling dreams) or interpretation through metaphors.
+
+2. **RESPONSE STRUCTURE**:
+   - **New Stance**: Determine the visual emotional state (idle, happy, angry, etc).
+   - **Greeting**: A short, punchy line (1 sentence) acknowledging the user.
+   - **Monologue**: A deep paragraph response. 
+     - Reference the **History of Interactions** if provided (e.g., "You return to me again...").
+     - Explain the dream meaning of the current situation.
+     - Offer guidance or cryptic warnings.
+   - **Interaction Options**: Provide 4 options for the user to interact **specifically with THIS entity** (e.g., "Ask about...", "Touch the...", "Offer..."). Do not offer options to leave or go elsewhere.
+
+3. **GAMEPLAY**: 
+   - If the user makes a breakthrough, grant knowledge.
+   - If the user acts aggressively, react defensively.
+   - If the action reveals a major secret, set 'unlock_trigger' to 'UNLOCK_NEW_DREAM'.
 """
 
 async def analyze_dream_text(text: str) -> DreamGenerationResponse:
@@ -79,7 +97,7 @@ async def analyze_dream_text(text: str) -> DreamGenerationResponse:
 async def analyze_interaction_text(world_context: Dict[str, Any], entity_name: str, current_stance: str, command: str) -> InteractionResponse:
     # Contextual query building
     context_str = f"World Description: {world_context.get('world_description', 'N/A')}\n"
-    context_str += f"Other Entities Present: {', '.join([e['name'] for e in world_context.get('other_entities', [])])}\n"
+    context_str += f"Interaction History: {world_context.get('interaction_history', 'No previous contact.')}\n"
     
     query = f"{context_str}\nTarget Entity: {entity_name} (Current Stance: {current_stance}).\nUser Action: {command}"
     

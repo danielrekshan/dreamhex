@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, StatusBar, Text, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DreamScene } from './components/DreamScene';
 import { BookReader } from './components/BookReader';
@@ -10,6 +11,8 @@ import * as api from './api';
 
 // Direct import of your provided JSON content for offline fallback/demo
 const DREAM_DATABASE: any = require('./assets/world.json');
+
+const SESSION_KEY = 'dreamhex_session_v1';
 
 export default function App() {
   // --- STATE ---
@@ -24,26 +27,59 @@ export default function App() {
   // Game States
   const [scarabCount, setScarabCount] = useState(0);
   const [foundScarabs, setFoundScarabs] = useState<Set<string>>(new Set());
+  const [interactionHistory, setInteractionHistory] = useState<string[]>([]); // New: Track History
+  
   const [loading, setLoading] = useState(false);
   const [userId] = useState("user-demo-" + Math.floor(Math.random() * 1000));
 
-  // --- LOAD DREAM ---
+  // --- INITIAL LOAD (PERSISTENCE) ---
   useEffect(() => {
-    setLoading(true);
-    // Load from local JSON
-    setTimeout(() => {
-        const dreams = DREAM_DATABASE.dreams || [];
-        const found = dreams.find((d: any) => d.slug === currentDreamSlug);
-        // Deep copy to ensure we don't mutate the 'require' cache directly
-        setDreamData(found ? JSON.parse(JSON.stringify(found)) : dreams[0]);
-        setLoading(false);
-    }, 500);
-  }, [currentDreamSlug]); 
+    const loadSession = async () => {
+        setLoading(true);
+        try {
+            const savedState = await AsyncStorage.getItem(SESSION_KEY);
+            if (savedState) {
+                const parsed = JSON.parse(savedState);
+                console.log("Loaded session from storage");
+                setDreamData(parsed.dreamData);
+                setInteractionHistory(parsed.history || []);
+                setCurrentDreamSlug(parsed.slug || 'between-thought-and-waking-light');
+            } else {
+                // Fallback to JSON default
+                loadFromJSON('between-thought-and-waking-light');
+            }
+        } catch (e) {
+            console.warn("Failed to load session", e);
+            loadFromJSON('between-thought-and-waking-light');
+        } finally {
+            setLoading(false);
+        }
+    };
+    loadSession();
+  }, []);
+
+  const loadFromJSON = (slug: string) => {
+      const dreams = DREAM_DATABASE.dreams || [];
+      const found = dreams.find((d: any) => d.slug === slug);
+      setDreamData(found ? JSON.parse(JSON.stringify(found)) : dreams[0]);
+  };
+
+  // --- SAVE SESSION (PERSISTENCE) ---
+  useEffect(() => {
+      if (dreamData) {
+          const session = {
+              dreamData,
+              history: interactionHistory,
+              slug: currentDreamSlug
+          };
+          AsyncStorage.setItem(SESSION_KEY, JSON.stringify(session)).catch(e => console.warn("Save failed", e));
+      }
+  }, [dreamData, interactionHistory, currentDreamSlug]);
+
 
   // --- HANDLERS ---
 
   const getEntityFrames = (station: any) => {
-      // Helper to resolve frames based on stance
       if (station.generated_assets) {
           const stance = station.current_stance || 'idle';
           if (station.generated_assets[stance]) return station.generated_assets[stance].file_paths;
@@ -55,20 +91,19 @@ export default function App() {
   };
 
   const handleInteractStation = (targetStation: any) => {
-    // 1. Resolve Text
     const greeting = targetStation.entity_greeting || targetStation.greeting || "The entity stares at you silently.";
     const options = targetStation.interaction_options || ["Observe closely"];
     const description = targetStation.written_description || "";
+    const monologue = targetStation.entity_monologue || "";
 
-    // 2. Resolve Frames
     const frames = getEntityFrames(targetStation);
 
-    // 3. Open Dialog
     setActiveEntity({
         name: targetStation.entity_name,
         stationId: targetStation.id,
         description: description,
         greeting: greeting,
+        monologue: monologue,
         options: options,
         frames: frames
     });
@@ -77,18 +112,19 @@ export default function App() {
   const handleOptionSelect = async (option: string) => {
     if (!activeEntity || !dreamData) return;
 
-    // 1. Set Loading
     setInteractionLoading(true);
 
     try {
-        // Find the full station object in our local state to send to API
         const currentStation = dreamData.stations.find((s: any) => s.id === activeEntity.stationId);
 
-        // 2. Prepare Context (Summary of the World)
+        // Build History String
+        const historyStr = interactionHistory.slice(-5).join("\n"); // Last 5 interactions
+
         const worldContext = {
             dream_title: dreamData.title,
             world_description: dreamData.world_state?.written_description || "A mysterious realm.",
             time_of_day: dreamData.world_state?.time || "Unknown",
+            interaction_history: historyStr,
             other_entities: dreamData.stations
                 .filter((s: any) => s.id !== activeEntity.stationId)
                 .map((s: any) => ({ 
@@ -97,20 +133,22 @@ export default function App() {
                 }))
         };
 
-        // 3. Call API with context
         const response = await api.interactEntity(
             userId, 
             currentDreamSlug, 
             activeEntity.stationId, 
             option,
-            currentStation, // Pass the specific station data
-            worldContext    // Pass the summary of the world
+            currentStation, 
+            worldContext    
         );
 
-        // 4. Update World State (Local Merge)
         if (response && response.station) {
             
-            // Merge the updated station into our local dreamData
+            // Log History
+            const newLog = `User: ${option} -> Entity (${response.station.entity_name}): ${response.station.entity_greeting}`;
+            setInteractionHistory(prev => [...prev, newLog]);
+
+            // Update State
             const updatedStations = dreamData.stations.map((s: any) => 
                 s.id === response.station.id ? response.station : s
             );
@@ -120,11 +158,11 @@ export default function App() {
                 stations: updatedStations
             }));
             
-            // 5. Update Dialog with new text
             const newFrames = getEntityFrames(response.station);
             setActiveEntity({
                 ...activeEntity,
                 greeting: response.station.entity_greeting,
+                monologue: response.station.entity_monologue,
                 options: response.station.interaction_options,
                 frames: newFrames 
             });
@@ -136,18 +174,13 @@ export default function App() {
     } finally {
         setInteractionLoading(false);
     }
-    
-    // Scarab Logic (Easter Egg)
-    if (!foundScarabs.has(activeEntity.stationId)) {
-        if (Math.random() > 0.8) { 
-            setScarabCount(prev => prev + 1);
-            setFoundScarabs(prev => new Set(prev).add(activeEntity.stationId));
-        }
-    }
   };
 
   const handleBookAction = (page: BookPage) => {
       if (page.type === 'DREAM_GATE' && page.targetDreamId) {
+          // Switching dreams resets the view but maybe we keep history? 
+          // For now, load new JSON data for the new dream
+          loadFromJSON(page.targetDreamId);
           setCurrentDreamSlug(page.targetDreamId); 
           setBookOpen(false);
       } else if (page.type === 'CREDITS_UNLOCK') {
@@ -188,6 +221,7 @@ export default function App() {
                 entityName={activeEntity.name}
                 description={activeEntity.description}
                 greeting={activeEntity.greeting}
+                monologue={activeEntity.monologue}
                 options={activeEntity.options}
                 frames={activeEntity.frames}
                 isLoading={interactionLoading}

@@ -195,7 +195,7 @@ client = OpenAI()
 
 # --- SYSTEM PROMPT (Story Interactions + Generic Stances) ---
 SYSTEM_PROMPT = """
-You are the Dream Architect. Analyze the dream text and extract key entities (Up to 6).
+You are the Dream Architect. Analyze the dream text and extract key entities (Up to 6), including the subject of the dream.
 
 ### 1. WORLD STATE
 - **BASE NOUN**: A physical place (e.g., 'Neon Rainforest'). No abstract concepts.
