@@ -58,78 +58,81 @@ pipe.enable_vae_tiling()
 
 print("✅ System Ready.")
 
-# @title 2. Generator (VRAM Optimized)
+# @title 2. Generator (Phased & CPU Optimized with FAST Model)
 import torch.nn as nn
 import torch
+import gc
 from rembg import remove, new_session
+from PIL import Image
 
-# Initialize Rembg session once for sprite processing
-if 'rembg_session' not in globals():
-    print("⏳ Loading Background Remover...")
-    try:
-        rembg_session = new_session("u2net")
-        print("✅ Background Remover Loaded.")
-    except Exception as e:
-        rembg_session = None
-        print(f"⚠️ Could not load rembg session: {e}. Sprite generation will not remove backgrounds.")
+# --- SETUP: Force Background Remover to CPU ---
+# We force this to CPU to prevent it from fighting with SDXL for GPU VRAM
+print("⏳ Configuring Background Remover for CPU...")
+try:
+    if 'rembg_session' in globals():
+        del rembg_session
+        gc.collect()
+        torch.cuda.empty_cache()
+
+    # --- OPTIMIZATION: Switched to 'u2netp' for faster processing ---
+    # u2netp is a lighter version of the u2net model, ideal for faster processing.
+    FAST_MODEL = "u2netp"
+    rembg_session = new_session(FAST_MODEL, providers=['CPUExecutionProvider'])
+    print(f"✅ Background Remover Loaded (CPU Mode, Model: {FAST_MODEL}).")
+except Exception as e:
+    rembg_session = None
+    print(f"⚠️ Could not load rembg session: {e}. Sprites will have white backgrounds.")
 
 
 def generate_dream_scene(prompt_a, prompt_b=None, type="pano", frames=4):
     # Clear memory before starting
     torch.cuda.empty_cache()
+    gc.collect()
 
     # --- 1. SEAMLESS HACK: CIRCULAR PADDING ---
     def make_seamless(model):
         for m in model.modules():
             if isinstance(m, nn.Conv2d):
-                # Use circular padding on the horizontal axis for panoramas
                 m.padding_mode = 'circular' if type == "pano" else 'zeros'
         return model
 
-    # Apply the padding hack to UNET and VAE
     pipe.unet = make_seamless(pipe.unet)
     pipe.vae = make_seamless(pipe.vae)
 
-    # --- STYLE CONSTANTS (Matches desired aesthetic) ---
-    style_header = "renaissance illustration, ink and watercolor on paper, negative space. "
+    # --- STYLE CONSTANTS ---
+    style_header = "Ink and watercolor, thick india ink lines, vintage paper texture, negative space. "
     neg_base = "photorealistic, 3d render, modern, text, blur, border, frame, solid fill"
 
     def build_full_prompt(raw_text, is_pano):
         if raw_text is None: raw_text = "void"
-        # Truncate user text strictly to 20 words to prevent token overflow
         safe_text = " ".join(raw_text.split()[:20])
 
         if is_pano:
-            # Pano Prompt with fading to white
             return f"{style_header} {safe_text}, 360 equirectangular panorama, empty scene, fading to white at top and bottom"
         else:
-            # Sprite Prompt
+            # We ask for a white background during generation for stability
             return f"{style_header} {safe_text}, isolated cutout on white background, dynamic pose"
 
-    # --- CONFIG (REVERTED TO SAFER VRAM SIZES) ---
+    # --- CONFIG (VRAM Safe Sizes) ---
     if type == "pano":
-        # REDUCED for VRAM safety (was 1024x512)
         width, height = 768, 384
         neg = neg_base + ", people, objects, focal point, close up"
     else:
-        # REDUCED for VRAM safety (was 384x384)
         width, height = 320, 320
         neg = neg_base + ", background, ground, shadow, tree, wall, floor"
 
-    generated_images = []
-    session_for_removal = globals().get('rembg_session')
+    # --- PHASE 1: GENERATION (GPU) ---
+    raw_images = []
 
-    # Force Fresh Canvas (White)
     current_image = Image.new("RGB", (width, height), (255, 255, 255))
 
-    print(f"🖌️ Generating {frames} frames for ({type})...")
+    print(f"🖌️ Phase 1: Generating {frames} frames (GPU)...")
 
-    # --- GENERATION LOOP ---
     with torch.no_grad():
         for i in range(frames):
             target_prompt = prompt_b if prompt_b else prompt_a
 
-            # Logic Selector (Generative Fade)
+            # Logic Selector
             if type == "pano":
                 current_raw = prompt_a
                 strength = 1.0 if i == 0 else 0.4
@@ -141,7 +144,6 @@ def generate_dream_scene(prompt_a, prompt_b=None, type="pano", frames=4):
 
             full_prompt = build_full_prompt(current_raw, type == "pano")
 
-            # 1. Main Generation
             image = pipe(
                 prompt=full_prompt,
                 negative_prompt=neg,
@@ -152,22 +154,27 @@ def generate_dream_scene(prompt_a, prompt_b=None, type="pano", frames=4):
                 width=width, height=height
             ).images[0]
 
-            # 2. Post-Process: Background Removal (Sprites only, using rembg)
-            if type == "sprite":
-                if session_for_removal:
-                    clean_img = remove(image, session=session_for_removal)
-                    final_img = Image.new("RGB", clean_img.size, (255, 255, 255))
-                    final_img.paste(clean_img, (0, 0), clean_img)
-                    image = final_img
-                else:
-                    pass
-
-            generated_images.append(image)
+            raw_images.append(image)
             current_image = image
 
-    return generated_images
+    # --- PHASE 2: POST-PROCESSING (CPU) ---
+    final_images = []
 
-# @title 3. The Dream Scryer (Entity-Specific Actions)
+    if type == "sprite" and 'rembg_session' in globals() and rembg_session is not None:
+        print("   ✂️ Phase 2: Removing Backgrounds (CPU, FAST Model)...")
+        for img in raw_images:
+            try:
+                clean_img = remove(img, session=rembg_session)
+                final_images.append(clean_img)
+            except Exception as e:
+                print(f"   ⚠️ BG Removal failed: {e}. Keeping original image.")
+                final_images.append(img)
+    else:
+        final_images = raw_images
+
+    return final_images
+
+# @title 3. The Dream Scryer (Stances & Story Options)
 from typing import List, Literal, Optional, Dict, Any
 from pydantic import BaseModel, Field, field_validator
 from openai import OpenAI
@@ -178,37 +185,41 @@ import re
 # --- CONSTANTS ---
 VALID_TIMES = Literal["Day", "Night", "Between"]
 VALID_CONDITIONS = Literal["Peaceful", "Chaotic"]
-CORE_EMOTIONS = ["Neutral", "Joy", "Sorrow", "Anger", "Fear"]
+# The 7 Standard Visual Stances
+STANCE_KEYS = ["Idle", "Active", "Resting", "Happy", "Sad", "Angry", "Surprised"]
 
 # Setup OpenAI client
 if "OPENAI_API_KEY" not in os.environ:
     os.environ["OPENAI_API_KEY"] = getpass.getpass("Enter your OpenAI API Key: ")
 client = OpenAI()
 
-# --- SYSTEM PROMPT (UPDATED for Physical Settings) ---
+# --- SYSTEM PROMPT (Story Interactions + Generic Stances) ---
 SYSTEM_PROMPT = """
-You are the Dream Architect. Simulate a living dream world defined by a Hex (7 Stations).
+You are the Dream Architect. Analyze the dream text and extract key entities (Up to 6).
 
-### 1. WORLD STATE (World and Background Prompts)
-- **BASE NOUN (World State)**: Must be a physical place or setting (e.g., 'Ancient Library', 'Vast Desert', 'Neon Alley'). No abstract concepts.
+### 1. WORLD STATE
+- **BASE NOUN**: A physical place (e.g., 'Neon Rainforest'). No abstract concepts.
 
-### 2. ENTITY DEFINITION
-- **For EACH entity:**
-  - **CURRENT STATE:** 'current_emotion' (Neutral/Joy/Sorrow/Anger/Fear). 'current_action' must be a single, appropriate verb/gerund for the entity (e.g., 'Meditate', 'Purr', 'Pace').
-  - **BASE NOUN (Entity):** (MAX 4 WORDS) The physical subject being rendered (e.g., 'Golden Robot', 'Stone Golem'). Strict Noun Phrase.
-  - **ENTITY ACTIONS (NEW):** Provide 5 unique, appropriate actions for this entity (e.g., 'Meditate', 'Purr', 'Gaze', 'Hiss', 'Run').
-  - **ASSET FRAGMENTS:** Provide Modifiers & Verbs (Max 2-4 words) for the 5 Emotions and the 5 unique Actions.
-  - **Written Description:** Multi-sentence narrative.
-
-### 3. RELATIONAL MATRIX (Greetings & Options)
+### 2. ENTITY DEFINITION (Extract up to 6)
+- **BASE NOUN**: The physical subject (e.g., 'Cyber Jaguar').
+- **GREETING**: What the entity says or does when the player approaches.
+- **INTERACTION OPTIONS**: Provide exactly 4 distinct, story-driven actions the PLAYER can take (e.g., "Offer a data-treat", "Ask about the rain").
+- **VISUAL STANCES**: Provide a short visual description (2-4 words) for each of the 7 standard stances:
+  1. Idle (Default state)
+  2. Active (Moving/Doing main action)
+  3. Resting (Sleeping/Sitting)
+  4. Happy (Joyful/Positive)
+  5. Sad (Sorrowful/Negative)
+  6. Angry (Aggressive/Hostile)
+  7. Surprised (Shocked/Reacting)
 
 ### OUTPUT
 Return strictly structured JSON.
 """
 
 RECALC_PROMPT = """
-The User (Active Station) performed an ACTION on Target Station.
-1. Update World State. 2. Update Emotion/Action. 3. Update Dialog. 4. Provide 3 NEW options.
+The User performed an ACTION on the Target Entity.
+Update the Entity's state, greeting, and provide 4 NEW interaction options.
 """
 
 # --- DATA MODELS ---
@@ -217,30 +228,23 @@ class GeneratedAsset(BaseModel):
     file_paths: List[str]
     full_prompt: str
 
-class Relationship(BaseModel):
-    target_id: str
-    greeting_dialogue: str
-    interaction_options: List[str] = Field(..., min_length=3, max_length=3)
-
-class EntityActionPrompt(BaseModel):
-    name: str = Field(..., description="The unique name of the action (e.g., Meditate, Purr).")
-    prompt_modifier: str = Field(..., description="Max 4 words. The visual verb/gerund for this action.")
-
-class VisualPrompts(BaseModel):
-    neutral: str = Field(..., description="Max 2 words. Adjectives.")
-    joy: str
-    sorrow: str
-    anger: str
-    fear: str
+class StancePrompts(BaseModel):
+    idle: str = Field(..., description="Visual description for Idle state")
+    active: str = Field(..., description="Visual description for Active state")
+    resting: str = Field(..., description="Visual description for Resting state")
+    happy: str = Field(..., description="Visual description for Happy state")
+    sad: str = Field(..., description="Visual description for Sad state")
+    angry: str = Field(..., description="Visual description for Angry state")
+    surprised: str = Field(..., description="Visual description for Surprised state")
 
 class _WorldStateGenerated(BaseModel):
     time: Literal["Day", "Night", "Between"]
     condition: Literal["Peaceful", "Chaotic"]
     music_track_id: str
-    base_noun: str = Field(..., description="Max 4 words. The setting.")
-    mood_modifier: str = Field(..., description="Max 2 words. Lighting/Mood.")
-    ambient_verb: str = Field(..., description="Max 4 words. Ambient motion.")
-    written_description: str = Field(..., description="Multi-sentence narrative for game copy.")
+    base_noun: str = Field(..., description="Max 4 words. Physical setting.")
+    mood_modifier: str
+    ambient_verb: str
+    written_description: str
 
 class _StationGenerated(BaseModel):
     id: str
@@ -248,23 +252,18 @@ class _StationGenerated(BaseModel):
     position_index: int
     is_player: bool = False
 
-    current_emotion: str = Field(..., description="One of: Neutral, Joy, Sorrow, Anger, Fear")
-    current_action: str = Field(..., description="Must be one of the entity's 5 unique actions (e.g., Meditate, Purr).")
+    # Story / Gameplay Data
+    greeting: str = Field(..., description="Initial dialogue or action line.")
+    interaction_options: List[str] = Field(..., min_length=4, max_length=4, description="4 story choices for the user.")
 
-    relationships: List[Relationship]
-    base_noun: str = Field(..., description="Max 4 words. Noun Phrase. No verbs.")
-    visual_summary: str = Field(..., description="Full prose description for context.")
+    # Visual Data
+    base_noun: str = Field(..., description="Max 4 words. Physical subject.")
+    visual_summary: str
+    stance_prompts: StancePrompts # The 7 visual states
 
-    # 1. NEW FIELD: Store the 5 unique actions
-    entity_actions: List[str] = Field(..., min_length=5, max_length=5, description="5 unique, appropriate actions for this entity.")
+    written_description: str
 
-    # 2. UPDATED FIELD: Store the 5 unique action prompts in a list of objects
-    asset_emotion_prompts: VisualPrompts
-    asset_action_prompts: List[EntityActionPrompt] = Field(..., min_length=5, max_length=5, description="5 unique action prompts corresponding to entity_actions.")
-
-    written_description: str = Field(..., description="Multi-sentence narrative for game copy.")
-
-# --- DATA MODELS: FINAL STORAGE CLASSES (Used by the Game Engine/Manifest) ---\n
+# --- DATA MODELS: STORAGE ---
 
 class WorldState(BaseModel):
     time: Literal["Day", "Night", "Between"]
@@ -281,27 +280,17 @@ class Station(BaseModel):
     entity_name: str
     position_index: int
     is_player: bool = False
-    current_emotion: str
-    current_action: str
-    relationships: List[Relationship]
+
+    greeting: str
+    interaction_options: List[str]
+
     base_noun: str
     visual_summary: str
+    stance_prompts: StancePrompts
 
-    # Storage Fields
+    # Stores the generated file paths for the 7 stances
     generated_assets: Dict[str, GeneratedAsset] = Field(default_factory=dict)
     written_description: str
-
-    # 👇 NEW FIELD for storage
-    entity_actions: List[str]
-    asset_emotion_prompts: VisualPrompts
-    asset_action_prompts: List[EntityActionPrompt]
-
-    @field_validator('current_emotion')
-    @classmethod
-    def validate_emotion(cls, v):
-        v_upper = v.capitalize()
-        if v_upper not in CORE_EMOTIONS: raise ValueError(f"Emotion '{v}' is not a valid key.")
-        return v_upper
 
 class _DreamHexGenerated(BaseModel):
     title: str
@@ -329,7 +318,6 @@ def analyze_dream(dream_text):
         data = completion.choices[0].message.parsed
         data.slug = re.sub(r'[^a-z0-9-]', '', data.slug.lower())
 
-        # CRUCIAL STEP: Convert the simple output back into the complex storage schema
         final_world_state = WorldState(**data.world_state.model_dump())
         final_stations = [Station(**s.model_dump()) for s in data.stations]
 
@@ -344,21 +332,7 @@ def analyze_dream(dream_text):
         print(f"❌ Analysis Error: {e}")
         return None
 
-def recalculate_dream_state(current_hex, active_station_id, target_station_id, action_taken):
-    print(f"⚡ Recalculating: {active_station_id} -> {action_taken} -> {target_station_id}")
-    query = f"World: {current_hex.world_state.time}. Active: {active_station_id}. Target: {target_station_id}. Action: {action_taken}."
-    try:
-        completion = client.beta.chat.completions.parse(
-            model="gpt-4o-mini",
-            messages=[{"role": "system", "content": RECALC_PROMPT}, {"role": "user", "content": query}],
-            response_format=RecalculationResponse,
-        )
-        return completion.choices[0].message.parsed
-    except Exception as e:
-        print(f"❌ Recalc Error: {e}")
-        return None
-
-# @title 4. World Builder (Final Local Version)
+# @title 4. World Builder (7 Stances Loop)
 import shutil
 import os
 import time
@@ -368,11 +342,9 @@ import torch
 import io
 from google.colab import files
 
-
 # --- SETTINGS ---
-# This is now only used for correct public URL construction
 GCS_BUCKET_NAME = "dreamhex-assets-dreamhex"
-GENERATE_FULL_MATRIX = True
+GENERATE_FULL_MATRIX = False
 CHAPTER_1_TEXT = """
 I, John Dee, floated in a space between thought and waking light. A cool, pale glow spread through the room, and a sphere formed in the air. It pulsed with inner geometry, lines and spirals folding into one another like living mathematics. As it drew nearer, words appeared in my mind. They were not spoken. They rose like writing on an invisible sheet.
 
@@ -388,163 +360,123 @@ I, August Kekulé, sat beside my fire, half awake, my mind drifting among though
 CHAPTER_3_TEXT = """
 I, Thomas Edison, leaned back in my chair with a sphere in each hand. My mind loosened, drifting into gentle darkness. Shapes and sparks formed in the air. I saw two metal plates separated by a small gap. A current leapt between them like a tiny lightning bolt. The gap glowed, and I sensed a mechanism waiting to be built. The images drifted toward clarity. I felt my hand relax. One sphere slipped from my grasp and struck the floor with a sharp sound. I awoke at once. The spark remained in my mind, bright and whole. I reached for my notebook and sketched the image before it faded.
 """
-BATCH_INPUT = [CHAPTER_1_TEXT, CHAPTER_2_TEXT, CHAPTER_2_TEXT]
-CORE_EMOTIONS = ["Neutral", "Joy", "Sorrow", "Anger", "Fear"]
+BATCH_INPUT = [CHAPTER_1_TEXT, CHAPTER_2_TEXT]
+# The 7 Stances to generate for every entity
+STANCE_KEYS = ["idle", "active", "resting", "happy", "sad", "angry", "surprised"]
 
 
-# --- LOCAL SAVING & URL GENERATION ---
 
+# --- LOCAL SAVING ---
 def save_frame_sequence(image_list, folder_path, file_prefix, file_format="PNG"):
-    """
-    Saves files locally and constructs the anticipated public GCS URL.
-    """
     saved_urls = []
-
-    # 1. Ensure local directory exists
     os.makedirs(folder_path, exist_ok=True)
-
-    # 2. Get the GCS slug/folder name
     gcs_slug = os.path.basename(folder_path)
 
     for i, img in enumerate(image_list):
         filename = f"{file_prefix}_{i}.{file_format.lower()}"
         full_path = os.path.join(folder_path, filename)
 
-        # Save file locally
         if file_format == "JPEG":
             img.convert("RGB").save(full_path, quality=85)
         else:
             img.save(full_path, format="PNG")
 
-        # Construct the anticipated public URL:
-        # https://storage.googleapis.com/[BUCKET_NAME]/[SLUG]/[FILENAME]
         public_url = f"https://storage.googleapis.com/{GCS_BUCKET_NAME}/{gcs_slug}/{filename}"
         saved_urls.append(public_url)
-
     return saved_urls
 
-
-# --- RUNNER (Restored to Local Save and Zip) ---
+# --- RUNNER ---
 def run_world_builder():
     base_dir = "dream_hex_build"
     assets_dir = os.path.join(base_dir, "assets")
 
-    # Clean up and re-create local structure
     if os.path.exists(base_dir): shutil.rmtree(base_dir)
     os.makedirs(assets_dir)
 
-    manifest = {"version": "3.1", "dreams": []}
-    print(f"🏭 Starting World Builder. Assets will be zipped locally for manual upload to GCS bucket: {GCS_BUCKET_NAME}...")
+    manifest = {"version": "3.3-stances", "dreams": []}
+    print(f"🏭 Starting World Builder (7 Stances Mode)...")
 
     for i, text in enumerate(BATCH_INPUT):
-
-        # 1. ANALYSIS & SETUP
         gc.collect()
         torch.cuda.empty_cache()
 
-        print(f"\n{'='*30}\n🔮 DREAM {i+1}...\n🔮 Architecting Dream World...")
-        hex_data_dict = analyze_dream(text) # Returns a dictionary of Pydantic objects
-
+        # 1. ANALYZE (Generates S1...Sn)
+        hex_data_dict = analyze_dream(text)
         if not hex_data_dict: continue
 
-        # Unpack dictionary to access data
         hex_data = hex_data_dict['world_state']
         stations = hex_data_dict['stations']
         slug = hex_data_dict['slug']
 
-        # The local folder path, used to derive the GCS slug
-        dream_folder = os.path.join(assets_dir, slug)
 
-        # 2. BACKGROUND CONSTRUCTION
-        print(f"🎨 BG: {hex_data.base_noun[:30]}...")
+        # Enforce max 7 entities (S0 + 6 others)
+        if len(stations) > 6:
+            print(f"⚠️ Too many entities ({len(stations)}). Truncating to 6.")
+            stations = stations[:6]
+
+        # 3. BACKGROUND GENERATION
+        dream_folder = os.path.join(assets_dir, slug)
+        print(f"\n🎨 BG: {hex_data.base_noun}...")
         bg_prompt = f"{hex_data.base_noun}, {hex_data.mood_modifier}, {hex_data.ambient_verb}"
 
         bg_frames = generate_dream_scene(bg_prompt, type="pano", frames=3)
         display(bg_frames[0].resize((300, 150)))
 
-        # Saves locally and constructs the public URLs
         bg_urls = save_frame_sequence(bg_frames, dream_folder, f"{slug}_bg", "JPEG")
-
-        # Store the GCS URLs in the final manifest object
         hex_data.generated_asset = GeneratedAsset(file_paths=bg_urls, full_prompt=bg_prompt)
 
-        # 3. ENTITY GENERATION
-        print(f"🧚 Generating Entities...")
+        # 4. ENTITY GENERATION (Loop through all stations)
+        print(f"\n🧚 Generating Entities ({len(stations)} total)...")
+
         for station in stations:
             print(f"   👤 {station.entity_name}...")
 
-            def generate_asset(modifier_prompt, action_verb, key_name):
-                full_prompt = f"{station.base_noun}, {modifier_prompt}, {action_verb}"
+            # Loop through the 7 fixed stances
+            for stance_name in STANCE_KEYS:
+                # 4a. Get the visual modifier for this stance
+                # We use getattr because stance_prompts is a Pydantic model
+                stance_mod = getattr(station.stance_prompts, stance_name, "neutral")
 
+                print(f"      - {stance_name}: {stance_mod}")
+
+                # 4b. Construct Prompt
+                full_prompt = f"{station.base_noun}, {stance_mod}"
+
+                # 4c. Generate
+                # Note: frames=4 is standard for sprites
                 frames = generate_dream_scene(full_prompt, type="sprite", frames=4)
 
-                prefix = f"{slug}_{station.id}_{key_name}"
-                # Saves locally and constructs the public URLs
+                # 4d. Save
+                # Key format: "idle", "active", etc.
+                prefix = f"{slug}_{station.id}_{stance_name}"
                 paths = save_frame_sequence(frames, dream_folder, prefix, "PNG")
 
-                return GeneratedAsset(file_paths=paths, full_prompt=full_prompt)
+                # 4e. Store in Data
+                generated_asset_obj = GeneratedAsset(file_paths=paths, full_prompt=full_prompt)
+                station.generated_assets[stance_name] = generated_asset_obj
 
-            # --- DYNAMIC ACTION LOOKUP (Case-Insensitive Fix) ---
-            c_emo = station.current_emotion
-            c_action_name = station.current_action
-            action_prompt_verb = None
+                # Clean up VRAM after every generation
+                gc.collect()
+                torch.cuda.empty_cache()
 
-            # 1. Get Emotion Modifier
-            emo_mod = getattr(station.asset_emotion_prompts, c_emo.lower())
-
-            # 2. Get Action Verb Modifier (Uses .lower() for robust matching)
-            target_action_lower = c_action_name.lower()
-
-            for action_obj in station.asset_action_prompts:
-                if action_obj.name.lower() == target_action_lower:
-                    action_prompt_verb = action_obj.prompt_modifier
-                    break
-
-            if not action_prompt_verb:
-                # This error means the LLM failed to put the chosen action into the action_prompt list.
-                print(f"⚠️ ERROR: Could not find prompt for action '{c_action_name}'. Skipping asset generation.")
-                continue
-
-            # 3. Generate and Store
-            key = f"{c_emo.lower()}_{c_action_name.lower().replace(' ', '_')}"
-
-            generated_asset_obj = generate_asset(emo_mod, action_prompt_verb, key)
-            station.generated_assets[key] = generated_asset_obj
-
-            gc.collect()
-            torch.cuda.empty_cache()
-
-        # 4. FINAL MANIFEST EXPORT
+        # 5. EXPORT
         final_manifest_entry = {
             'title': hex_data_dict['title'],
             'slug': hex_data_dict['slug'],
             'world_state': hex_data.model_dump(),
-            'stations': [s.model_dump() for s in stations]
+            'stations': [s.model_dump() for s in stations],
+            'original_dream_text': text
         }
         manifest["dreams"].append(final_manifest_entry)
 
-    # --- FINAL OUTPUT: JSON & ZIP DOWNLOAD ---\n
-
-    # 1. Save world.json locally
+    # --- FINAL SAVE ---
     with open(os.path.join(base_dir, "world.json"), "w") as f:
         json.dump(manifest, f, indent=2)
 
-    print("\n📦 Zipping assets for manual upload...")
+    print("\n📦 Zipping...")
     shutil.make_archive("dreamhex_world", 'zip', base_dir)
-
-    # 2. Trigger the download of the zip file
     files.download("dreamhex_world.zip")
 
-    # 3. Output the JSON content string
-    manifest_json = json.dumps(manifest, indent=2)
+    return json.dumps(manifest, indent=2)
 
-    # Clean up local space completely
-    if os.path.exists(base_dir): shutil.rmtree(base_dir)
-
-    print("\n=====================================================")
-    print("✅ Local Zipping Complete. The zip file is downloading.")
-    print(f"**Action Required: Manually upload the 'dreamhex_world.zip' content to the root of your GCS bucket '{GCS_BUCKET_NAME}'.**")
-    print("=====================================================")
-
-    return manifest_json
 run_world_builder()
