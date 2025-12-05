@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, Dimensions, ScrollView, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Dimensions, ScrollView, Image } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import { BookPage } from '../BookManifest';
 
@@ -12,28 +12,23 @@ interface BookReaderProps {
   // Controlled State Props
   pageIndex: number;
   setPageIndex: (i: number) => void;
-  
-  // ADDED SCARAB COUNT
-  scarabCount: number;
+
+  // Context Props
+  currentDreamSlug?: string;
 }
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 // Custom Markdown Renderer to ensure images are handled correctly
 const customRenderers = {
-  // Explicitly tell the library to render images as React Native <Image> components
   image: (node: any, children: any, parentStyles: any, styles: any) => {
     const uri = node.attributes.src;
-    
-    // Check if URI is valid before rendering
     if (!uri) return null;
 
     return (
-      // 1. Use the imageContainer style to center the image block horizontally
       <View key={node.key} style={styles.imageContainer}>
         <Image 
           source={{ uri: uri }}
-          // 2. Use the image style to apply fixed width/height to satisfy the library requirement
           style={styles.image} 
           accessibilityLabel={node.attributes.alt || 'image'}
         />
@@ -45,7 +40,7 @@ const customRenderers = {
 
 export const BookReader: React.FC<BookReaderProps> = ({ 
     visible, onClose, pages, onAction, 
-    pageIndex, setPageIndex, scarabCount
+    pageIndex, setPageIndex, currentDreamSlug
 }) => {
   
   const activePage = pages[pageIndex];
@@ -53,14 +48,12 @@ export const BookReader: React.FC<BookReaderProps> = ({
 
   const hasNext = pageIndex < pages.length - 1;
   const hasPrev = pageIndex > 0;
-  const isLastPage = pageIndex === pages.length - 1;
 
   const handleNext = () => { if (hasNext) setPageIndex(pageIndex + 1); };
   const handlePrev = () => { if (hasPrev) setPageIndex(pageIndex - 1); };
 
-  const isUnlockableAction = activePage.type === 'DREAM_GATE' || 
-                           (activePage.type === 'CREDITS_UNLOCK' && scarabCount >= (activePage.requiredScarabs || 0));
-
+  // Check if the page target matches the current dream
+  const isCurrentDream = activePage.type === 'DREAM_GATE' && activePage.targetDreamId === currentDreamSlug;
 
   return (
     <Modal visible={visible} animationType="slide" transparent={true} onRequestClose={onClose}>
@@ -71,23 +64,15 @@ export const BookReader: React.FC<BookReaderProps> = ({
             <View style={styles.header}>
                 <Text style={styles.pageIndicator}>Page {pageIndex + 1} of {pages.length}</Text>
                 
-                {/* CONDITIONAL RENDERING OF SCARAB COUNTER: Only visible on the last page */}
-                {isLastPage && (
-                    <View style={styles.scarabCounter}>
-                        <Text style={styles.scarabText}>Golden Scarabs: {scarabCount}</Text>
-                    </View>
-                )}
-                
                 <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                     <Text style={styles.closeText}>✕</Text>
                 </TouchableOpacity>
             </View>
 
-            {/* Content Area - Fixed Height for consistency */}
+            {/* Content Area */}
             <View style={styles.contentArea}>
                 <Text style={styles.titleText}>{activePage.title}</Text>
                 
-                {/* WRAPPED MARKDOWN IN SCROLLVIEW FOR VERTICAL SCROLLING */}
                 <ScrollView style={styles.markdownScroll} contentContainerStyle={styles.markdownContentContainer}>
                     <Markdown 
                         key={pageIndex} 
@@ -99,7 +84,7 @@ export const BookReader: React.FC<BookReaderProps> = ({
                 </ScrollView>
             </View>
 
-            {/* Footer Navigation - Fixed position */}
+            {/* Footer Navigation */}
             <View style={styles.footer}>
                 <TouchableOpacity 
                     onPress={handlePrev} 
@@ -111,18 +96,21 @@ export const BookReader: React.FC<BookReaderProps> = ({
 
                 {/* Action Button (Center) */}
                 {activePage.type === 'DREAM_GATE' ? (
-                    <TouchableOpacity onPress={() => onAction(activePage)} style={styles.actionBtn}>
-                        <Text style={styles.actionText}>ENTER DREAM</Text>
-                    </TouchableOpacity>
+                    isCurrentDream ? (
+                        <View style={styles.disabledActionBtn}>
+                            <Text style={styles.disabledActionText}>CURRENT DREAM</Text>
+                        </View>
+                    ) : (
+                        <TouchableOpacity onPress={() => onAction(activePage)} style={styles.actionBtn}>
+                            <Text style={styles.actionText}>ENTER DREAM</Text>
+                        </TouchableOpacity>
+                    )
                 ) : activePage.type === 'CREDITS_UNLOCK' ? (
                     <TouchableOpacity 
                         onPress={() => onAction(activePage)} 
-                        style={[styles.actionBtn, !isUnlockableAction && styles.lockedActionBtn]}
-                        disabled={!isUnlockableAction}
+                        style={styles.actionBtn}
                     >
-                        <Text style={styles.actionText}>
-                             {scarabCount >= (activePage.requiredScarabs || 0) ? 'VIEW ENDING' : `LOCKED (${activePage.requiredScarabs})`}
-                        </Text>
+                        <Text style={styles.actionText}>VIEW ENDING</Text>
                     </TouchableOpacity>
                 ) : (
                     <View style={{width: 100}} /> 
@@ -143,7 +131,6 @@ export const BookReader: React.FC<BookReaderProps> = ({
   );
 };
 
-// Markdown Styles for rendering rich text and images
 const markdownStyles = StyleSheet.create({
     body: {
         fontSize: 18,
@@ -162,16 +149,13 @@ const markdownStyles = StyleSheet.create({
         marginBottom: 10,
         fontFamily: 'serif',
     },
-    // Fix: Set fixed width/height in pixels to satisfy the underlying library.
-    // The value 300px is chosen as it is roughly 50% of the 600px max container width.
     image: {
         width: 300, 
         height: 300, 
         resizeMode: 'contain',
     },
-    // Custom style for the surrounding container of the image to ensure center alignment
     imageContainer: {
-        alignItems: 'center', // This is what centers the image block horizontally
+        alignItems: 'center', 
         marginVertical: 10,
     }
 });
@@ -187,7 +171,7 @@ const styles = StyleSheet.create({
   bookContainer: { 
       width: '100%',
       maxWidth: 600,
-      height: Math.min(SCREEN_HEIGHT * 0.8, 700), // Standard height constraint
+      height: Math.min(SCREEN_HEIGHT * 0.8, 700),
       backgroundColor: '#fcfbf7', 
       borderRadius: 8, 
       padding: 20,
@@ -213,24 +197,6 @@ const styles = StyleSheet.create({
   closeButton: { padding: 5 },
   closeText: { fontSize: 24, color: '#5d4037', fontWeight: 'bold' },
   
-  // SCARAB STYLES
-  scarabCounter: {
-      position: 'absolute',
-      alignSelf: 'center',
-      backgroundColor: 'rgba(62, 39, 35, 0.2)', 
-      borderRadius: 15,
-      paddingVertical: 5,
-      paddingHorizontal: 10,
-      left: '50%',
-      transform: [{ translateX: -50 }],
-  },
-  scarabText: {
-      color: '#ffdd00',
-      fontSize: 12,
-      fontWeight: 'bold',
-      fontFamily: 'serif'
-  },
-
   contentArea: {
       flex: 1, 
   },
@@ -242,15 +208,12 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       marginBottom: 20
   },
-  // New Styles for ScrollView wrapping Markdown
   markdownScroll: {
       flex: 1,
   },
   markdownContentContainer: {
-      paddingBottom: 20, // Add some bottom padding for the scroll content
+      paddingBottom: 20, 
   },
-
-
   footer: { 
       flexDirection: 'row', 
       justifyContent: 'space-between', 
@@ -270,8 +233,15 @@ const styles = StyleSheet.create({
       paddingHorizontal: 20, 
       borderRadius: 4 
   },
-  lockedActionBtn: {
-      backgroundColor: '#a1887f', 
+  disabledActionBtn: {
+      backgroundColor: 'transparent',
+      borderColor: '#8d6e63',
+      borderWidth: 1,
+      paddingVertical: 10, 
+      paddingHorizontal: 20, 
+      borderRadius: 4,
+      opacity: 0.6
   },
-  actionText: { color: '#fcfbf7', fontFamily: 'serif', fontWeight: 'bold', fontSize: 14 }
+  actionText: { color: '#fcfbf7', fontFamily: 'serif', fontWeight: 'bold', fontSize: 14 },
+  disabledActionText: { color: '#8d6e63', fontFamily: 'serif', fontWeight: 'bold', fontSize: 12 }
 });

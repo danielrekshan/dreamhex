@@ -25,6 +25,17 @@ export interface EntityInteractionProps {
 // Module-level cache to track seen content across re-renders/unmounts (Keeping for original logic)
 const viewedContentCache = new Set<string>();
 
+// Helper to clean markdown for text-only previews
+const cleanMarkdownPreview = (text: string) => {
+    if (!text) return "";
+    return text
+        .replace(/!\[.*?\]\(.*?\)/g, '')      // Remove Images completely
+        .replace(/\[(.*?)\]\(.*?\)/g, '$1')   // Remove Links but keep text
+        .replace(/[*#_~`>]/g, '')             // Remove formatting chars (bold, italic, headers, blockquotes)
+        .replace(/\n+/g, ' ')                 // Collapse newlines into spaces for a smooth preview
+        .trim();
+};
+
 const EntityAvatar: React.FC<{ frames: string[] }> = ({ frames }) => {
   const [frameIndex, setFrameIndex] = useState(0);
   
@@ -50,7 +61,7 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
   visible, entityName, description, greeting, monologue, options, frames, isLoading, onSelectOption, onClose, foundPage
 }) => {
   const [customInput, setCustomInput] = useState('');
-  const [typingPhase, setTypingPhase] = useState<'idle' | 'greeting' | 'monologue' | 'options' | 'done'>('done'); // Simplified typing animation for this scope
+  const [typingPhase, setTypingPhase] = useState<'idle' | 'greeting' | 'monologue' | 'options' | 'done'>('done'); 
   const [visibleOptionsCount, setVisibleOptionsCount] = useState(options.length);
 
   const contentOpacity = isLoading ? 0.4 : 1;
@@ -102,7 +113,7 @@ export const EntityDialog: React.FC<EntityInteractionProps> = ({
                         <View style={styles.foundPageContent}>
                             <Text style={styles.foundPageTitle}>{foundPage.title}</Text>
                             <Text numberOfLines={3} style={styles.foundPagePreview}>
-                                {foundPage.content.replace(/[*#]/g, '')}
+                                {cleanMarkdownPreview(foundPage.content)}
                             </Text>
                         </View>
                         <Text style={styles.foundPageFooter}>Open your Magic Book to view it.</Text>
