@@ -70,16 +70,16 @@ Analyze the context and the user's action to calculate the Entity's reaction.
 2. **RESPONSE STRUCTURE**:
    - **New Stance**: Determine the visual emotional state (idle, happy, angry, etc).
    - **Greeting**: A short, punchy line (1 sentence) acknowledging the user.
-   - **Monologue**: A deep paragraph response (1-4 sentences) from the voice of the entity, for example, if it is a snake, it should hiss and talk about snake things, if it is a historical person, like John Dee, it should sound like them. 
+   - **Monologue**: A deep paragraph response (1-3 sentences) from the voice of the entity, for example, if it is a snake, it should hiss and talk about snake things, if it is a historical person, like John Dee, it should sound like them. 
      - Reference the **History of Interactions** if provided (e.g., "You return to me again...").
-     - Explain the dream meaning of the current situation.
-     - Offer guidance or cryptic warnings.
+     - Offer its perspective on the current state of the dream.
+     - Teach about dream incubation, lucid dreaming, or dreamwork.
    - **Interaction Options**: Provide 4 options for the user to interact **specifically with THIS entity** (e.g., "Ask about...", "Touch the...", "Offer..."). Do not offer options to leave or go elsewhere.
 
 3. **GAMEPLAY**: 
    - If the user makes a breakthrough, grant knowledge.
    - If the user acts aggressively, react defensively.
-   - If the action reveals a major secret, set 'unlock_trigger' to 'UNLOCK_NEW_DREAM'.
+   - If the action seems engaged, set 'unlock_trigger' to 'UNLOCK_NEW_DREAM'.
 """
 
 async def analyze_dream_text(text: str) -> DreamGenerationResponse:

@@ -65,31 +65,51 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, bookText, onO
   // Total steps: 1 (BG) + 1 (Book) + N (Stations) = N+2
   const totalSteps = stations.length > 0 ? stations.length + 2 : 1; 
 
-  // Logic for the entrance and exit animation sequence (~4 seconds total)
+  // 1. EFFECT FOR ENTRANCE (Runs only once on initial mount/dream load)
   useEffect(() => {
+    if (stations.length === 0) return;
+
     let timers: NodeJS.Timeout[] = [];
-    // UPDATED: Faster step interval for a 70% speed increase (650ms * 0.30 ≈ 200ms)
     const stepInterval = 200; 
     
     let targetSteps: number[] = [];
+    // ENTRANCE ANIMATION: Sequence: 0 -> 1 (BG Show) -> ... -> totalSteps (Last Entity Show)
+    for (let s = 1; s <= totalSteps; s++) {
+        targetSteps.push(s);
+    }
     
-    if (isExiting) {
-        // EXIT ANIMATION: Reverse sequence: totalSteps (Last Entity Hide) -> ... -> 1 (BG Hide)
-        for (let s = totalSteps; s >= 0; s--) {
-            targetSteps.push(s);
-        }
-    } else if (stations.length > 0 && animationStep === 0) { 
-        // ENTRANCE ANIMATION: Sequence: 0 -> 1 (BG Show) -> ... -> totalSteps (Last Entity Show)
-        // ONLY triggers if the component mounts (initial load) or on dream change (via key) 
-        // AND animation has not started (animationStep === 0).
-        for (let s = 1; s <= totalSteps; s++) {
-            targetSteps.push(s);
-        }
-    } else {
-        // Prevent setting animationStep = 0 if it has already completed the entrance
-        if (!isExiting && animationStep > 0) return () => {timers.forEach(clearTimeout)};
-        setAnimationStep(0);
-        return () => {timers.forEach(clearTimeout)};
+    targetSteps.forEach((step, index) => {
+        const timer = setTimeout(() => {
+            setAnimationStep(step); 
+        }, index * stepInterval);
+        timers.push(timer);
+    });
+
+    return () => {
+        timers.forEach(clearTimeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalSteps, stations.length]); 
+
+
+  // 2. EFFECT FOR EXIT (Runs only when isExiting changes to true)
+  useEffect(() => {
+    if (!isExiting || stations.length === 0) {
+      // Reset animation step to final state if we're not exiting, 
+      // ensuring visual elements remain visible while interactions update state.
+      if (!isExiting && animationStep > 0) {
+        setAnimationStep(totalSteps);
+      }
+      return;
+    }
+
+    let timers: NodeJS.Timeout[] = [];
+    const stepInterval = 200; 
+    
+    let targetSteps: number[] = [];
+    // EXIT ANIMATION: Reverse sequence: totalSteps (Last Entity Hide) -> ... -> 0 (BG Hide)
+    for (let s = totalSteps; s >= 0; s--) {
+        targetSteps.push(s);
     }
 
     // Schedule Steps
@@ -98,18 +118,17 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, bookText, onO
             setAnimationStep(step); 
             
             // Trigger callback when the final step (0) is reached during exit
-            if (isExiting && step === 0) {
+            if (step === 0) {
                 onExitAnimationComplete();
             }
         }, index * stepInterval);
         timers.push(timer);
     });
 
-    // Dependency array ensures this only runs on: 1) Mount (initial load, animationStep=0) 2) isExiting state change
     return () => {
         timers.forEach(clearTimeout);
     };
-  }, [isExiting, totalSteps, onExitAnimationComplete]); 
+  }, [isExiting, totalSteps, stations.length, onExitAnimationComplete]); 
 
   // Helper to determine sprite visibility based on index and current step
   const getStationVisibility = (i: number) => {

@@ -169,6 +169,8 @@ export default function App() {
                 setInteractionHistory(prev => [...prev, newLog]);
             }
 
+            // This state update triggers a re-render of DreamScene, but because 
+            // isExiting is false, the animation sequence will not re-run.
             setDreamData((prev: any) => {
                 const newState = { ...prev };
                 if (response.station) {
