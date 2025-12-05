@@ -294,19 +294,40 @@ In this world, observe how beauty and knowledge intertwine within dream vision.
 `
   },
 
-  // --- ENDING (Hidden in Dream 12) ---
+
+    // --- DREAM 12 (Hidden in Dream 11) ---
   {
-    id: 'credits',
-    type: 'CREDITS_UNLOCK',
-    title: 'The Great Work',
-    hiddenInDream: 'the-radiant-equation',
-    pageUnlockCondition: 'FIRST_INTERACTION',
-    content: `**The Great Work is Complete.**
+    id: 'gate_ramanujan',
+    type: 'DREAM_GATE',
+    title: 'The End',
+        hiddenInDream: 'the-radiant-equation',
 
-You have traversed the available realms and gathered the scattered light. The Hexarchia Oneirica begins to mend. 
+    targetDreamId: 'dream-of-time-and-transitions', 
+    // hiddenInDream: 'abraham-lincolns-mourning-dream',
+    // pageUnlockCondition: 'FIRST_INTERACTION', 
+    content: `
+![Central Image](https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions_1_active_0.png)     
+    
+**Dream Realm: Or perhaps the beginning?**
 
-The power to Scry—to weave new worlds from your own words—is now returning to these pages.
+Daniel Rekshan, creator of this app, has been a dreamer all of his life.  He uses creative dream incubation to solve problems and generate ideas.  This dream represents his own journey into the unknown realms of dreaming, creativity, and imagination. 
 
-*(End of current demo content)*`
+`
   }
+
+//   // --- ENDING (Hidden in Dream 12) ---
+//   {
+//     id: 'credits',
+//     type: 'CREDITS_UNLOCK',
+//     title: 'The Great Work',
+//     hiddenInDream: 'the-radiant-equation',
+//     pageUnlockCondition: 'FIRST_INTERACTION',
+//     content: `**The Great Work is Complete.**
+
+// You have traversed the available realms and gathered the scattered light. The Hexarchia Oneirica begins to mend. 
+
+// The power to Scry—to weave new worlds from your own words—is now returning to these pages.
+
+// *(End of current demo content)*`
+//   }
 ];

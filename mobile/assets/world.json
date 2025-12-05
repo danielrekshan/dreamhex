@@ -5238,6 +5238,330 @@
         }
       ],
       "original_dream_text": "\nI, Srinivasa Ramanujan, slept with a sense of quiet expectancy, as though some presence waited just beyond my thoughts. Suddenly a radiant figure appeared before me, glowing with a light both soft and brilliant. She wrote symbols in the air, each equation shining like a small star. Lines curved into elegant forms, connecting with grace and precision. I understood the patterns instantly, as if they were familiar truths. I reached toward them and felt warmth spread through me. When I woke, the symbols were still clear. I wrote them down at once, marveling at their strange and perfect beauty.\n"
+    },
+      {
+      "title": "Dream of Time and Transitions",
+      "slug": "dream-of-time-and-transitions",
+      "world_state": {
+        "time": "Night",
+        "condition": "Chaotic",
+        "music_track_id": "ethereal_sounds",
+        "base_noun": "Foundations of Space and Time",
+        "mood_modifier": "Introspective",
+        "ambient_verb": "flipping pages",
+        "generated_assets": {
+          "level_1": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl1_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl1_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl1_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl1_3.jpeg"
+            ],
+            "full_prompt": "Foundations of Space and Time, Introspective, flipping pages, serene, hazy, light"
+          },
+          "level_2": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl2_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl2_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl2_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl2_3.jpeg"
+            ],
+            "full_prompt": "Foundations of Space and Time, Introspective, flipping pages, still but moving, lightening"
+          },
+          "level_3": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl3_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl3_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl3_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl3_3.jpeg"
+            ],
+            "full_prompt": "Foundations of Space and Time, Introspective, flipping pages, sense of motion, darkening"
+          },
+          "level_4": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl4_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl4_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl4_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_bg_lvl4_3.jpeg"
+            ],
+            "full_prompt": "Foundations of Space and Time, Introspective, flipping pages, chaotic, sharp, dark"
+          }
+        },
+        "written_description": "A surreal journey through past lives and dimensions."
+      },
+      "stations": [
+        {
+          "id": "1",
+          "entity_name": "Daniel Rekshan",
+          "position_index": 1,
+          "is_player": true,
+          "greeting": "What an incredible journey this is!",
+          "interaction_options": [
+            "Dive deeper into the transition",
+            "Ask the beings about time",
+            "Recall a specific past life",
+            "Observe the vast beings closely"
+          ],
+          "base_noun": "A curious seeker",
+          "visual_summary": "Introspective and thoughtful",
+          "stance_prompts": {
+            "idle": "Calm and observing",
+            "active": "Engaged and alert",
+            "resting": "Sitting cross-legged",
+            "happy": "Excited and smiling",
+            "sad": "Nostalgic and reflective",
+            "angry": "Frustrated at confusion",
+            "surprised": "Wide-eyed and amazed"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_idle_3.png"
+              ],
+              "full_prompt": "A curious seeker, Calm and observing"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_active_3.png"
+              ],
+              "full_prompt": "A curious seeker, Engaged and alert"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_resting_3.png"
+              ],
+              "full_prompt": "A curious seeker, Sitting cross-legged"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_happy_3.png"
+              ],
+              "full_prompt": "A curious seeker, Excited and smiling"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_sad_3.png"
+              ],
+              "full_prompt": "A curious seeker, Nostalgic and reflective"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_angry_3.png"
+              ],
+              "full_prompt": "A curious seeker, Frustrated at confusion"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_1_surprised_3.png"
+              ],
+              "full_prompt": "A curious seeker, Wide-eyed and amazed"
+            }
+          },
+          "written_description": "A dreamer exploring the multiverse of past lives."
+        },
+        {
+          "id": "2",
+          "entity_name": "Vast Beings",
+          "position_index": 2,
+          "is_player": false,
+          "greeting": "You are not yet ready for this realm.",
+          "interaction_options": [
+            "Attempt to understand their ways",
+            "Ask them about the nature of time",
+            "Inquire if I can stay longer",
+            "Request to share knowledge"
+          ],
+          "base_noun": "Immense beings of light",
+          "visual_summary": "Ethereal and expansive",
+          "stance_prompts": {
+            "idle": "Floating gently",
+            "active": "Radiating energy",
+            "resting": "Observing in stillness",
+            "happy": "Conveying warmth",
+            "sad": "Reflecting deep wisdom",
+            "angry": "Flickering with intensity",
+            "surprised": "Shifting forms unexpectedly"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_idle_3.png"
+              ],
+              "full_prompt": "Immense beings of light, Floating gently"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_active_3.png"
+              ],
+              "full_prompt": "Immense beings of light, Radiating energy"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_resting_3.png"
+              ],
+              "full_prompt": "Immense beings of light, Observing in stillness"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_happy_3.png"
+              ],
+              "full_prompt": "Immense beings of light, Conveying warmth"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_sad_3.png"
+              ],
+              "full_prompt": "Immense beings of light, Reflecting deep wisdom"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_angry_3.png"
+              ],
+              "full_prompt": "Immense beings of light, Flickering with intensity"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_2_surprised_3.png"
+              ],
+              "full_prompt": "Immense beings of light, Shifting forms unexpectedly"
+            }
+          },
+          "written_description": "Guardians of the Foundations of Space and Time."
+        },
+        {
+          "id": "3",
+          "entity_name": "Daniel's Body",
+          "position_index": 3,
+          "is_player": false,
+          "greeting": "Welcome back to yourself.",
+          "interaction_options": [
+            "Experience the physical sensations",
+            "Engage in self-reflection",
+            "Monitor dreams post-awareness",
+            "Return to sleep for another journey"
+          ],
+          "base_noun": "Physical body of Daniel",
+          "visual_summary": "Still and present",
+          "stance_prompts": {
+            "idle": "Lying dormant",
+            "active": "Breathing rhythmically",
+            "resting": "Relaxed on the bed",
+            "happy": "Energized and alert",
+            "sad": "Weary from experiences",
+            "angry": "Tensing muscles",
+            "surprised": "Startled awake"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_idle_3.png"
+              ],
+              "full_prompt": "Physical body of Daniel, Lying dormant"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_active_3.png"
+              ],
+              "full_prompt": "Physical body of Daniel, Breathing rhythmically"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_resting_3.png"
+              ],
+              "full_prompt": "Physical body of Daniel, Relaxed on the bed"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_happy_3.png"
+              ],
+              "full_prompt": "Physical body of Daniel, Energized and alert"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_sad_3.png"
+              ],
+              "full_prompt": "Physical body of Daniel, Weary from experiences"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_angry_3.png"
+              ],
+              "full_prompt": "Physical body of Daniel, Tensing muscles"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/dream-of-time-and-transitions/dream-of-time-and-transitions_3_surprised_3.png"
+              ],
+              "full_prompt": "Physical body of Daniel, Startled awake"
+            }
+          },
+          "written_description": "The vessel of the dreamer upon awakening."
+        }
+      ],
+      "original_dream_text": "\nI, Daniel Rekshan, dreamed that I was many things.  I saw many past lives, like the many pages of a book flipping.  Each time I looked down at my watch, I would look up to a different dream.  This happened many times until I became curious about the transition.  I became lucid in my dreams for one of the first times, then paid attention to the transition of dreams.  I went to the Foundations of Space and Time.  I met beings there who understood that time flows in many ways.  They were vast beings who felt so real to me, like the same feeling you might get standing next to a wild animal.  They told me that it was not my time to be in their realm, then they put me back into my body.  I awoke as they placed me right behind my body's eyes with strong feelings in my body, which I would sometimes feel during sleep paralysis and hypnapompic entity encounters... the memory of this dream is as powerful today as when I first dreamed it and is a major inspiration for my philosophic and creative work.\n\n"
     }
   ]
 }
