@@ -1,14 +1,25 @@
 import React from 'react';
 import { GroupProps } from '@react-three/fiber';
+import { Text } from '@react-three/drei/native';
 
 interface MagicBookProps extends GroupProps {
   onPress: () => void;
+  pageText?: string;
 }
 
-export const MagicBook: React.FC<MagicBookProps> = ({ onPress, ...props }) => {
+export const MagicBook: React.FC<MagicBookProps> = ({ onPress, pageText, ...props }) => {
   return (
     // Positioned low (-5.5) to act as a "foundation" for the world
-    <group position={[0, -5.5, 0]} scale={0.6} {...props}>
+    // Added onClick here to make the whole book interactive
+    <group 
+        position={[0, -5.5, 0]} 
+        scale={0.6} 
+        onClick={(e) => {
+             e.stopPropagation();
+             onPress();
+        }}
+        {...props}
+    >
       
       {/* 1. The Book Cover (Dark Leather) */}
       <mesh position={[0, 0, 0]}>
@@ -28,18 +39,21 @@ export const MagicBook: React.FC<MagicBookProps> = ({ onPress, ...props }) => {
         <meshStandardMaterial color="#2d1b15" />
       </mesh>
 
-      {/* 4. THE INTERACTION BUTTON */}
-      {/* A raised red seal/gem on the page. Only clicking THIS opens the UI. */}
-      <mesh 
-        position={[0, 1.2, 3]} 
-        onClick={(e) => {
-          e.stopPropagation(); // Stop event from bubbling
-          onPress();
-        }}
-      >
-        <cylinderGeometry args={[1, 1, 0.2, 32]} />
-        <meshStandardMaterial color="#b71c1c" emissive="#500000" emissiveIntensity={0.5} />
-      </mesh>
+      {/* 4. Page Text Preview */}
+      {pageText && (
+          <Text
+            position={[0, 0.86, 0]} // Slightly above the paper surface
+            rotation={[-Math.PI / 2, 0, Math.PI / 2]} // Laying flat, rotated to face 'up' in standard view if needed, or Z-up
+            fontSize={0.5}
+            color="#3e2723"
+            maxWidth={10}
+            textAlign="center"
+            anchorX="center"
+            anchorY="middle"
+          >
+            {pageText.substring(0, 300) + (pageText.length > 300 ? "..." : "")}
+          </Text>
+      )}
       
     </group>
   );

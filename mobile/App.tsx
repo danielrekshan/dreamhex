@@ -20,17 +20,23 @@ export default function App() {
   const [dreamData, setDreamData] = useState<any>(null);
   
   // UI States
-  const [isBookOpen, setBookOpen] = useState(true);
+  const [isBookOpen, setBookOpen] = useState(false); // Default to closed so we see the 3D book first
+  const [bookPageIndex, setBookPageIndex] = useState(0); // LIFTED STATE
+  
   const [activeEntity, setActiveEntity] = useState<any>(null);
   const [interactionLoading, setInteractionLoading] = useState(false);
   
   // Game States
   const [scarabCount, setScarabCount] = useState(0);
   const [foundScarabs, setFoundScarabs] = useState<Set<string>>(new Set());
-  const [interactionHistory, setInteractionHistory] = useState<string[]>([]); // New: Track History
+  const [interactionHistory, setInteractionHistory] = useState<string[]>([]); 
   
   const [loading, setLoading] = useState(false);
   const [userId] = useState("user-demo-" + Math.floor(Math.random() * 1000));
+
+  // Helper to get current page text for the 3D model
+  const currentBookPage = BOOK_CONTENT[bookPageIndex];
+  const currentBookText = currentBookPage ? currentBookPage.content : "";
 
   // --- INITIAL LOAD (PERSISTENCE) ---
   useEffect(() => {
@@ -45,7 +51,6 @@ export default function App() {
                 setInteractionHistory(parsed.history || []);
                 setCurrentDreamSlug(parsed.slug || 'between-thought-and-waking-light');
             } else {
-                // Fallback to JSON default
                 loadFromJSON('between-thought-and-waking-light');
             }
         } catch (e) {
@@ -64,7 +69,7 @@ export default function App() {
       setDreamData(found ? JSON.parse(JSON.stringify(found)) : dreams[0]);
   };
 
-  // --- SAVE SESSION (PERSISTENCE) ---
+  // --- SAVE SESSION ---
   useEffect(() => {
       if (dreamData) {
           const session = {
@@ -116,9 +121,7 @@ export default function App() {
 
     try {
         const currentStation = dreamData.stations.find((s: any) => s.id === activeEntity.stationId);
-
-        // Build History String
-        const historyStr = interactionHistory.slice(-5).join("\n"); // Last 5 interactions
+        const historyStr = interactionHistory.slice(-5).join("\n"); 
 
         const worldContext = {
             dream_title: dreamData.title,
@@ -143,33 +146,24 @@ export default function App() {
         );
 
         if (response) {
-            
-            // 1. History Logging
             if (response.station) {
                 const newLog = `User: ${option} -> Entity (${response.station.entity_name}): ${response.station.entity_greeting}`;
                 setInteractionHistory(prev => [...prev, newLog]);
             }
 
-            // 2. Global State Update (Entities + World)
             setDreamData((prev: any) => {
                 const newState = { ...prev };
-                
-                // Update Entity
                 if (response.station) {
                      newState.stations = prev.stations.map((s: any) => 
                         s.id === response.station.id ? response.station : s
                     );
                 }
-
-                // Update World (Chaos Level / Background)
                 if (response.world_state) {
                     newState.world_state = response.world_state;
                 }
-
                 return newState;
             });
             
-            // 3. UI Update (Dialog)
             if (response.station) {
                 const newFrames = getEntityFrames(response.station);
                 setActiveEntity({
@@ -192,8 +186,6 @@ export default function App() {
 
   const handleBookAction = (page: BookPage) => {
       if (page.type === 'DREAM_GATE' && page.targetDreamId) {
-          // Switching dreams resets the view but maybe we keep history? 
-          // For now, load new JSON data for the new dream
           loadFromJSON(page.targetDreamId);
           setCurrentDreamSlug(page.targetDreamId); 
           setBookOpen(false);
@@ -216,6 +208,7 @@ export default function App() {
             <DreamScene 
                 key={currentDreamSlug} 
                 dreamData={dreamData}
+                bookText={currentBookText} // Pass current page text
                 onOpenBook={() => setBookOpen(true)}
                 onInteractStation={handleInteractStation}
             />
@@ -225,6 +218,8 @@ export default function App() {
             visible={isBookOpen}
             onClose={() => setBookOpen(false)}
             pages={BOOK_CONTENT}
+            pageIndex={bookPageIndex}       // Controlled component
+            setPageIndex={setBookPageIndex} // Controlled component
             onAction={handleBookAction}
             scarabCount={scarabCount}
         />

@@ -2,289 +2,739 @@
   "version": "3.4-multi-condition",
   "dreams": [
     {
-      "title": "The Sphere of Thoughts",
-      "slug": "the-sphere-of-thoughts",
+      "title": "Floating in Thought",
+      "slug": "floating-in-thought",
       "world_state": {
         "time": "Between",
         "condition": "Peaceful",
-        "music_track_id": "ethereal_chords_02",
-        "base_noun": "Dimly Lit Room",
-        "mood_modifier": "Calm and Mysterious",
-        "ambient_verb": "Gleaming",
+        "music_track_id": "ambient_space",
+        "base_noun": "Room of Light",
+        "mood_modifier": "Dreamlike",
+        "ambient_verb": "Pulsing",
         "generated_assets": {
           "level_1": {
             "file_paths": [
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl1_0.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl1_1.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl1_2.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl1_3.jpeg"
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl1_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl1_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl1_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl1_3.jpeg"
             ],
-            "full_prompt": "Dimly Lit Room, Calm and Mysterious, Gleaming, serene, hazy, light"
+            "full_prompt": "Room of Light, Dreamlike, Pulsing, serene, hazy, light"
           },
           "level_2": {
             "file_paths": [
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl2_0.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl2_1.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl2_2.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl2_3.jpeg"
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl2_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl2_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl2_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl2_3.jpeg"
             ],
-            "full_prompt": "Dimly Lit Room, Calm and Mysterious, Gleaming, still but moving, lightening"
+            "full_prompt": "Room of Light, Dreamlike, Pulsing, still but moving, lightening"
           },
           "level_3": {
             "file_paths": [
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl3_0.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl3_1.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl3_2.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl3_3.jpeg"
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl3_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl3_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl3_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl3_3.jpeg"
             ],
-            "full_prompt": "Dimly Lit Room, Calm and Mysterious, Gleaming, sense of motion, darkening"
+            "full_prompt": "Room of Light, Dreamlike, Pulsing, sense of motion, darkening"
           },
           "level_4": {
             "file_paths": [
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl4_0.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl4_1.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl4_2.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_bg_lvl4_3.jpeg"
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl4_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl4_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl4_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_bg_lvl4_3.jpeg"
             ],
-            "full_prompt": "Dimly Lit Room, Calm and Mysterious, Gleaming, chaotic, sharp, dark"
+            "full_prompt": "Room of Light, Dreamlike, Pulsing, chaotic, sharp, dark"
           }
         },
-        "written_description": "A hazy room where a glowing sphere hovers, emanating tranquility."
+        "written_description": "A cool, pale glow spread through the room, illuminating the spherical shape."
       },
       "stations": [
         {
           "id": "1",
-          "entity_name": "The Sphere",
+          "entity_name": "John Dee",
           "position_index": 0,
-          "is_player": false,
-          "greeting": "Welcome to the realm of thought.",
+          "is_player": true,
+          "greeting": "I float in this surreal space, observing the sphere.",
           "interaction_options": [
-            "Touch the surface",
-            "Listen to the geometry",
-            "Ask about the messages",
-            "Explore the inner designs"
+            "Reach out to touch the sphere",
+            "Focus on the writing in my mind",
+            "Consider the geometric patterns",
+            "Let myself drift further into thought"
           ],
-          "base_noun": "Illuminated Sphere",
-          "visual_summary": "Glowing, pulsing orb",
+          "base_noun": "John Dee",
+          "visual_summary": "Ethereal and introspective",
           "stance_prompts": {
-            "idle": "Suspended in air",
-            "active": "Radiating soft light",
-            "resting": "Hovering silently",
-            "happy": "Pulsating rhythmically",
-            "sad": "Dimmer glow",
-            "angry": "Flickering erratically",
-            "surprised": "Expanding rapidly"
+            "idle": "Calmly suspended in the air",
+            "active": "Gently moving towards the sphere",
+            "resting": "Leaning back, eyes closed",
+            "happy": "A serene smile on my face",
+            "sad": "Eyes narrowed in contemplation",
+            "angry": "Furrowing brow in confusion",
+            "surprised": "Eyes wide in wonder"
           },
           "generated_assets": {
             "idle": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_idle_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_idle_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_idle_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_idle_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_idle_3.png"
               ],
-              "full_prompt": "Illuminated Sphere, Suspended in air"
+              "full_prompt": "John Dee, Calmly suspended in the air"
             },
             "active": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_active_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_active_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_active_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_active_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_active_3.png"
               ],
-              "full_prompt": "Illuminated Sphere, Radiating soft light"
+              "full_prompt": "John Dee, Gently moving towards the sphere"
             },
             "resting": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_resting_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_resting_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_resting_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_resting_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_resting_3.png"
               ],
-              "full_prompt": "Illuminated Sphere, Hovering silently"
+              "full_prompt": "John Dee, Leaning back, eyes closed"
             },
             "happy": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_happy_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_happy_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_happy_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_happy_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_happy_3.png"
               ],
-              "full_prompt": "Illuminated Sphere, Pulsating rhythmically"
+              "full_prompt": "John Dee, A serene smile on my face"
             },
             "sad": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_sad_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_sad_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_sad_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_sad_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_sad_3.png"
               ],
-              "full_prompt": "Illuminated Sphere, Dimmer glow"
+              "full_prompt": "John Dee, Eyes narrowed in contemplation"
             },
             "angry": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_angry_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_angry_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_angry_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_angry_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_angry_3.png"
               ],
-              "full_prompt": "Illuminated Sphere, Flickering erratically"
+              "full_prompt": "John Dee, Furrowing brow in confusion"
             },
             "surprised": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_surprised_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_surprised_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_surprised_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-sphere-of-thoughts/the-sphere-of-thoughts_1_surprised_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_1_surprised_3.png"
               ],
-              "full_prompt": "Illuminated Sphere, Expanding rapidly"
+              "full_prompt": "John Dee, Eyes wide in wonder"
             }
           },
-          "written_description": "A mysterious sphere of light, pulsating with intricate patterns and emitting a serene glow."
+          "written_description": "A figure floating in a mystical space, surrounded by an ethereal glow."
+        },
+        {
+          "id": "2",
+          "entity_name": "Pulsing Sphere",
+          "position_index": 1,
+          "is_player": false,
+          "greeting": "The sphere pulses rhythmically, drawing attention.",
+          "interaction_options": [
+            "Observe the patterns closely",
+            "Try to communicate with it",
+            "Take a step back",
+            "Search for hidden messages"
+          ],
+          "base_noun": "Pulsing Sphere",
+          "visual_summary": "Glowing and geometric",
+          "stance_prompts": {
+            "idle": "Resting in the air, glowing softly",
+            "active": "Pulsating rhythmically, changing colors",
+            "resting": "Floating, stabilizing its form",
+            "happy": "Brightening with vibrant colors",
+            "sad": "Dimming slightly as if melancholic",
+            "angry": "Flashing erratically with intensity",
+            "surprised": "Unexpectedly altering its shape"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_idle_3.png"
+              ],
+              "full_prompt": "Pulsing Sphere, Resting in the air, glowing softly"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_active_3.png"
+              ],
+              "full_prompt": "Pulsing Sphere, Pulsating rhythmically, changing colors"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_resting_3.png"
+              ],
+              "full_prompt": "Pulsing Sphere, Floating, stabilizing its form"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_happy_3.png"
+              ],
+              "full_prompt": "Pulsing Sphere, Brightening with vibrant colors"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_sad_3.png"
+              ],
+              "full_prompt": "Pulsing Sphere, Dimming slightly as if melancholic"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_angry_3.png"
+              ],
+              "full_prompt": "Pulsing Sphere, Flashing erratically with intensity"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_2_surprised_3.png"
+              ],
+              "full_prompt": "Pulsing Sphere, Unexpectedly altering its shape"
+            }
+          },
+          "written_description": "A sphere of light, emanating complex patterns."
+        },
+        {
+          "id": "3",
+          "entity_name": "Inner Geometry",
+          "position_index": 2,
+          "is_player": false,
+          "greeting": "The geometry reveals itself in spirals.",
+          "interaction_options": [
+            "Trace the lines with my mind",
+            "Change the patterns deliberately",
+            "Capture a thought in geometry",
+            "Transform the shape into something else"
+          ],
+          "base_noun": "Living Mathematics",
+          "visual_summary": "Dynamic and intricate",
+          "stance_prompts": {
+            "idle": "Fixed and complex in structure",
+            "active": "Shifting and morphing constantly",
+            "resting": "Maintaining a form quietly",
+            "happy": "Radiating harmonic symmetry",
+            "sad": "Folding inward, losing clarity",
+            "angry": "Becoming chaotic in patterns",
+            "surprised": "Erupting with new shapes unexpectedly"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_idle_3.png"
+              ],
+              "full_prompt": "Living Mathematics, Fixed and complex in structure"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_active_3.png"
+              ],
+              "full_prompt": "Living Mathematics, Shifting and morphing constantly"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_resting_3.png"
+              ],
+              "full_prompt": "Living Mathematics, Maintaining a form quietly"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_happy_3.png"
+              ],
+              "full_prompt": "Living Mathematics, Radiating harmonic symmetry"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_sad_3.png"
+              ],
+              "full_prompt": "Living Mathematics, Folding inward, losing clarity"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_angry_3.png"
+              ],
+              "full_prompt": "Living Mathematics, Becoming chaotic in patterns"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_3_surprised_3.png"
+              ],
+              "full_prompt": "Living Mathematics, Erupting with new shapes unexpectedly"
+            }
+          },
+          "written_description": "Intricate lines and spirals forming a living structure."
+        },
+        {
+          "id": "4",
+          "entity_name": "Invisible Sheet",
+          "position_index": 3,
+          "is_player": false,
+          "greeting": "Thoughts materialize on the sheet.",
+          "interaction_options": [
+            "Read the emerging words",
+            "Explore the nature of the sheet",
+            "Summon more thoughts onto it",
+            "Erase existing words and rewrite"
+          ],
+          "base_noun": "Invisible Sheet",
+          "visual_summary": "Ephemeral and intangible",
+          "stance_prompts": {
+            "idle": "Suspended as if watching a canvas",
+            "active": "Words forming rapidly on its surface",
+            "resting": "Calmly observing the process",
+            "happy": "Delighted at the emergence of ideas",
+            "sad": "Concerned as thoughts fade away",
+            "angry": "Frustrated by the lack of clarity",
+            "surprised": "Reacting to sudden bursts of text"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_idle_3.png"
+              ],
+              "full_prompt": "Invisible Sheet, Suspended as if watching a canvas"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_active_3.png"
+              ],
+              "full_prompt": "Invisible Sheet, Words forming rapidly on its surface"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_resting_3.png"
+              ],
+              "full_prompt": "Invisible Sheet, Calmly observing the process"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_happy_3.png"
+              ],
+              "full_prompt": "Invisible Sheet, Delighted at the emergence of ideas"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_sad_3.png"
+              ],
+              "full_prompt": "Invisible Sheet, Concerned as thoughts fade away"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_angry_3.png"
+              ],
+              "full_prompt": "Invisible Sheet, Frustrated by the lack of clarity"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/floating-in-thought/floating-in-thought_4_surprised_3.png"
+              ],
+              "full_prompt": "Invisible Sheet, Reacting to sudden bursts of text"
+            }
+          },
+          "written_description": "A seemingly transparent surface where thoughts take form."
         }
       ],
       "original_dream_text": "\nI, John Dee, floated in a space between thought and waking light. A cool, pale glow spread through the room, and a sphere formed in the air. It pulsed with inner geometry, lines and spirals folding into one another like living mathematics. As it drew nearer, words appeared in my mind. They were not spoken. They rose like writing on an invisible sheet.\n"
     },
     {
-      "title": "The Serpent of Bonds",
-      "slug": "the-serpent-of-bonds",
+      "title": "Serpent of Chemistry",
+      "slug": "serpent-of-chemistry",
       "world_state": {
         "time": "Night",
         "condition": "Peaceful",
-        "music_track_id": "ambient-1",
-        "base_noun": "Fire Circle",
-        "mood_modifier": "Dreamy",
+        "music_track_id": "ambient_chemical_symphony",
+        "base_noun": "Cozy Fire",
+        "mood_modifier": "Thoughtful",
         "ambient_verb": "Drifting",
         "generated_assets": {
           "level_1": {
             "file_paths": [
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl1_0.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl1_1.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl1_2.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl1_3.jpeg"
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl1_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl1_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl1_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl1_3.jpeg"
             ],
-            "full_prompt": "Fire Circle, Dreamy, Drifting, serene, hazy, light"
+            "full_prompt": "Cozy Fire, Thoughtful, Drifting, serene, hazy, light"
           },
           "level_2": {
             "file_paths": [
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl2_0.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl2_1.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl2_2.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl2_3.jpeg"
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl2_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl2_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl2_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl2_3.jpeg"
             ],
-            "full_prompt": "Fire Circle, Dreamy, Drifting, still but moving, lightening"
+            "full_prompt": "Cozy Fire, Thoughtful, Drifting, still but moving, lightening"
           },
           "level_3": {
             "file_paths": [
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl3_0.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl3_1.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl3_2.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl3_3.jpeg"
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl3_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl3_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl3_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl3_3.jpeg"
             ],
-            "full_prompt": "Fire Circle, Dreamy, Drifting, sense of motion, darkening"
+            "full_prompt": "Cozy Fire, Thoughtful, Drifting, sense of motion, darkening"
           },
           "level_4": {
             "file_paths": [
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl4_0.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl4_1.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl4_2.jpeg",
-              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_bg_lvl4_3.jpeg"
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl4_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl4_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl4_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_bg_lvl4_3.jpeg"
             ],
-            "full_prompt": "Fire Circle, Dreamy, Drifting, chaotic, sharp, dark"
+            "full_prompt": "Cozy Fire, Thoughtful, Drifting, chaotic, sharp, dark"
           }
         },
-        "written_description": "A fire flickers, casting warm shadows, as the mind wanders among molecular chains."
+        "written_description": "A serene night indoors with a warm fire lit."
       },
       "stations": [
         {
-          "id": "entity-001",
-          "entity_name": "Glowing Serpent",
+          "id": "1",
+          "entity_name": "August Kekul\u00e9",
           "position_index": 0,
-          "is_player": false,
-          "greeting": "The serpent hisses gently, weaving in and out of the firelight.",
+          "is_player": true,
+          "greeting": "My thoughts weave like atoms in a chain.",
           "interaction_options": [
-            "Touch the serpent",
-            "Ask about the chains",
-            "Follow its glow",
-            "Rest beside the fire"
+            "Engage with the serpent",
+            "Sketch my ideas",
+            "Focus on the fire",
+            "Drift deeper into reverie"
           ],
-          "base_noun": "Glowing Serpent",
-          "visual_summary": "Luminous and fluid",
+          "base_noun": "Famous Chemist",
+          "visual_summary": "Introspective thinker",
           "stance_prompts": {
-            "idle": "Coiled and shimmering",
-            "active": "Twisting between strands",
-            "resting": "Sculpted in a ring",
-            "happy": "Radiating warmth",
-            "sad": "Fading glow",
-            "angry": "Hissing defiantly",
-            "surprised": "Splaying in quick coils"
+            "idle": "Sitting beside the fire, lost in thought.",
+            "active": "Writing down thoughts on a piece of paper.",
+            "resting": "Relaxed, eyes closed slightly.",
+            "happy": "Smiling at the creativity flowing.",
+            "sad": "Frowning at the complexities of chemistry.",
+            "angry": "Clenching my fists in frustration.",
+            "surprised": "Eyes wide, watching the serpent form."
           },
           "generated_assets": {
             "idle": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_idle_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_idle_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_idle_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_idle_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_idle_3.png"
               ],
-              "full_prompt": "Glowing Serpent, Coiled and shimmering"
+              "full_prompt": "Famous Chemist, Sitting beside the fire, lost in thought."
             },
             "active": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_active_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_active_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_active_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_active_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_active_3.png"
               ],
-              "full_prompt": "Glowing Serpent, Twisting between strands"
+              "full_prompt": "Famous Chemist, Writing down thoughts on a piece of paper."
             },
             "resting": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_resting_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_resting_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_resting_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_resting_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_resting_3.png"
               ],
-              "full_prompt": "Glowing Serpent, Sculpted in a ring"
+              "full_prompt": "Famous Chemist, Relaxed, eyes closed slightly."
             },
             "happy": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_happy_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_happy_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_happy_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_happy_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_happy_3.png"
               ],
-              "full_prompt": "Glowing Serpent, Radiating warmth"
+              "full_prompt": "Famous Chemist, Smiling at the creativity flowing."
             },
             "sad": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_sad_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_sad_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_sad_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_sad_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_sad_3.png"
               ],
-              "full_prompt": "Glowing Serpent, Fading glow"
+              "full_prompt": "Famous Chemist, Frowning at the complexities of chemistry."
             },
             "angry": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_angry_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_angry_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_angry_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_angry_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_angry_3.png"
               ],
-              "full_prompt": "Glowing Serpent, Hissing defiantly"
+              "full_prompt": "Famous Chemist, Clenching my fists in frustration."
             },
             "surprised": {
               "file_paths": [
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_surprised_0.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_surprised_1.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_surprised_2.png",
-                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-serpent-of-bonds/the-serpent-of-bonds_entity-001_surprised_3.png"
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_1_surprised_3.png"
               ],
-              "full_prompt": "Glowing Serpent, Splaying in quick coils"
+              "full_prompt": "Famous Chemist, Eyes wide, watching the serpent form."
             }
           },
-          "written_description": "A serpent of glowing light, formed from chains of atoms, dances with a life of its own."
+          "written_description": "A moment of deep thought beside a warm fire, reflecting on chemistry."
+        },
+        {
+          "id": "2",
+          "entity_name": "Molecular Chains",
+          "position_index": 1,
+          "is_player": false,
+          "greeting": "Dancing and twisting in the air.",
+          "interaction_options": [
+            "Observe their dance",
+            "Try to touch a chain",
+            "Follow a chain's movement",
+            "Imagine their structure"
+          ],
+          "base_noun": "Molecular Structures",
+          "visual_summary": "Ethereal and lively shapes",
+          "stance_prompts": {
+            "idle": "Floating gently in the air.",
+            "active": "Twisting and swirling dynamically.",
+            "resting": "Suspended in a still pattern.",
+            "happy": "Arranging themselves in pleasing shapes.",
+            "sad": "Falling apart and separating.",
+            "angry": "Entangling into chaotic forms.",
+            "surprised": "Suddenly merging into a new shape."
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_idle_3.png"
+              ],
+              "full_prompt": "Molecular Structures, Floating gently in the air."
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_active_3.png"
+              ],
+              "full_prompt": "Molecular Structures, Twisting and swirling dynamically."
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_resting_3.png"
+              ],
+              "full_prompt": "Molecular Structures, Suspended in a still pattern."
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_happy_3.png"
+              ],
+              "full_prompt": "Molecular Structures, Arranging themselves in pleasing shapes."
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_sad_3.png"
+              ],
+              "full_prompt": "Molecular Structures, Falling apart and separating."
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_angry_3.png"
+              ],
+              "full_prompt": "Molecular Structures, Entangling into chaotic forms."
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_2_surprised_3.png"
+              ],
+              "full_prompt": "Molecular Structures, Suddenly merging into a new shape."
+            }
+          },
+          "written_description": "Chains of molecules that embody both beauty and complexity, expressing chemical bonds."
+        },
+        {
+          "id": "3",
+          "entity_name": "Mystical Serpent",
+          "position_index": 2,
+          "is_player": false,
+          "greeting": "I am transformation and creation.",
+          "interaction_options": [
+            "Communicate with the serpent",
+            "Ask for knowledge",
+            "Touch its glowing body",
+            "Follow it into the depths"
+          ],
+          "base_noun": "Glowing Serpent",
+          "visual_summary": "Shimmering and mystical",
+          "stance_prompts": {
+            "idle": "Coiled elegantly in the air.",
+            "active": "Moving gracefully around the room.",
+            "resting": "Curled up, radiating glow.",
+            "happy": "Waving its tail in delight.",
+            "sad": "Fading slightly in brightness.",
+            "angry": "Writhing aggressively.",
+            "surprised": "Shooting up with a sudden burst."
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_idle_3.png"
+              ],
+              "full_prompt": "Glowing Serpent, Coiled elegantly in the air."
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_active_3.png"
+              ],
+              "full_prompt": "Glowing Serpent, Moving gracefully around the room."
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_resting_3.png"
+              ],
+              "full_prompt": "Glowing Serpent, Curled up, radiating glow."
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_happy_3.png"
+              ],
+              "full_prompt": "Glowing Serpent, Waving its tail in delight."
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_sad_3.png"
+              ],
+              "full_prompt": "Glowing Serpent, Fading slightly in brightness."
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_angry_3.png"
+              ],
+              "full_prompt": "Glowing Serpent, Writhing aggressively."
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/serpent-of-chemistry/serpent-of-chemistry_3_surprised_3.png"
+              ],
+              "full_prompt": "Glowing Serpent, Shooting up with a sudden burst."
+            }
+          },
+          "written_description": "A serpent that embodies the essence of chemistry, with a luminescent body."
         }
       ],
       "original_dream_text": "\nI, August Kekul\u00e9, sat beside my fire, half awake, my mind drifting among thoughts of atoms and bonds. Chains of molecules danced before me, twisting like strings of tiny creatures. As I fell deeper into reverie, the chains curled and wove together. One chain bent into a circle. It twisted around itself, and then it became a serpent, its body glowing faintly.\n"

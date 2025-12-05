@@ -9,12 +9,12 @@ import { MagicBook } from './MagicBook';
 
 interface DreamSceneProps {
   dreamData: any; 
+  bookText: string; // New Prop
   onOpenBook: () => void;
   onInteractStation: (station: any) => void;
 }
 
 const getStationConfig = (index: number, total: number) => {
-  // CONFIG 1: The Central Station (Index 0)
   if (index === 0) {
     return {
       position: [0, 1.5, 0] as [number, number, number], 
@@ -22,7 +22,6 @@ const getStationConfig = (index: number, total: number) => {
     };
   }
 
-  // CONFIG 2: Perimeter Stations (Index 1..N)
   const perimeterIndex = index - 1;
   const perimeterTotal = total - 1;
   
@@ -35,7 +34,7 @@ const getStationConfig = (index: number, total: number) => {
   };
 };
 
-export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, onOpenBook, onInteractStation }) => {
+export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, bookText, onOpenBook, onInteractStation }) => {
   const [viewSize, setViewSize] = useState<{width: number, height: number} | null>(null);
 
   const onLayout = (e: LayoutChangeEvent) => {
@@ -43,19 +42,14 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, onOpenBook, o
      if (width > 0 && height > 0) setViewSize({ width, height });
   };
 
-  // --- BACKGROUND LOGIC ---
-  // Default to level 2 (Moving/Lightening) as requested
   const currentLevel = dreamData?.world_state?.chaos_level ?? 2;
   const levelKey = `level_${currentLevel}`;
 
-  // Try to find the specific level asset
   let bgFrames = dreamData?.world_state?.generated_assets?.[levelKey]?.file_paths || [];
 
-  // Fallback 1: Legacy 'generated_asset' (single background)
   if (bgFrames.length === 0) {
       bgFrames = dreamData?.world_state?.generated_asset?.file_paths || [];
   }
-  // Fallback 2: Old Hex format
   if (bgFrames.length === 0) {
       bgFrames = dreamData?.hex?.background_frames || [];
   }
@@ -76,9 +70,6 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, onOpenBook, o
             <AnimatedBackground frames={bgFrames} />
 
             {stations.map((s: any, i: number) => {
-                // LOGIC: Check for generated_assets (world.json structure)
-                // If present, use the 'current_stance' to pick keys.
-                // Fallback to 'idle' or the first available key.
                 let frames: string[] = [];
                 
                 if (s.generated_assets) {
@@ -88,12 +79,10 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, onOpenBook, o
                     } else if (s.generated_assets['idle']) {
                         frames = s.generated_assets['idle'].file_paths;
                     } else {
-                        // Fallback: take first key
                         const keys = Object.keys(s.generated_assets);
                         if (keys.length > 0) frames = s.generated_assets[keys[0]].file_paths;
                     }
                 } else {
-                    // Fallback for old API generated data
                     frames = s.sprite_frames || [];
                 }
 
@@ -110,7 +99,11 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, onOpenBook, o
                 );
             })}
 
-            <MagicBook onPress={onOpenBook} />
+            {/* Pass the text and click handler to the Book */}
+            <MagicBook 
+                onPress={onOpenBook} 
+                pageText={bookText} 
+            />
           </Suspense>
 
           <OrbitControls 

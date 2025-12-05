@@ -70,7 +70,7 @@ Analyze the context and the user's action to calculate the Entity's reaction.
 2. **RESPONSE STRUCTURE**:
    - **New Stance**: Determine the visual emotional state (idle, happy, angry, etc).
    - **Greeting**: A short, punchy line (1 sentence) acknowledging the user.
-   - **Monologue**: A deep paragraph response. 
+   - **Monologue**: A deep paragraph response (1-4 sentences) from the voice of the entity, for example, if it is a snake, it should hiss and talk about snake things, if it is a historical person, like John Dee, it should sound like them. 
      - Reference the **History of Interactions** if provided (e.g., "You return to me again...").
      - Explain the dream meaning of the current situation.
      - Offer guidance or cryptic warnings.
