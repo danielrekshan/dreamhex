@@ -1,5 +1,5 @@
-// const API_URL = "https://dreamhex-api-847608987786.us-central1.run.app"; 
-const API_URL = "http://localhost:8000"; 
+const API_URL = "https://dreamhex-api-847608987786.us-central1.run.app"; 
+// const API_URL = "http://localhost:8000"; 
 
 export const triggerWarmup = async (userId: string) => {
   try {

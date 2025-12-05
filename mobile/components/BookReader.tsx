@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, Dimensions } from 'react-native';
+import Markdown from 'react-native-markdown-display';
 import { BookPage } from '../BookManifest';
 
 interface BookReaderProps {
@@ -7,76 +8,81 @@ interface BookReaderProps {
   onClose: () => void;
   pages: BookPage[];
   onAction: (page: BookPage) => void; 
-  scarabCount: number;
   
   // Controlled State Props
   pageIndex: number;
   setPageIndex: (i: number) => void;
 }
 
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+
 export const BookReader: React.FC<BookReaderProps> = ({ 
-    visible, onClose, pages, onAction, scarabCount, 
+    visible, onClose, pages, onAction, 
     pageIndex, setPageIndex 
 }) => {
   
   const activePage = pages[pageIndex];
+  // Simple safety check
+  if (!activePage) return null;
+
   const hasNext = pageIndex < pages.length - 1;
   const hasPrev = pageIndex > 0;
 
   const handleNext = () => { if (hasNext) setPageIndex(pageIndex + 1); };
   const handlePrev = () => { if (hasPrev) setPageIndex(pageIndex - 1); };
 
-  const isLocked = activePage.type === 'CREDITS_UNLOCK' && scarabCount < (activePage.requiredScarabs || 4);
-
   return (
-    <Modal visible={visible} animationType="fade" transparent={true} onRequestClose={onClose}>
+    <Modal visible={visible} animationType="slide" transparent={true} onRequestClose={onClose}>
       <View style={styles.overlay}>
-        {/* Centered Page Container with Max Width */}
-        <View style={styles.pageContainer}>
+        <View style={styles.bookContainer}>
             
-            {/* Header: Simple X and Page Count */}
+            {/* Header */}
             <View style={styles.header}>
-                <Text style={styles.pageNumber}>Page {pageIndex + 1} / {pages.length}</Text>
-                <TouchableOpacity onPress={onClose} hitSlop={{top:10, bottom:10, left:10, right:10}}>
+                <Text style={styles.pageIndicator}>Page {pageIndex + 1} of {pages.length}</Text>
+                <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                     <Text style={styles.closeText}>✕</Text>
                 </TouchableOpacity>
             </View>
 
-            {/* Main Content Area */}
-            <ScrollView style={styles.contentScroll} contentContainerStyle={styles.scrollContent}>
-                <Text style={styles.pageTitle}>{activePage.title}</Text>
-                
-                {isLocked ? (
-                    <View style={styles.lockedContainer}>
-                        <Text style={styles.lockIcon}>🔒</Text>
-                        <Text style={styles.lockedText}>
-                            The ink swirls indecipherably.
-                            {"\n\n"}
-                            Requires {activePage.requiredScarabs} Golden Scarabs.
-                        </Text>
-                    </View>
-                ) : (
-                    <Text style={styles.pageContent}>{activePage.content}</Text>
-                )}
-            </ScrollView>
-            
-            {/* Footer: Navigation */}
+            {/* Content Area - Fixed Height for consistency */}
+            <View style={styles.contentArea}>
+                <Text style={styles.titleText}>{activePage.title}</Text>
+                <View style={styles.markdownContainer}>
+                    {/* The Markdown component would typically be wrapped in a ScrollView 
+                        if the text can exceed the container size in a production app. */}
+                    <Markdown style={markdownStyles}>
+                        {activePage.content}
+                    </Markdown>
+                </View>
+            </View>
+
+            {/* Footer Navigation - Fixed position */}
             <View style={styles.footer}>
-                <TouchableOpacity onPress={handlePrev} disabled={!hasPrev} style={{opacity: !hasPrev ? 0.3 : 1}}>
-                    <Text style={styles.navText}>←</Text>
+                <TouchableOpacity 
+                    onPress={handlePrev} 
+                    disabled={!hasPrev} 
+                    style={[styles.navButton, !hasPrev && styles.disabledNav]}
+                >
+                    <Text style={styles.navText}>← PREV</Text>
                 </TouchableOpacity>
 
-                {/* Action Button */}
-                {!isLocked && (activePage.type === 'DREAM_GATE' || activePage.type === 'CREDITS_UNLOCK') ? (
+                {/* Action Button (Center) */}
+                {activePage.type === 'DREAM_GATE' || activePage.type === 'CREDITS_UNLOCK' ? (
                     <TouchableOpacity onPress={() => onAction(activePage)} style={styles.actionBtn}>
                         <Text style={styles.actionText}>
-                            {activePage.type === 'DREAM_GATE' ? 'Enter' : 'Scry'}
+                             {activePage.type === 'DREAM_GATE' ? 'ENTER DREAM' : 'VIEW ENDING'}
                         </Text>
                     </TouchableOpacity>
-                ) : <View style={{width: 50}} />} 
+                ) : (
+                    <View style={{width: 100}} /> 
+                )}
 
-                <TouchableOpacity onPress={handleNext} disabled={!hasNext} style={{opacity: !hasNext ? 0.3 : 1}}>
-                    <Text style={styles.navText}>→</Text>
+                <TouchableOpacity 
+                    onPress={handleNext} 
+                    disabled={!hasNext} 
+                    style={[styles.navButton, !hasNext && styles.disabledNav]}
+                >
+                    <Text style={styles.navText}>NEXT →</Text>
                 </TouchableOpacity>
             </View>
 
@@ -86,65 +92,78 @@ export const BookReader: React.FC<BookReaderProps> = ({
   );
 };
 
+// Markdown Styles for rendering rich text
+const markdownStyles = StyleSheet.create({
+    body: {
+        fontSize: 18,
+        fontFamily: 'serif',
+        color: '#3e2723',
+        lineHeight: 28,
+    },
+    strong: {
+        fontWeight: 'bold',
+        color: '#2d1b15',
+    },
+    heading1: {
+        fontSize: 24,
+        color: '#2d1b15',
+        marginTop: 10,
+        marginBottom: 10,
+        fontFamily: 'serif',
+    }
+});
+
 const styles = StyleSheet.create({
   overlay: { 
       flex: 1, 
-      backgroundColor: 'rgba(0,0,0,0.7)', 
+      backgroundColor: 'rgba(0,0,0,0.85)', 
       justifyContent: 'center', 
       alignItems: 'center',
       padding: 20 
   },
-  pageContainer: { 
+  bookContainer: { 
       width: '100%',
-      maxWidth: 700, // Max Reading Width
-      maxHeight: '90%',
-      backgroundColor: '#fcfbf7', // Parchment color
-      borderRadius: 4, 
-      padding: 25,
-      
-      // Page Shadow / "Physicality"
+      maxWidth: 600,
+      height: Math.min(SCREEN_HEIGHT * 0.8, 700), // Standard height constraint
+      backgroundColor: '#fcfbf7', 
+      borderRadius: 8, 
+      padding: 20,
       shadowColor: "#000",
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.3,
-      shadowRadius: 10,
-      elevation: 10,
-      borderLeftWidth: 1,
-      borderLeftColor: '#e0dcd5'
+      shadowOffset: { width: 0, height: 10 },
+      shadowOpacity: 0.5,
+      shadowRadius: 20,
+      elevation: 20,
+      display: 'flex',
+      flexDirection: 'column'
   },
-  
   header: { 
       flexDirection: 'row', 
       justifyContent: 'space-between', 
-      marginBottom: 20, 
+      alignItems: 'center',
       borderBottomWidth: 1, 
-      borderBottomColor: '#ebe5da',
-      paddingBottom: 10
+      borderBottomColor: '#d7ccc8',
+      paddingBottom: 15,
+      marginBottom: 15
   },
-  pageNumber: { fontFamily: 'serif', color: '#a1887f', fontSize: 14, fontStyle: 'italic' },
-  closeText: { fontSize: 20, color: '#5d4037', opacity: 0.7 },
+  pageIndicator: { fontFamily: 'serif', color: '#8d6e63', fontSize: 14, fontStyle: 'italic' },
+  closeButton: { padding: 5 },
+  closeText: { fontSize: 24, color: '#5d4037', fontWeight: 'bold' },
 
-  contentScroll: { flex: 1 },
-  scrollContent: { paddingBottom: 20 },
-  
-  pageTitle: { 
-      fontSize: 28, 
-      fontFamily: 'serif', 
-      color: '#2d1b15', 
-      marginBottom: 25, 
+  contentArea: {
+      flex: 1, 
+  },
+  titleText: {
+      fontSize: 26,
+      fontFamily: 'serif',
+      color: '#2d1b15',
       textAlign: 'center',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      marginBottom: 20
   },
-  pageContent: { 
-      fontSize: 18, 
-      fontFamily: 'serif', 
-      color: '#3e2723', 
-      lineHeight: 32, // Relaxed leading for readability
-      textAlign: 'left'
+  markdownContainer: {
+      flex: 1,
+      // Note: In a real app, large content would need an external ScrollView wrapping the Markdown component.
   },
-
-  lockedContainer: { alignItems: 'center', marginTop: 50 },
-  lockIcon: { fontSize: 40, marginBottom: 15, opacity: 0.5 },
-  lockedText: { fontSize: 16, fontFamily: 'serif', color: '#b71c1c', textAlign: 'center' },
 
   footer: { 
       flexDirection: 'row', 
@@ -152,15 +171,18 @@ const styles = StyleSheet.create({
       alignItems: 'center', 
       paddingTop: 15, 
       borderTopWidth: 1, 
-      borderTopColor: '#ebe5da' 
+      borderTopColor: '#d7ccc8',
+      marginTop: 10
   },
-  navText: { fontSize: 24, fontFamily: 'serif', color: '#5d4037', fontWeight: 'bold' },
+  navButton: { padding: 10 },
+  navText: { fontSize: 16, fontFamily: 'serif', color: '#5d4037', fontWeight: 'bold', letterSpacing: 1 },
+  disabledNav: { opacity: 0.2 },
   
   actionBtn: { 
       backgroundColor: '#3e2723', 
-      paddingVertical: 8, 
-      paddingHorizontal: 25, 
+      paddingVertical: 10, 
+      paddingHorizontal: 20, 
       borderRadius: 4 
   },
-  actionText: { color: '#fcfbf7', fontFamily: 'serif', fontWeight: 'bold', fontSize: 14, textTransform: 'uppercase', letterSpacing: 1 }
+  actionText: { color: '#fcfbf7', fontFamily: 'serif', fontWeight: 'bold', fontSize: 14 }
 });

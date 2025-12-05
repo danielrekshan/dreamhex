@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { StyleSheet, View, StatusBar, Text, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,43 +7,59 @@ import { DreamScene } from './components/DreamScene';
 import { BookReader } from './components/BookReader';
 import { EntityDialog } from './components/EntityDialog';
 import { MusicPlayer } from './components/MusicPlayer'; 
-import { BOOK_CONTENT, BookPage } from './BookManifest';
+import { BOOK_CONTENT, BookPage, UnlockConditionType } from './BookManifest';
 import * as api from './api';
 
-// Direct import of your provided JSON content for offline fallback/demo
 const DREAM_DATABASE: any = require('./assets/world.json');
+const SESSION_KEY = 'dreamhex_session_v2'; // Changed key to avoid conflict with old state
 
-const SESSION_KEY = 'dreamhex_session_v1';
+// Type for Dream Progress Tracking
+type DreamProgress = {
+    [key: string]: {
+        centralOpenCount: number;
+        stationsVisited: Set<string>;
+        interactedCount: number;
+    }
+};
 
 export default function App() {
-  // --- STATE ---
-  const [currentDreamSlug, setCurrentDreamSlug] = useState('between-thought-and-waking-light'); 
+  const [currentDreamSlug, setCurrentDreamSlug] = useState('floating-in-thought');
   const [dreamData, setDreamData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
   
-  // NEW TRANSITION STATES
+  // Transition States
   const [isExiting, setIsExiting] = useState(false); 
   const [nextDreamSlug, setNextDreamSlug] = useState<string | null>(null);
   
-  // UI States
-  const [isBookOpen, setBookOpen] = useState(false); // Default to closed so we see the 3D book first
-  const [bookPageIndex, setBookPageIndex] = useState(0); // LIFTED STATE
-  
+  // Book & Page Logic
+  const [isBookOpen, setBookOpen] = useState(false);
+  const [bookPageIndex, setBookPageIndex] = useState(0); 
+  // Default pages unlocked: Intro pages + 1st Gate
+  const [unlockedPageIds, setUnlockedPageIds] = useState<string[]>(['intro_1', 'intro_2', 'intro_3', 'intro_4', 'gate_john_dee']);
+  const [foundPageNotification, setFoundPageNotification] = useState<BookPage | null>(null);
+
+  // Interaction State
   const [activeEntity, setActiveEntity] = useState<any>(null);
   const [interactionLoading, setInteractionLoading] = useState(false);
-  
-  // Game States
-  const [scarabCount, setScarabCount] = useState(0);
-  const [foundScarabs, setFoundScarabs] = useState<Set<string>>(new Set());
-  const [interactionHistory, setInteractionHistory] = useState<string[]>([]); 
-  
-  const [loading, setLoading] = useState(false);
   const [userId] = useState("user-demo-" + Math.floor(Math.random() * 1000));
+  const [interactionHistory, setInteractionHistory] = useState<string[]>([]); 
 
-  // Helper to get current page text for the 3D model
-  const currentBookPage = BOOK_CONTENT[bookPageIndex];
-  const currentBookText = currentBookPage ? currentBookPage.content : "";
+  // Dream Progress Tracking (for Unlock Conditions)
+  const [dreamProgress, setDreamProgress] = useState<DreamProgress>({});
 
-  // --- INITIAL LOAD (PERSISTENCE) ---
+  // --- DERIVED STATE ---
+  const availablePages = useMemo(() => {
+    return BOOK_CONTENT.filter(p => unlockedPageIds.includes(p.id));
+  }, [unlockedPageIds]);
+  
+  const currentLeftPage = availablePages[bookPageIndex] || { content: " " };
+  const currentRightPage = availablePages[bookPageIndex + 1] || { content: " " };
+
+  // Combine text for backwards compatibility with DreamScene logic structure
+  const currentBookText = `${currentLeftPage.content} ${currentRightPage.content}`;
+
+
+  // --- INITIAL LOAD ---
   useEffect(() => {
     const loadSession = async () => {
         setLoading(true);
@@ -54,13 +70,22 @@ export default function App() {
                 console.log("Loaded session from storage");
                 setDreamData(parsed.dreamData);
                 setInteractionHistory(parsed.history || []);
-                setCurrentDreamSlug(parsed.slug || 'between-thought-and-waking-light');
+                setCurrentDreamSlug(parsed.slug || 'floating-in-thought');
+                setUnlockedPageIds(parsed.unlockedPageIds || ['intro_1', 'intro_2', 'intro_3', 'intro_4', 'gate_john_dee']);
+                
+                // CRITICAL FIX: Ensure stationsVisited is re-hydrated as a Set
+                const loadedProgress = parsed.dreamProgress ? Object.entries(parsed.dreamProgress).reduce((acc, [key, val]: any) => {
+                    acc[key] = { ...val, stationsVisited: new Set(val.stationsVisited) };
+                    return acc;
+                }, {} as DreamProgress) : {};
+                
+                setDreamProgress(loadedProgress);
             } else {
-                loadFromJSON('between-thought-and-waking-light');
+                loadFromJSON(currentDreamSlug);
             }
         } catch (e) {
             console.warn("Failed to load session", e);
-            loadFromJSON('between-thought-and-waking-light');
+            loadFromJSON(currentDreamSlug);
         } finally {
             setLoading(false);
         }
@@ -80,29 +105,162 @@ export default function App() {
           const session = {
               dreamData,
               history: interactionHistory,
-              slug: currentDreamSlug
+              slug: currentDreamSlug,
+              unlockedPageIds,
+              // Convert Set back to Array for serialization
+              dreamProgress: Object.entries(dreamProgress).reduce((acc, [key, val]) => {
+                  acc[key] = { ...val, stationsVisited: Array.from(val.stationsVisited) };
+                  return acc;
+              }, {} as any)
           };
           AsyncStorage.setItem(SESSION_KEY, JSON.stringify(session)).catch(e => console.warn("Save failed", e));
       }
-  }, [dreamData, interactionHistory, currentDreamSlug]);
+  }, [dreamData, interactionHistory, currentDreamSlug, unlockedPageIds, dreamProgress]);
 
+  // --- PROGRESS AND UNLOCK LOGIC ---
 
-  // NEW HANDLER: Called by DreamScene when the exit animation is complete
-  const handleExitAnimationComplete = () => {
-    if (nextDreamSlug) {
-        // 1. Load the new dream's data
-        loadFromJSON(nextDreamSlug);
-        // 2. Set the new current slug (triggers DreamScene remount/entrance animation)
-        setCurrentDreamSlug(nextDreamSlug); 
-        // 3. Reset the transition states
-        setIsExiting(false);
-        setNextDreamSlug(null);
+  const checkUnlockCondition = (slug: string, progress: DreamProgress[string], currentDreamStations: any[]) => {
+      const hiddenPage = BOOK_CONTENT.find(p => p.hiddenInDream === slug);
+      if (!hiddenPage || unlockedPageIds.includes(hiddenPage.id)) return;
+      
+      let conditionMet = false;
+      switch (hiddenPage.condition as UnlockConditionType) {
+          case 'OPEN_CENTRAL_2X':
+              if (progress.centralOpenCount >= 2) conditionMet = true;
+              break;
+          case 'VISIT_ALL_STATIONS':
+              const totalStations = currentDreamStations.length;
+              if (progress.stationsVisited.size >= totalStations) conditionMet = true;
+              break;
+          case 'INTERACT_ONCE':
+              if (progress.interactedCount >= 1) conditionMet = true;
+              break;
+          case 'ENTER_OTHER_INTERACTION':
+              if (progress.interactedCount > 0) conditionMet = true; 
+              break;
+          default:
+              break;
+      }
+
+      if (conditionMet) {
+          setUnlockedPageIds(prev => {
+              if (!prev.includes(hiddenPage.id)) {
+                  setFoundPageNotification(hiddenPage);
+                  return [...prev, hiddenPage.id];
+              }
+              return prev;
+          });
+      }
+  };
+
+  const updateProgress = (type: 'CENTRAL_OPEN' | 'VISIT_STATION' | 'INTERACT', stationId?: string) => {
+      setDreamProgress(prev => {
+          // FIX: Ensure 'stationsVisited' is always initialized as a Set for safe mutation.
+          const existingProgress = prev[currentDreamSlug];
+          const current = {
+              centralOpenCount: existingProgress?.centralOpenCount || 0,
+              stationsVisited: existingProgress?.stationsVisited || new Set(),
+              interactedCount: existingProgress?.interactedCount || 0,
+          };
+          
+          if (type === 'CENTRAL_OPEN') {
+              current.centralOpenCount += 1;
+          }
+          if (type === 'VISIT_STATION' && stationId) {
+              current.stationsVisited.add(stationId); // .add() is now safe to call
+          }
+          if (type === 'INTERACT') {
+              current.interactedCount += 1;
+          }
+
+          // Must create a new Set here so React detects the state change
+          const newProgress = { 
+              centralOpenCount: current.centralOpenCount,
+              stationsVisited: new Set(current.stationsVisited),
+              interactedCount: current.interactedCount
+          };
+          const newState = { ...prev, [currentDreamSlug]: newProgress };
+          
+          checkUnlockCondition(currentDreamSlug, newProgress, dreamData?.stations || []);
+          
+          return newState;
+      });
+  };
+
+  // --- HANDLERS ---
+  const handleInteractStation = (targetStation: any) => {
+    updateProgress('VISIT_STATION', targetStation.id);
+    
+    // Central station is always position_index 0 in the array
+    if (targetStation.position_index === 0) {
+        updateProgress('CENTRAL_OPEN');
+    }
+
+    let frames = getEntityFrames(targetStation);
+
+    setActiveEntity({
+        name: targetStation.entity_name,
+        stationId: targetStation.id,
+        description: targetStation.written_description,
+        greeting: targetStation.entity_greeting || targetStation.greeting,
+        monologue: targetStation.entity_monologue || "",
+        options: targetStation.interaction_options || ["Observe closely"],
+        frames: frames
+    });
+  };
+
+  const handleOptionSelect = async (option: string) => {
+    updateProgress('INTERACT');
+    
+    if (!activeEntity || !dreamData) return;
+    setInteractionLoading(true);
+
+    try {
+        // --- MOCK API RESPONSE for demo ---
+        setTimeout(() => {
+             setInteractionLoading(false);
+             setActiveEntity(prev => ({
+                 ...prev,
+                 greeting: `The entity responded to your inquiry: "${option}".`,
+                 monologue: "The truth still eludes you, but the threads of the dream shift slightly.",
+                 options: ["Ask something else"]
+             }));
+        }, 1000);
+
+    } catch (e) {
+        Alert.alert("Connection Error", "The dream resists your touch. (API Error)");
+        setInteractionLoading(false);
     }
   };
 
+  const handleBookAction = (page: BookPage) => {
+      if (page.type === 'DREAM_GATE' && page.targetDreamId) {
+          if (isExiting || nextDreamSlug) return;
+          setNextDreamSlug(page.targetDreamId); 
+          setIsExiting(true); 
+          setBookOpen(false); 
+      } else if (page.type === 'CREDITS_UNLOCK') {
+          Alert.alert("The Great Work", "You have finished the current content!");
+      }
+  };
 
-  // --- HANDLERS ---
-
+  const handleExitAnimationComplete = () => {
+    if (nextDreamSlug) {
+        loadFromJSON(nextDreamSlug);
+        setCurrentDreamSlug(nextDreamSlug); 
+        setIsExiting(false);
+        setNextDreamSlug(null);
+        setFoundPageNotification(null);
+        // Reset reader index to show the first page of the new manifest state
+        const gateIndex = availablePages.findIndex(p => p.targetDreamId === nextDreamSlug);
+        if (gateIndex !== -1) {
+             setBookPageIndex(gateIndex);
+        } else {
+             setBookPageIndex(0);
+        }
+    }
+  };
+  
   const getEntityFrames = (station: any) => {
       if (station.generated_assets) {
           const stance = station.current_stance || 'idle';
@@ -112,113 +270,6 @@ export default function App() {
           return k ? station.generated_assets[k].file_paths : [];
       }
       return station.sprite_frames || [];
-  };
-
-  const handleInteractStation = (targetStation: any) => {
-    const greeting = targetStation.entity_greeting || targetStation.greeting || "The entity stares at you silently.";
-    const options = targetStation.interaction_options || ["Observe closely"];
-    const description = targetStation.written_description || "";
-    const monologue = targetStation.entity_monologue || "";
-
-    const frames = getEntityFrames(targetStation);
-
-    setActiveEntity({
-        name: targetStation.entity_name,
-        stationId: targetStation.id,
-        description: description,
-        greeting: greeting,
-        monologue: monologue,
-        options: options,
-        frames: frames
-    });
-  };
-
-  const handleOptionSelect = async (option: string) => {
-    if (!activeEntity || !dreamData) return;
-
-    setInteractionLoading(true);
-
-    try {
-        const currentStation = dreamData.stations.find((s: any) => s.id === activeEntity.stationId);
-        const historyStr = interactionHistory.slice(-5).join("\n"); 
-
-        const worldContext = {
-            dream_title: dreamData.title,
-            world_description: dreamData.world_state?.written_description || "A mysterious realm.",
-            time_of_day: dreamData.world_state?.time || "Unknown",
-            interaction_history: historyStr,
-            other_entities: dreamData.stations
-                .filter((s: any) => s.id !== activeEntity.stationId)
-                .map((s: any) => ({ 
-                    name: s.entity_name, 
-                    stance: s.current_stance || "idle" 
-                }))
-        };
-
-        const response = await api.interactEntity(
-            userId, 
-            currentDreamSlug, 
-            activeEntity.stationId, 
-            option,
-            currentStation, 
-            worldContext    
-        );
-
-        if (response) {
-            if (response.station) {
-                const newLog = `User: ${option} -> Entity (${response.station.entity_name}): ${response.station.entity_greeting}`;
-                setInteractionHistory(prev => [...prev, newLog]);
-            }
-
-            // This state update triggers a re-render of DreamScene, but because 
-            // isExiting is false, the animation sequence will not re-run.
-            setDreamData((prev: any) => {
-                const newState = { ...prev };
-                if (response.station) {
-                     newState.stations = prev.stations.map((s: any) => 
-                        s.id === response.station.id ? response.station : s
-                    );
-                }
-                if (response.world_state) {
-                    newState.world_state = response.world_state;
-                }
-                return newState;
-            });
-            
-            if (response.station) {
-                const newFrames = getEntityFrames(response.station);
-                setActiveEntity({
-                    ...activeEntity,
-                    greeting: response.station.entity_greeting,
-                    monologue: response.station.entity_monologue,
-                    options: response.station.interaction_options,
-                    frames: newFrames 
-                });
-            }
-        }
-
-    } catch (e) {
-        Alert.alert("Connection Error", "The dream resists your touch. (API Error)");
-        console.error(e);
-    } finally {
-        setInteractionLoading(false);
-    }
-  };
-
-  const handleBookAction = (page: BookPage) => {
-      if (page.type === 'DREAM_GATE' && page.targetDreamId) {
-          // Check if we are already exiting or transitioning to prevent double-trigger
-          if (isExiting || nextDreamSlug) return;
-
-          // 1. Set the target slug
-          setNextDreamSlug(page.targetDreamId); 
-          // 2. Trigger the exit animation
-          setIsExiting(true); 
-          // 3. Close the BookReader UI immediately
-          setBookOpen(false); 
-      } else if (page.type === 'CREDITS_UNLOCK') {
-          Alert.alert("The End", "You have restored the Hexarchia Oneirica.");
-      }
   };
 
   return (
@@ -235,25 +286,25 @@ export default function App() {
             <DreamScene 
                 key={currentDreamSlug} 
                 dreamData={dreamData}
-                bookText={currentBookText}
+                // Now passes concatenated text, which DreamScene splits for left/right
+                bookText={currentBookText} 
                 onOpenBook={() => setBookOpen(true)}
                 onInteractStation={handleInteractStation}
-                isExiting={isExiting} // Controls exit animation
-                onExitAnimationComplete={handleExitAnimationComplete} // Controls state change
+                isExiting={isExiting} 
+                onExitAnimationComplete={handleExitAnimationComplete} 
             />
         )}
 
-        {/* Music Player persists across dreams, now receives isExiting state */}
         <MusicPlayer currentDreamSlug={currentDreamSlug} isExiting={isExiting} />
 
         <BookReader 
             visible={isBookOpen}
             onClose={() => setBookOpen(false)}
-            pages={BOOK_CONTENT}
+            pages={availablePages}
             pageIndex={bookPageIndex}       
             setPageIndex={setBookPageIndex} 
             onAction={handleBookAction}
-            scarabCount={scarabCount}
+            scarabCount={0}
         />
 
         {activeEntity && (
@@ -264,10 +315,15 @@ export default function App() {
                 greeting={activeEntity.greeting}
                 monologue={activeEntity.monologue}
                 options={activeEntity.options}
-                frames={activeEntity.frames}
+                // Ensure we get frames from the latest dreamData, not the entity cache
+                frames={getEntityFrames(dreamData.stations.find((s: any) => s.id === activeEntity.stationId))} 
                 isLoading={interactionLoading}
                 onSelectOption={handleOptionSelect}
-                onClose={() => setActiveEntity(null)}
+                onClose={() => {
+                    setActiveEntity(null);
+                    setFoundPageNotification(null); // Clear notification on close
+                }}
+                foundPage={foundPageNotification} // Pass notification
             />
         )}
         

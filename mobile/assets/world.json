@@ -4230,6 +4230,1014 @@
         }
       ],
       "original_dream_text": "\nI, Nikola Tesla, drifted into a deep darkness lit by a gentle electric glow. A machine hovered before me, slowly rotating. It had beams extending from a central core, each moving in perfect harmony. Sparks leapt across the structure like tiny stars. I felt no fear, only wonder. I examined the machine from every angle. I rotated it in my mind and saw how each part fit together. The more I studied it, the clearer it became. When I woke, every detail remained. I reached immediately for paper and drew the machine with absolute precision, as though I had built it already.\n"
+    },
+    {
+      "title": "Abraham Lincoln's Mourning Dream",
+      "slug": "abraham-lincolns-mourning-dream",
+      "world_state": {
+        "time": "Night",
+        "condition": "Chaotic",
+        "music_track_id": "haunting_theme",
+        "base_noun": "White House",
+        "mood_modifier": "Mournful",
+        "ambient_verb": "Whispering",
+        "generated_assets": {
+          "level_1": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl1_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl1_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl1_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl1_3.jpeg"
+            ],
+            "full_prompt": "White House, Mournful, Whispering, serene, hazy, light"
+          },
+          "level_2": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl2_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl2_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl2_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl2_3.jpeg"
+            ],
+            "full_prompt": "White House, Mournful, Whispering, still but moving, lightening"
+          },
+          "level_3": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl3_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl3_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl3_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl3_3.jpeg"
+            ],
+            "full_prompt": "White House, Mournful, Whispering, sense of motion, darkening"
+          },
+          "level_4": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl4_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl4_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl4_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_bg_lvl4_3.jpeg"
+            ],
+            "full_prompt": "White House, Mournful, Whispering, chaotic, sharp, dark"
+          }
+        },
+        "written_description": "Abraham Lincoln walks through the White House filled with a sense of mourning."
+      },
+      "stations": [
+        {
+          "id": "1",
+          "entity_name": "Abraham Lincoln",
+          "position_index": 0,
+          "is_player": true,
+          "greeting": "I approached one and asked who had died.",
+          "interaction_options": [
+            "Ask about the coffin",
+            "Inquire about the mourners",
+            "Look for familiar faces",
+            "Leave the room"
+          ],
+          "base_noun": "Abraham Lincoln",
+          "visual_summary": "Tall, somber figure",
+          "stance_prompts": {
+            "idle": "Standing quietly, reflecting",
+            "active": "Walking through the hall",
+            "resting": "Sitting, deep in thought",
+            "happy": "N/A",
+            "sad": "Eyes downcast, somber",
+            "angry": "N/A",
+            "surprised": "Eyes widening in shock"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_idle_3.png"
+              ],
+              "full_prompt": "Abraham Lincoln, Standing quietly, reflecting"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_active_3.png"
+              ],
+              "full_prompt": "Abraham Lincoln, Walking through the hall"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_resting_3.png"
+              ],
+              "full_prompt": "Abraham Lincoln, Sitting, deep in thought"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_happy_3.png"
+              ],
+              "full_prompt": "Abraham Lincoln, N/A"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_sad_3.png"
+              ],
+              "full_prompt": "Abraham Lincoln, Eyes downcast, somber"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_angry_3.png"
+              ],
+              "full_prompt": "Abraham Lincoln, N/A"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_1_surprised_3.png"
+              ],
+              "full_prompt": "Abraham Lincoln, Eyes widening in shock"
+            }
+          },
+          "written_description": "A tall figure in a dark suit, embodying a sense of heaviness."
+        },
+        {
+          "id": "2",
+          "entity_name": "Coffin",
+          "position_index": 1,
+          "is_player": false,
+          "greeting": "A mysterious presence in the room.",
+          "interaction_options": [
+            "Examine the coffin",
+            "Pray beside it",
+            "Move closer to the guards",
+            "Retrieve a memento"
+          ],
+          "base_noun": "Wooden coffin",
+          "visual_summary": "Covered with a dark cloth",
+          "stance_prompts": {
+            "idle": "Resting in place",
+            "active": "Being guarded",
+            "resting": "N/A",
+            "happy": "N/A",
+            "sad": "Surrounded by mourners",
+            "angry": "N/A",
+            "surprised": "N/A"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_idle_3.png"
+              ],
+              "full_prompt": "Wooden coffin, Resting in place"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_active_3.png"
+              ],
+              "full_prompt": "Wooden coffin, Being guarded"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_resting_3.png"
+              ],
+              "full_prompt": "Wooden coffin, N/A"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_happy_3.png"
+              ],
+              "full_prompt": "Wooden coffin, N/A"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_sad_3.png"
+              ],
+              "full_prompt": "Wooden coffin, Surrounded by mourners"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_angry_3.png"
+              ],
+              "full_prompt": "Wooden coffin, N/A"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_2_surprised_3.png"
+              ],
+              "full_prompt": "Wooden coffin, N/A"
+            }
+          },
+          "written_description": "An ornate coffin draped in heavy fabric, surrounded by a somber atmosphere."
+        },
+        {
+          "id": "3",
+          "entity_name": "Mourners",
+          "position_index": 2,
+          "is_player": false,
+          "greeting": "Whispers fill the air.",
+          "interaction_options": [
+            "Listen to their whispers",
+            "Ask about the deceased",
+            "Join their circle",
+            "Depart from their presence"
+          ],
+          "base_noun": "Group of mourners",
+          "visual_summary": "In dark clothing, solemn",
+          "stance_prompts": {
+            "idle": "Huddled together quietly",
+            "active": "Whispering among themselves",
+            "resting": "Sitting in sorrow",
+            "happy": "N/A",
+            "sad": "Expressions of grief",
+            "angry": "N/A",
+            "surprised": "Gasping in shock"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_idle_3.png"
+              ],
+              "full_prompt": "Group of mourners, Huddled together quietly"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_active_3.png"
+              ],
+              "full_prompt": "Group of mourners, Whispering among themselves"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_resting_3.png"
+              ],
+              "full_prompt": "Group of mourners, Sitting in sorrow"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_happy_3.png"
+              ],
+              "full_prompt": "Group of mourners, N/A"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_sad_3.png"
+              ],
+              "full_prompt": "Group of mourners, Expressions of grief"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_angry_3.png"
+              ],
+              "full_prompt": "Group of mourners, N/A"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_3_surprised_3.png"
+              ],
+              "full_prompt": "Group of mourners, Gasping in shock"
+            }
+          },
+          "written_description": "A somber group dressed in black, reflecting deep sorrow."
+        },
+        {
+          "id": "4",
+          "entity_name": "Guards",
+          "position_index": 3,
+          "is_player": false,
+          "greeting": "Stand watch over the coffin.",
+          "interaction_options": [
+            "Inquire about security",
+            "Ask for details on the funeral",
+            "Request to pass through",
+            "Remain silent and watch"
+          ],
+          "base_noun": "Tall guards",
+          "visual_summary": "Stoic and vigilant",
+          "stance_prompts": {
+            "idle": "Standing at attention",
+            "active": "Scanning the crowd",
+            "resting": "N/A",
+            "happy": "N/A",
+            "sad": "N/A",
+            "angry": "N/A",
+            "surprised": "N/A"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_idle_3.png"
+              ],
+              "full_prompt": "Tall guards, Standing at attention"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_active_3.png"
+              ],
+              "full_prompt": "Tall guards, Scanning the crowd"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_resting_3.png"
+              ],
+              "full_prompt": "Tall guards, N/A"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_happy_3.png"
+              ],
+              "full_prompt": "Tall guards, N/A"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_sad_3.png"
+              ],
+              "full_prompt": "Tall guards, N/A"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_angry_3.png"
+              ],
+              "full_prompt": "Tall guards, N/A"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/abraham-lincolns-mourning-dream/abraham-lincolns-mourning-dream_4_surprised_3.png"
+              ],
+              "full_prompt": "Tall guards, N/A"
+            }
+          },
+          "written_description": "Strong, vigilant figures dressed in ceremonial attire."
+        }
+      ],
+      "original_dream_text": "\nI, Abraham Lincoln, walked through the silent halls of the White House. Every room seemed washed in a pale, mournful light. The air felt heavy, as if mourning had already begun. In the East Room I saw a coffin surrounded by guards. Mourners whispered in low voices. I approached one and asked who had died. He looked at me with sorrow and said, \"The President.\" I felt a chill that cut through my bones. I tried to speak but no words came. The scene blurred, and I woke shaking in the dark. The sense of doom lingered long after the images faded.\n"
+    },
+    {
+      "title": "The Radiant Equation",
+      "slug": "the-radiant-equation",
+      "world_state": {
+        "time": "Night",
+        "condition": "Peaceful",
+        "music_track_id": "soft_mystic",
+        "base_noun": "Dreamscape of Mathematics",
+        "mood_modifier": "Ethereal",
+        "ambient_verb": "glow",
+        "generated_assets": {
+          "level_1": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl1_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl1_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl1_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl1_3.jpeg"
+            ],
+            "full_prompt": "Dreamscape of Mathematics, Ethereal, glow, serene, hazy, light"
+          },
+          "level_2": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl2_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl2_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl2_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl2_3.jpeg"
+            ],
+            "full_prompt": "Dreamscape of Mathematics, Ethereal, glow, still but moving, lightening"
+          },
+          "level_3": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl3_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl3_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl3_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl3_3.jpeg"
+            ],
+            "full_prompt": "Dreamscape of Mathematics, Ethereal, glow, sense of motion, darkening"
+          },
+          "level_4": {
+            "file_paths": [
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl4_0.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl4_1.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl4_2.jpeg",
+              "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_bg_lvl4_3.jpeg"
+            ],
+            "full_prompt": "Dreamscape of Mathematics, Ethereal, glow, chaotic, sharp, dark"
+          }
+        },
+        "written_description": "A serene dreamscape filled with glowing equations and a radiant figure."
+      },
+      "stations": [
+        {
+          "id": "1",
+          "entity_name": "Srinivasa Ramanujan",
+          "position_index": 0,
+          "is_player": true,
+          "greeting": "I sense a presence waiting for me.",
+          "interaction_options": [
+            "Reach toward the symbols",
+            "Ask the glowing figure about the equations",
+            "Write down the equations",
+            "Feel the warmth of understanding"
+          ],
+          "base_noun": "Srinivasa Ramanujan",
+          "visual_summary": "Curious and contemplative",
+          "stance_prompts": {
+            "idle": "Standing quietly in contemplation",
+            "active": "Drawing near the glowing symbols",
+            "resting": "Sitting peacefully",
+            "happy": "Expressing joy at understanding",
+            "sad": "Reflecting on lost knowledge",
+            "angry": "Frustrated with challenges",
+            "surprised": "Amazed by the radiant figure"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_idle_3.png"
+              ],
+              "full_prompt": "Srinivasa Ramanujan, Standing quietly in contemplation"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_active_3.png"
+              ],
+              "full_prompt": "Srinivasa Ramanujan, Drawing near the glowing symbols"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_resting_3.png"
+              ],
+              "full_prompt": "Srinivasa Ramanujan, Sitting peacefully"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_happy_3.png"
+              ],
+              "full_prompt": "Srinivasa Ramanujan, Expressing joy at understanding"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_sad_3.png"
+              ],
+              "full_prompt": "Srinivasa Ramanujan, Reflecting on lost knowledge"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_angry_3.png"
+              ],
+              "full_prompt": "Srinivasa Ramanujan, Frustrated with challenges"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_1_surprised_3.png"
+              ],
+              "full_prompt": "Srinivasa Ramanujan, Amazed by the radiant figure"
+            }
+          },
+          "written_description": "The dreamer experiences a moment of insight with a radiant figure."
+        },
+        {
+          "id": "2",
+          "entity_name": "Radiant Figure",
+          "position_index": 1,
+          "is_player": false,
+          "greeting": "I bring you knowledge and patterns.",
+          "interaction_options": [
+            "Write symbols together",
+            "Share your thoughts on the equations",
+            "Ask about their origin",
+            "Follow her guidance in the dream"
+          ],
+          "base_noun": "Radiant Figure",
+          "visual_summary": "Glowing and ethereal",
+          "stance_prompts": {
+            "idle": "Hovering gracefully in place",
+            "active": "Writing in the air",
+            "resting": "Calm and observing",
+            "happy": "Radiating warmth and light",
+            "sad": "Expressing sorrow over misunderstanding",
+            "angry": "Flickering with intensity",
+            "surprised": "Reacting to the dreamer's actions"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_idle_3.png"
+              ],
+              "full_prompt": "Radiant Figure, Hovering gracefully in place"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_active_3.png"
+              ],
+              "full_prompt": "Radiant Figure, Writing in the air"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_resting_3.png"
+              ],
+              "full_prompt": "Radiant Figure, Calm and observing"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_happy_3.png"
+              ],
+              "full_prompt": "Radiant Figure, Radiating warmth and light"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_sad_3.png"
+              ],
+              "full_prompt": "Radiant Figure, Expressing sorrow over misunderstanding"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_angry_3.png"
+              ],
+              "full_prompt": "Radiant Figure, Flickering with intensity"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_2_surprised_3.png"
+              ],
+              "full_prompt": "Radiant Figure, Reacting to the dreamer's actions"
+            }
+          },
+          "written_description": "A mysterious and brilliant figure illuminating the dream with knowledge."
+        },
+        {
+          "id": "3",
+          "entity_name": "Symbols",
+          "position_index": 2,
+          "is_player": false,
+          "greeting": "We hold the keys to the universe.",
+          "interaction_options": [
+            "Learn the equations",
+            "Draw the symbols with me",
+            "Connect the lines in your mind",
+            "Share your interpretations"
+          ],
+          "base_noun": "Mathematical Symbols",
+          "visual_summary": "Glowing and intricate",
+          "stance_prompts": {
+            "idle": "Floating in patterns",
+            "active": "Transforming and shifting shapes",
+            "resting": "Static and perfect",
+            "happy": "Sparkling brightly",
+            "sad": "Fading slowly",
+            "angry": "Convolving tightly",
+            "surprised": "Changing unexpectedly"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_idle_3.png"
+              ],
+              "full_prompt": "Mathematical Symbols, Floating in patterns"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_active_3.png"
+              ],
+              "full_prompt": "Mathematical Symbols, Transforming and shifting shapes"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_resting_3.png"
+              ],
+              "full_prompt": "Mathematical Symbols, Static and perfect"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_happy_3.png"
+              ],
+              "full_prompt": "Mathematical Symbols, Sparkling brightly"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_sad_3.png"
+              ],
+              "full_prompt": "Mathematical Symbols, Fading slowly"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_angry_3.png"
+              ],
+              "full_prompt": "Mathematical Symbols, Convolving tightly"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_3_surprised_3.png"
+              ],
+              "full_prompt": "Mathematical Symbols, Changing unexpectedly"
+            }
+          },
+          "written_description": "The beautiful symbols shimmering with knowledge."
+        },
+        {
+          "id": "4",
+          "entity_name": "Patterns",
+          "position_index": 3,
+          "is_player": false,
+          "greeting": "We reveal truths through connection.",
+          "interaction_options": [
+            "Explore the connections",
+            "Describe your insights",
+            "Visualize the patterns",
+            "Feel the connections in your heart"
+          ],
+          "base_noun": "Elegant Patterns",
+          "visual_summary": "Curved and fluid",
+          "stance_prompts": {
+            "idle": "Intertwined and harmonizing",
+            "active": "Flowing gracefully",
+            "resting": "Balanced and poised",
+            "happy": "Radiating beauty",
+            "sad": "Breaking apart softly",
+            "angry": "Twisting chaotically",
+            "surprised": "Shifting suddenly"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_idle_3.png"
+              ],
+              "full_prompt": "Elegant Patterns, Intertwined and harmonizing"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_active_3.png"
+              ],
+              "full_prompt": "Elegant Patterns, Flowing gracefully"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_resting_3.png"
+              ],
+              "full_prompt": "Elegant Patterns, Balanced and poised"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_happy_3.png"
+              ],
+              "full_prompt": "Elegant Patterns, Radiating beauty"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_sad_3.png"
+              ],
+              "full_prompt": "Elegant Patterns, Breaking apart softly"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_angry_3.png"
+              ],
+              "full_prompt": "Elegant Patterns, Twisting chaotically"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_4_surprised_3.png"
+              ],
+              "full_prompt": "Elegant Patterns, Shifting suddenly"
+            }
+          },
+          "written_description": "The intricate patterns representing mathematical truths and connections."
+        },
+        {
+          "id": "5",
+          "entity_name": "Light",
+          "position_index": 4,
+          "is_player": false,
+          "greeting": "I illuminate your path.",
+          "interaction_options": [
+            "Dance in the light",
+            "Express gratitude for clarity",
+            "Allow the light to guide you",
+            "Channel the light into your creations"
+          ],
+          "base_noun": "Soft Radiant Light",
+          "visual_summary": "Bright and comforting",
+          "stance_prompts": {
+            "idle": "Glowing gently",
+            "active": "Bathe the area in light",
+            "resting": "Dim and warm",
+            "happy": "Shining joyfully",
+            "sad": "Flickering softly",
+            "angry": "Blindingly bright",
+            "surprised": "Sparkling unexpectedly"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_idle_3.png"
+              ],
+              "full_prompt": "Soft Radiant Light, Glowing gently"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_active_3.png"
+              ],
+              "full_prompt": "Soft Radiant Light, Bathe the area in light"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_resting_3.png"
+              ],
+              "full_prompt": "Soft Radiant Light, Dim and warm"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_happy_3.png"
+              ],
+              "full_prompt": "Soft Radiant Light, Shining joyfully"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_sad_3.png"
+              ],
+              "full_prompt": "Soft Radiant Light, Flickering softly"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_angry_3.png"
+              ],
+              "full_prompt": "Soft Radiant Light, Blindingly bright"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_5_surprised_3.png"
+              ],
+              "full_prompt": "Soft Radiant Light, Sparkling unexpectedly"
+            }
+          },
+          "written_description": "The soft, radiant light enhancing the dreamscape."
+        },
+        {
+          "id": "6",
+          "entity_name": "Dreamscape of Mathematics",
+          "position_index": 5,
+          "is_player": false,
+          "greeting": "Explore the realms of knowledge.",
+          "interaction_options": [
+            "Wander through the dreamscape",
+            "Engage with each symbol",
+            "Capture your thoughts here",
+            "Marvel at the beauty surrounding you"
+          ],
+          "base_noun": "Mathematics Dreamscape",
+          "visual_summary": "Vast and colorful",
+          "stance_prompts": {
+            "idle": "Sprawling and pulsating",
+            "active": "Shifting and evolving",
+            "resting": "Calm and tranquil",
+            "happy": "Alive with energy",
+            "sad": "Fading into shadow",
+            "angry": "Churning in chaos",
+            "surprised": "Expanding wildly"
+          },
+          "generated_assets": {
+            "idle": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_idle_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_idle_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_idle_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_idle_3.png"
+              ],
+              "full_prompt": "Mathematics Dreamscape, Sprawling and pulsating"
+            },
+            "active": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_active_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_active_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_active_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_active_3.png"
+              ],
+              "full_prompt": "Mathematics Dreamscape, Shifting and evolving"
+            },
+            "resting": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_resting_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_resting_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_resting_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_resting_3.png"
+              ],
+              "full_prompt": "Mathematics Dreamscape, Calm and tranquil"
+            },
+            "happy": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_happy_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_happy_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_happy_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_happy_3.png"
+              ],
+              "full_prompt": "Mathematics Dreamscape, Alive with energy"
+            },
+            "sad": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_sad_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_sad_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_sad_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_sad_3.png"
+              ],
+              "full_prompt": "Mathematics Dreamscape, Fading into shadow"
+            },
+            "angry": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_angry_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_angry_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_angry_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_angry_3.png"
+              ],
+              "full_prompt": "Mathematics Dreamscape, Churning in chaos"
+            },
+            "surprised": {
+              "file_paths": [
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_surprised_0.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_surprised_1.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_surprised_2.png",
+                "https://storage.googleapis.com/dreamhex-assets-dreamhex/the-radiant-equation/the-radiant-equation_6_surprised_3.png"
+              ],
+              "full_prompt": "Mathematics Dreamscape, Expanding wildly"
+            }
+          },
+          "written_description": "A dreamscape where mathematics comes to life, full of symbols and patterns."
+        }
+      ],
+      "original_dream_text": "\nI, Srinivasa Ramanujan, slept with a sense of quiet expectancy, as though some presence waited just beyond my thoughts. Suddenly a radiant figure appeared before me, glowing with a light both soft and brilliant. She wrote symbols in the air, each equation shining like a small star. Lines curved into elegant forms, connecting with grace and precision. I understood the patterns instantly, as if they were familiar truths. I reached toward them and felt warmth spread through me. When I woke, the symbols were still clear. I wrote them down at once, marveling at their strange and perfect beauty.\n"
     }
   ]
 }
