@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { View, StyleSheet, LayoutChangeEvent } from 'react-native';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei/native';
@@ -9,9 +9,13 @@ import { MagicBook } from './MagicBook';
 
 interface DreamSceneProps {
   dreamData: any; 
-  bookText: string; // New Prop
+  bookText: string;
   onOpenBook: () => void;
   onInteractStation: (station: any) => void;
+  // NEW PROP: To signal a transition out
+  isExiting: boolean;
+  // NEW PROP: Callback to signal completion of the exit animation
+  onExitAnimationComplete: () => void;
 }
 
 const getStationConfig = (index: number, total: number) => {
@@ -34,8 +38,10 @@ const getStationConfig = (index: number, total: number) => {
   };
 };
 
-export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, bookText, onOpenBook, onInteractStation }) => {
+export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, bookText, onOpenBook, onInteractStation, isExiting, onExitAnimationComplete }) => {
   const [viewSize, setViewSize] = useState<{width: number, height: number} | null>(null);
+  // State for controlling the animation sequence (0=Hidden, 1=BG, 2=Book, 3=Central, 4+=Peripherals)
+  const [animationStep, setAnimationStep] = useState(0); 
 
   const onLayout = (e: LayoutChangeEvent) => {
      const { width, height } = e.nativeEvent.layout;
@@ -55,6 +61,71 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, bookText, onO
   }
   
   const stations = dreamData?.stations || dreamData?.hex?.stations || [];
+  
+  // Total steps: 1 (BG) + 1 (Book) + N (Stations) = N+2
+  const totalSteps = stations.length > 0 ? stations.length + 2 : 1; 
+
+  // Logic for the entrance and exit animation sequence (~4 seconds total)
+  useEffect(() => {
+    let timers: NodeJS.Timeout[] = [];
+    // UPDATED: Faster step interval for a 70% speed increase (650ms * 0.30 ≈ 200ms)
+    const stepInterval = 200; 
+    
+    let targetSteps: number[] = [];
+    
+    if (isExiting) {
+        // EXIT ANIMATION: Reverse sequence: totalSteps (Last Entity Hide) -> ... -> 1 (BG Hide)
+        for (let s = totalSteps; s >= 0; s--) {
+            targetSteps.push(s);
+        }
+    } else if (stations.length > 0 && animationStep === 0) { 
+        // ENTRANCE ANIMATION: Sequence: 0 -> 1 (BG Show) -> ... -> totalSteps (Last Entity Show)
+        // ONLY triggers if the component mounts (initial load) or on dream change (via key) 
+        // AND animation has not started (animationStep === 0).
+        for (let s = 1; s <= totalSteps; s++) {
+            targetSteps.push(s);
+        }
+    } else {
+        // Prevent setting animationStep = 0 if it has already completed the entrance
+        if (!isExiting && animationStep > 0) return () => {timers.forEach(clearTimeout)};
+        setAnimationStep(0);
+        return () => {timers.forEach(clearTimeout)};
+    }
+
+    // Schedule Steps
+    targetSteps.forEach((step, index) => {
+        const timer = setTimeout(() => {
+            setAnimationStep(step); 
+            
+            // Trigger callback when the final step (0) is reached during exit
+            if (isExiting && step === 0) {
+                onExitAnimationComplete();
+            }
+        }, index * stepInterval);
+        timers.push(timer);
+    });
+
+    // Dependency array ensures this only runs on: 1) Mount (initial load, animationStep=0) 2) isExiting state change
+    return () => {
+        timers.forEach(clearTimeout);
+    };
+  }, [isExiting, totalSteps, onExitAnimationComplete]); 
+
+  // Helper to determine sprite visibility based on index and current step
+  const getStationVisibility = (i: number) => {
+      // i=0 (Central Station): Should be 3rd element (after BG and Book). Step >= 3
+      if (i === 0) {
+          return animationStep >= 3;
+      }
+      // i>0 (Peripheral Stations): Visible at step i + 3 and beyond.
+      // Peripheral at index 1 is step 4. Peripheral at index 2 is step 5.
+      return animationStep >= (i + 3);
+  }
+
+  // The background is visible as long as animationStep is 1 or greater
+  const isBackgroundVisible = animationStep >= 1;
+  // The MagicBook is visible at step 2 and beyond. (Second item to appear/Second to last to leave)
+  const isBookVisible = animationStep >= 2;
 
   return (
     <View style={styles.container} onLayout={onLayout}>
@@ -67,7 +138,8 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, bookText, onO
           <ambientLight intensity={1.5} />
           
           <Suspense fallback={null}>
-            <AnimatedBackground frames={bgFrames} />
+            {/* Pass isVisible for background fade-in/out */}
+            <AnimatedBackground frames={bgFrames} isVisible={isBackgroundVisible} />
 
             {stations.map((s: any, i: number) => {
                 let frames: string[] = [];
@@ -87,6 +159,7 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, bookText, onO
                 }
 
                 const config = getStationConfig(i, stations.length);
+                const isVisible = getStationVisibility(i);
 
                 return (
                     <AnimatedSprite 
@@ -95,14 +168,17 @@ export const DreamScene: React.FC<DreamSceneProps> = ({ dreamData, bookText, onO
                         position={config.position}
                         scale={config.scale}
                         onPress={() => onInteractStation(s)}
+                        // NEW PROP: Triggers pop-in/pop-out animation in component
+                        isVisible={isVisible}
                     />
                 );
             })}
 
-            {/* Pass the text and click handler to the Book */}
+            {/* Pass the text and click handler to the Book, controlled by totalSteps */}
             <MagicBook 
                 onPress={onOpenBook} 
                 pageText={bookText} 
+                isVisible={isBookVisible}
             />
           </Suspense>
 

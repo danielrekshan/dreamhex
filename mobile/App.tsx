@@ -19,6 +19,10 @@ export default function App() {
   const [currentDreamSlug, setCurrentDreamSlug] = useState('between-thought-and-waking-light'); 
   const [dreamData, setDreamData] = useState<any>(null);
   
+  // NEW TRANSITION STATES
+  const [isExiting, setIsExiting] = useState(false);
+  const [nextDreamSlug, setNextDreamSlug] = useState<string | null>(null);
+  
   // UI States
   const [isBookOpen, setBookOpen] = useState(false); // Default to closed so we see the 3D book first
   const [bookPageIndex, setBookPageIndex] = useState(0); // LIFTED STATE
@@ -80,6 +84,20 @@ export default function App() {
           AsyncStorage.setItem(SESSION_KEY, JSON.stringify(session)).catch(e => console.warn("Save failed", e));
       }
   }, [dreamData, interactionHistory, currentDreamSlug]);
+
+
+  // NEW HANDLER: Called by DreamScene when the exit animation is complete
+  const handleExitAnimationComplete = () => {
+    if (nextDreamSlug) {
+        // 1. Load the new dream's data
+        loadFromJSON(nextDreamSlug);
+        // 2. Set the new current slug (triggers DreamScene remount/entrance animation)
+        setCurrentDreamSlug(nextDreamSlug); 
+        // 3. Reset the transition states
+        setIsExiting(false);
+        setNextDreamSlug(null);
+    }
+  };
 
 
   // --- HANDLERS ---
@@ -186,9 +204,15 @@ export default function App() {
 
   const handleBookAction = (page: BookPage) => {
       if (page.type === 'DREAM_GATE' && page.targetDreamId) {
-          loadFromJSON(page.targetDreamId);
-          setCurrentDreamSlug(page.targetDreamId); 
-          setBookOpen(false);
+          // Check if we are already exiting or transitioning to prevent double-trigger
+          if (isExiting || nextDreamSlug) return;
+
+          // 1. Set the target slug
+          setNextDreamSlug(page.targetDreamId); 
+          // 2. Trigger the exit animation
+          setIsExiting(true); 
+          // 3. Close the BookReader UI immediately
+          setBookOpen(false); 
       } else if (page.type === 'CREDITS_UNLOCK') {
           Alert.alert("The End", "You have restored the Hexarchia Oneirica.");
       }
@@ -199,7 +223,7 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar hidden />
         
-        {loading || !dreamData ? (
+        {loading || (!dreamData && !isExiting) ? ( 
              <View style={styles.center}>
                  <ActivityIndicator size="large" color="#d7ccc8" />
                  <Text style={{color: '#d7ccc8', marginTop: 10}}>Entering Dream...</Text>
@@ -208,9 +232,11 @@ export default function App() {
             <DreamScene 
                 key={currentDreamSlug} 
                 dreamData={dreamData}
-                bookText={currentBookText} // Pass current page text
+                bookText={currentBookText}
                 onOpenBook={() => setBookOpen(true)}
                 onInteractStation={handleInteractStation}
+                isExiting={isExiting} // Controls exit animation
+                onExitAnimationComplete={handleExitAnimationComplete} // Controls state change
             />
         )}
 
@@ -218,8 +244,8 @@ export default function App() {
             visible={isBookOpen}
             onClose={() => setBookOpen(false)}
             pages={BOOK_CONTENT}
-            pageIndex={bookPageIndex}       // Controlled component
-            setPageIndex={setBookPageIndex} // Controlled component
+            pageIndex={bookPageIndex}       
+            setPageIndex={setBookPageIndex} 
             onAction={handleBookAction}
             scarabCount={scarabCount}
         />

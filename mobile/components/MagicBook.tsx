@@ -1,19 +1,46 @@
-import React from 'react';
-import { GroupProps } from '@react-three/fiber';
+import React, { useRef } from 'react';
+import { GroupProps, useFrame } from '@react-three/fiber';
 import { Text } from '@react-three/drei/native';
+import * as THREE from 'three';
 
 interface MagicBookProps extends GroupProps {
   onPress: () => void;
   pageText?: string;
+  isVisible: boolean; // ADDED PROP for animation
 }
 
-export const MagicBook: React.FC<MagicBookProps> = ({ onPress, pageText, ...props }) => {
+// Constants reflecting the component's original design
+const BASE_POSITION: [number, number, number] = [0, -5.5, 0];
+const BASE_SCALE = 0.6; 
+const ANIMATION_SPEED = 8; // UPDATED: Faster speed
+
+export const MagicBook: React.FC<MagicBookProps> = ({ onPress, pageText, isVisible, ...props }) => {
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame((state, delta) => {
+    if (groupRef.current) {
+        // Target scale is the base scale (0.6) when visible, 0.001 when hidden
+        const targetScale = isVisible ? BASE_SCALE : 0.001; 
+        const currentScale = groupRef.current.scale.x;
+        
+        // Lerp for smooth scale transition (Pop-in/Pop-out effect)
+        const newScale = THREE.MathUtils.lerp(
+            currentScale,
+            targetScale,
+            delta * ANIMATION_SPEED 
+        );
+        
+        groupRef.current.scale.set(newScale, newScale, newScale);
+    }
+  });
+
   return (
-    // Positioned low (-5.5) to act as a "foundation" for the world
-    // Added onClick here to make the whole book interactive
+    // Attach ref to the main group for animation control
     <group 
-        position={[0, -5.5, 0]} 
-        scale={0.6} 
+        ref={groupRef} 
+        position={BASE_POSITION} 
+        // Initial scale is set low, quickly corrected by useFrame
+        scale={0.001} 
         onClick={(e) => {
              e.stopPropagation();
              onPress();
@@ -42,8 +69,8 @@ export const MagicBook: React.FC<MagicBookProps> = ({ onPress, pageText, ...prop
       {/* 4. Page Text Preview */}
       {pageText && (
           <Text
-            position={[0, 0.86, 0]} // Slightly above the paper surface
-            rotation={[-Math.PI / 2, 0, Math.PI / 2]} // Laying flat, rotated to face 'up' in standard view if needed, or Z-up
+            position={[0, 0.86, 0]} 
+            rotation={[-Math.PI / 2, 0, Math.PI / 2]} 
             fontSize={0.5}
             color="#3e2723"
             maxWidth={10}
