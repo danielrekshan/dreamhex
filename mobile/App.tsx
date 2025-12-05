@@ -8,11 +8,11 @@ import { EntityDialog } from './components/EntityDialog';
 import { BOOK_CONTENT, BookPage } from './BookManifest';
 
 // Direct import of your provided JSON content
-const DREAM_DATABASE: any = require('./assets/dreamworld.json');
+const DREAM_DATABASE: any = require('./assets/world.json');
 
 export default function App() {
   // --- STATE ---
-  const [currentDreamSlug, setCurrentDreamSlug] = useState('gate_john_dee'); // Start on Dee's dream
+  const [currentDreamSlug, setCurrentDreamSlug] = useState('between-thought-and-waking-light'); // Start on Dee's dream
   const [dreamData, setDreamData] = useState<any>(null);
   
   // UI States
