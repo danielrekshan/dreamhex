@@ -45,11 +45,12 @@ export const DreamScene: React.FC<DreamSceneProps> = ({
   if (bgFrames.length === 0) bgFrames = dreamData?.hex?.background_frames || [];
   
   const stations = dreamData?.stations || dreamData?.hex?.stations || [];
-  const totalSteps = stations.length > 0 ? stations.length + 2 : 1; 
+  // Ensure we have at least 2 steps (1 for BG, 2 for Book) even if no stations
+  const totalSteps = stations.length > 0 ? stations.length + 2 : 2; 
 
   // 1. Entrance Effect
   useEffect(() => {
-    if (stations.length === 0) return;
+    // We allow 0 stations now, so remove the early return check for stations.length === 0
     let timers: NodeJS.Timeout[] = [];
     const stepInterval = 200; 
     let targetSteps: number[] = [];
@@ -64,8 +65,9 @@ export const DreamScene: React.FC<DreamSceneProps> = ({
 
   // 2. Exit Effect
   useEffect(() => {
-    if (!isExiting || stations.length === 0) {
-      if (!isExiting && animationStep > 0) setAnimationStep(totalSteps);
+    if (!isExiting) {
+      // If we re-enter or cancel exit, fast forward to end
+      if (animationStep > 0 && animationStep < totalSteps) setAnimationStep(totalSteps);
       return;
     }
     let timers: NodeJS.Timeout[] = [];

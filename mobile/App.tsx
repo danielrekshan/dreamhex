@@ -14,6 +14,30 @@ const DREAM_DATABASE: any = require('./assets/world.json');
 const SESSION_KEY = 'dreamhex_session_v3';
 const USER_ID_KEY = 'dreamhex_user_id'; 
 
+// --- VOID SCENE CONFIGURATION ---
+const VOID_SLUG = 'void-intro';
+const VOID_FRAMES = [
+  'https://storage.googleapis.com/dreamhex-assets-dreamhex/void_space/void_space_0.png',
+  'https://storage.googleapis.com/dreamhex-assets-dreamhex/void_space/void_space_1.png',
+  'https://storage.googleapis.com/dreamhex-assets-dreamhex/void_space/void_space_2.png',
+  'https://storage.googleapis.com/dreamhex-assets-dreamhex/void_space/void_space_3.png'
+];
+
+const VOID_DREAM_DATA = {
+    slug: VOID_SLUG,
+    stations: [], // Empty stations for the void
+    world_state: {
+        chaos_level: 0,
+        generated_assets: {
+            level_0: {
+                file_paths: VOID_FRAMES
+            }
+        }
+    },
+    original_dream_text: ""
+};
+// --------------------------------
+
 type DreamProgress = {
     [key: string]: {
         centralOpenCount: number;
@@ -23,7 +47,7 @@ type DreamProgress = {
 };
 
 export default function App() {
-  const [currentDreamSlug, setCurrentDreamSlug] = useState('floating-in-thought');
+  const [currentDreamSlug, setCurrentDreamSlug] = useState(VOID_SLUG); // Start in Void
   const [dreamData, setDreamData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState<string>('guest_user');
@@ -66,7 +90,8 @@ export default function App() {
             if (savedState) {
                 const parsed = JSON.parse(savedState);
                 setDreamData(parsed.dreamData);
-                setCurrentDreamSlug(parsed.slug || 'floating-in-thought');
+                // Default to VOID if slug is missing or invalid in session, or use saved slug
+                setCurrentDreamSlug(parsed.slug || VOID_SLUG);
                 setUnlockedPageIds(parsed.unlockedPageIds || ['intro_1', 'intro_2', 'intro_3', 'intro_4', 'gate_john_dee']);
                 
                 const loadedProgress = parsed.dreamProgress ? Object.entries(parsed.dreamProgress).reduce((acc, [key, val]: any) => {
@@ -108,6 +133,11 @@ export default function App() {
   }, [dreamData, interactionHistory, currentDreamSlug, unlockedPageIds, dreamProgress]);
 
   const loadFromJSON = (slug: string) => {
+      if (slug === VOID_SLUG) {
+          setDreamData(VOID_DREAM_DATA);
+          return;
+      }
+
       const dreams = DREAM_DATABASE.dreams || [];
       const found = dreams.find((d: any) => d.slug === slug);
       setDreamData(found ? JSON.parse(JSON.stringify(found)) : dreams[0]);
