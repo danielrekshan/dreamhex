@@ -26,7 +26,7 @@ I am Doctor John Dee.
 
 ![John Dee](https://storage.googleapis.com/dreamhex-assets-dreamhex/magicbook/john_dee_0.png "John Dee")
 
-And this is the **Hexarchia Oneirica**, my Magick Book of the Six Dream Powers. 
+And this is the **Hexarchia Oneirica**, my Magick Dream Book that connects me to you. 
 
 ![The Hexarchia Oneirica Magick Book](https://storage.googleapis.com/dreamhex-assets-dreamhex/magicbook/magick_book_0.png "The Hexarchia Oneirica Magick Book")
 
