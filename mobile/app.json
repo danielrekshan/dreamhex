@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "DreamHex",
+    "slug": "dreamhex",
     "version": "1.0.0",
-    "orientation": "landscape",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
@@ -22,7 +22,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.dseti.mobile"
+      "package": "com.dseti.dreamhex"
     },
     "web": {
       "favicon": "./assets/favicon.png"

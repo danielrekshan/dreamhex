@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { 
     View, Text, StyleSheet, TouchableOpacity, Modal, 
-    ScrollView, Image, useWindowDimensions, Platform 
+    ScrollView, Image, useWindowDimensions
 } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import { BookPage } from '../BookManifest';
@@ -26,8 +26,10 @@ const customRenderers = {
     const uri = node.attributes.src;
     if (!uri) return null;
 
+    // FIX: Removed key={node.key}. The Markdown library manages keying internally, 
+    // and explicitly setting it often causes conflicts leading to the spread error.
     return (
-      <View key={node.key} style={styles.imageContainer}>
+      <View style={styles.imageContainer}>
         <Image 
           source={{ uri: uri }}
           style={styles.image} 
@@ -45,6 +47,8 @@ export const BookReader: React.FC<BookReaderProps> = ({
   
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
+  
+  const scrollViewRef = useRef<ScrollView>(null); 
 
   const activePage = pages[pageIndex];
   if (!activePage) return null;
@@ -52,8 +56,24 @@ export const BookReader: React.FC<BookReaderProps> = ({
   const hasNext = pageIndex < pages.length - 1;
   const hasPrev = pageIndex > 0;
 
-  const handleNext = () => { if (hasNext) setPageIndex(pageIndex + 1); };
-  const handlePrev = () => { if (hasPrev) setPageIndex(pageIndex - 1); };
+  const scrollToTop = () => {
+      if (scrollViewRef.current) {
+          scrollViewRef.current.scrollTo({ y: 0, animated: true });
+      }
+  };
+
+  const handleNext = () => { 
+      if (hasNext) {
+          setPageIndex(pageIndex + 1);
+          scrollToTop();
+      } 
+  };
+  const handlePrev = () => { 
+      if (hasPrev) {
+          setPageIndex(pageIndex - 1); 
+          scrollToTop();
+      }
+  };
 
   // Check if the page target matches the current dream
   const isCurrentDream = activePage.type === 'DREAM_GATE' && activePage.targetDreamId === currentDreamSlug;
@@ -88,7 +108,11 @@ export const BookReader: React.FC<BookReaderProps> = ({
   };
 
   const renderContent = () => (
-      <ScrollView style={styles.markdownScroll} contentContainerStyle={styles.markdownContentContainer}>
+      <ScrollView 
+          ref={scrollViewRef} 
+          style={styles.markdownScroll} 
+          contentContainerStyle={styles.markdownContentContainer}
+      >
           <Text style={styles.titleText}>{activePage.title}</Text>
           <Markdown 
               key={pageIndex} 
@@ -100,6 +124,37 @@ export const BookReader: React.FC<BookReaderProps> = ({
       </ScrollView>
   );
 
+  const renderBottomNav = () => (
+      <View style={styles.bottomNavContainer}>
+          {/* Left: Previous */}
+          <View style={styles.navItemLeft}>
+            <TouchableOpacity 
+                onPress={handlePrev} 
+                disabled={!hasPrev} 
+                style={[styles.navButton, !hasPrev && styles.disabledNav]}
+            >
+                <Text style={styles.navText}>← PREV</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Center: Action */}
+          <View style={styles.navItemCenter}>
+              {renderActionButton()}
+          </View>
+
+          {/* Right: Next */}
+          <View style={styles.navItemRight}>
+            <TouchableOpacity 
+                onPress={handleNext} 
+                disabled={!hasNext} 
+                style={[styles.navButton, !hasNext && styles.disabledNav]}
+            >
+                <Text style={styles.navText}>NEXT →</Text>
+            </TouchableOpacity>
+          </View>
+      </View>
+  );
+
   return (
     <Modal visible={visible} animationType="slide" transparent={true} onRequestClose={onClose}>
       <View style={styles.overlay}>
@@ -107,48 +162,31 @@ export const BookReader: React.FC<BookReaderProps> = ({
             styles.bookContainer, 
             { 
                 width: isLandscape ? '90%' : '100%', 
-                height: isLandscape ? '90%' : '80%',
-                flexDirection: isLandscape ? 'row' : 'column'
+                height: isLandscape ? '90%' : '90%',
             }
         ]}>
             
-            {/* --- LANDSCAPE LAYOUT --- */}
+            {/* --- LAYOUT CONTENT --- */}
+            <View style={{ flex: 1 }}>
             {isLandscape ? (
-                <>
-                    {/* Left Column: Content */}
-                    <View style={styles.landscapeLeftCol}>
+                /* --- LANDSCAPE LAYOUT (Single Column) --- */
+                <View style={styles.landscapeContentWrapper}>
+                    {/* Close button moved to top-right of the book view */}
+                    <TouchableOpacity 
+                        onPress={onClose} 
+                        style={styles.landscapeCloseBtnAbsolute}
+                    >
+                        <Text style={styles.closeText}>✕</Text>
+                    </TouchableOpacity>
+                    <View style={styles.contentArea}>
                         {renderContent()}
                     </View>
-
-                    {/* Right Column: Controls */}
-                    <View style={styles.landscapeRightCol}>
-                        <TouchableOpacity onPress={onClose} style={styles.landscapeCloseBtn}>
-                            <Text style={styles.closeText}>✕</Text>
-                        </TouchableOpacity>
-
-                        <View style={styles.landscapeControls}>
-                            <Text style={styles.pageIndicator}>Page {pageIndex + 1}/{pages.length}</Text>
-                            
-                            <View style={styles.landscapeNavRow}>
-                                <TouchableOpacity onPress={handlePrev} disabled={!hasPrev} style={[styles.navButton, !hasPrev && styles.disabledNav]}>
-                                    <Text style={styles.navText}>←</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={handleNext} disabled={!hasNext} style={[styles.navButton, !hasNext && styles.disabledNav]}>
-                                    <Text style={styles.navText}>→</Text>
-                                </TouchableOpacity>
-                            </View>
-
-                            <View style={{marginTop: 20}}>
-                                {renderActionButton()}
-                            </View>
-                        </View>
-                    </View>
-                </>
+                </View>
             ) : (
                 /* --- PORTRAIT LAYOUT --- */
                 <>
                     <View style={styles.header}>
-                        <Text style={styles.pageIndicator}>Page {pageIndex + 1} of {pages.length}</Text>
+                        {/* Only shows the close button now */}
                         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                             <Text style={styles.closeText}>✕</Text>
                         </TouchableOpacity>
@@ -157,20 +195,12 @@ export const BookReader: React.FC<BookReaderProps> = ({
                     <View style={styles.contentArea}>
                         {renderContent()}
                     </View>
-
-                    <View style={styles.footer}>
-                        <TouchableOpacity onPress={handlePrev} disabled={!hasPrev} style={[styles.navButton, !hasPrev && styles.disabledNav]}>
-                            <Text style={styles.navText}>← PREV</Text>
-                        </TouchableOpacity>
-
-                        {renderActionButton() || <View style={{width: 50}} />}
-
-                        <TouchableOpacity onPress={handleNext} disabled={!hasNext} style={[styles.navButton, !hasNext && styles.disabledNav]}>
-                            <Text style={styles.navText}>NEXT →</Text>
-                        </TouchableOpacity>
-                    </View>
                 </>
             )}
+            </View>
+
+            {/* --- UNIFIED BOTTOM NAVIGATION --- */}
+            {renderBottomNav()}
 
         </View>
       </View>
@@ -197,6 +227,7 @@ const markdownStyles = StyleSheet.create({
         width: 200, 
         height: 200, 
         resizeMode: 'contain',
+        alignSelf: 'center',
     },
     imageContainer: {
         alignItems: 'center', 
@@ -224,62 +255,38 @@ const styles = StyleSheet.create({
       shadowRadius: 20,
       elevation: 20,
       overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
   },
   
   // Portrait Specifics
   header: { 
       flexDirection: 'row', 
-      justifyContent: 'space-between', 
+      justifyContent: 'flex-end', 
       alignItems: 'center',
       borderBottomWidth: 1, 
       borderBottomColor: '#d7ccc8',
       paddingBottom: 10,
       marginBottom: 10,
   },
-  footer: { 
-      flexDirection: 'row', 
-      justifyContent: 'space-between', 
-      alignItems: 'center', 
-      paddingTop: 10, 
-      borderTopWidth: 1, 
-      borderTopColor: '#d7ccc8',
-      marginTop: 10
-  },
   contentArea: { flex: 1 },
 
-  // Landscape Specifics
-  landscapeLeftCol: {
-      flex: 3,
-      paddingRight: 20,
-      borderRightWidth: 1,
-      borderRightColor: '#d7ccc8',
-  },
-  landscapeRightCol: {
+  // Landscape Specifics (Simplified)
+  landscapeContentWrapper: {
       flex: 1,
-      paddingLeft: 20,
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      position: 'relative', 
+      paddingTop: 30, 
   },
-  landscapeCloseBtn: {
-      alignSelf: 'flex-end',
+  landscapeCloseBtnAbsolute: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
       padding: 5,
-  },
-  landscapeControls: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
-  },
-  landscapeNavRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '100%',
-      marginTop: 20,
-      marginBottom: 20,
+      zIndex: 10, 
   },
 
+
   // Common Elements
-  pageIndicator: { fontFamily: 'serif', color: '#8d6e63', fontSize: 14, fontStyle: 'italic' },
   closeButton: { padding: 5 },
   closeText: { fontSize: 24, color: '#5d4037', fontWeight: 'bold' },
   
@@ -294,6 +301,31 @@ const styles = StyleSheet.create({
   markdownScroll: { flex: 1 },
   markdownContentContainer: { paddingBottom: 20 },
   
+  // Bottom Navigation Bar
+  bottomNavContainer: { 
+      flexDirection: 'row', 
+      justifyContent: 'space-between', 
+      alignItems: 'center', 
+      paddingTop: 10, 
+      borderTopWidth: 1, 
+      borderTopColor: '#d7ccc8',
+      marginTop: 10,
+      height: 60, 
+  },
+  navItemLeft: {
+      flex: 1,
+      alignItems: 'flex-start',
+  },
+  navItemRight: {
+      flex: 1,
+      alignItems: 'flex-end',
+  },
+  navItemCenter: {
+      flex: 2, 
+      alignItems: 'center',
+      justifyContent: 'center',
+  },
+
   navButton: { padding: 10 },
   navText: { fontSize: 16, fontFamily: 'serif', color: '#5d4037', fontWeight: 'bold', letterSpacing: 1 },
   disabledNav: { opacity: 0.2 },
@@ -303,7 +335,8 @@ const styles = StyleSheet.create({
       paddingVertical: 12, 
       paddingHorizontal: 15, 
       borderRadius: 4,
-      alignItems: 'center'
+      alignItems: 'center',
+      minWidth: 120,
   },
   disabledActionBtn: {
       backgroundColor: 'transparent',
@@ -313,7 +346,8 @@ const styles = StyleSheet.create({
       paddingHorizontal: 15, 
       borderRadius: 4,
       opacity: 0.6,
-      alignItems: 'center'
+      alignItems: 'center',
+      minWidth: 120,
   },
   actionText: { color: '#fcfbf7', fontFamily: 'serif', fontWeight: 'bold', fontSize: 14, textAlign: 'center' },
   disabledActionText: { color: '#8d6e63', fontFamily: 'serif', fontWeight: 'bold', fontSize: 12, textAlign: 'center' }
