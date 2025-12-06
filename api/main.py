@@ -219,7 +219,7 @@ def list_dreams(user_id: str):
 @app.post("/dreams/interact")
 async def interact(req: InteractionRequest, bg_tasks: BackgroundTasks):
     print(f"🎭 Interaction requested by {req.user_id} on dream {req.dream_id}, station {req.station_id}" )
-    # db_client = get_db()
+    db_client = get_db()
     
     station = req.station_data
     world_context = req.world_context
@@ -260,10 +260,10 @@ async def interact(req: InteractionRequest, bg_tasks: BackgroundTasks):
         "user_id": req.user_id
     }
     
-    # try:
-    #     db_client.collection("interaction").add(interaction_log)
-    # except Exception as e:
-    #     print(f"⚠️ Failed to log interaction: {e}")
+    try:
+        db_client.collection("interaction").add(interaction_log)
+    except Exception as e:
+        print(f"⚠️ Failed to log interaction: {e}")
 
     return {
         "station": station, 

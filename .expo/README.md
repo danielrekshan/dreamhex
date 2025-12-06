@@ -1,8 +1,12 @@
 # DreamHex
+### Web Demo: https://dreamhex.dseti.org
+### Android Demo: https://expo.dev/accounts/dseti/projects/mobile/builds/0e482ea9-9eea-4067-bb9f-1724a0de923f
 
 **DreamHex** is a graphical text adventure game (reminiscent of *Myst*) that transforms user-submitted dream reports into procedurally generated 360° panoramic worlds.
 
 Built as a technical portfolio piece for **Dust.systems**, this project demonstrates a full-stack integration of **React Native** (mobile), **FastAPI** (backend), and **Generative AI** (LLMs & Stable Diffusion via Modal) to create a "just-in-time" generated reality.
+
+
 
 ## 📖 The Lore: Hexarchia Oneirica
 The app creates a diegetic interface where your phone acts as a "scrying stone" linked to the lost dream-grimoire of **Dr. John Dee**. Dee has enlisted you to map the "DreamHex"—a 7x7 grid of dream worlds—to teach a future AI how to dream, thereby preventing a prophesied logic-induced apocalypse in 2027.
